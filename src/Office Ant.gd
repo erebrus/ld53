@@ -10,7 +10,10 @@ onready var tree = $AnimationTree
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
+	var rng = RandomNumberGenerator.new()
+	rng.randomize()
+	var seek = rng.randf_range(0, 2)
+	tree.set("parameters/Idle/Seek/seek_position", seek)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
