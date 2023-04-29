@@ -21,3 +21,5 @@ assets/prototype/gfx/characters/.DS_Store
 assets/prototype/gfx/characters/player/.DS_Store
 assets/prototype/gfx/enemies/.DS_Store
 src/.DS_Store
+assets/.DS_Store
+.DS_Store
