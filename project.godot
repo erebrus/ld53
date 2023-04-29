@@ -44,10 +44,20 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/gs_logger/appenders/file_appender.gd"
 }, {
+"base": "Reference",
+"class": "GameTime",
+"language": "GDScript",
+"path": "res://src/GameTime.gd"
+}, {
 "base": "Layout",
 "class": "HtmlLayout",
 "language": "GDScript",
 "path": "res://addons/gs_logger/layouts/html_layout.gd"
+}, {
+"base": "TileMap",
+"class": "InteractiveTilemap",
+"language": "GDScript",
+"path": "res://src/commons/InteractiveTileMap.gd"
 }, {
 "base": "Reference",
 "class": "Layout",
@@ -63,6 +73,16 @@ _global_script_classes=[ {
 "class": "Message",
 "language": "GDScript",
 "path": "res://addons/gs_logger/message.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "Npc",
+"language": "GDScript",
+"path": "res://src/npc/npc.gd"
+}, {
+"base": "Node2D",
+"class": "Package",
+"language": "GDScript",
+"path": "res://src/Package.gd"
 }, {
 "base": "Layout",
 "class": "PatternLayout",
@@ -147,10 +167,14 @@ _global_script_class_icons={
 "EasingV2": "",
 "EasingV3": "",
 "FileAppender": "",
+"GameTime": "",
 "HtmlLayout": "",
+"InteractiveTilemap": "",
 "Layout": "",
 "LogContainer": "",
 "Message": "",
+"Npc": "",
+"Package": "",
 "PatternLayout": "",
 "RNGTools": "",
 "State": "res://addons/xsm/icons/state.png",
@@ -178,6 +202,7 @@ config/icon="res://icon.png"
 DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
 Logger="*res://addons/gs_logger/logger.gd"
 HyperLog="*res://addons/hyperlog/hyperlog.tscn"
+Globals="*res://src/Globals.gd"
 
 [editor]
 
@@ -190,6 +215,21 @@ enabled=PoolStringArray( "res://addons/dialogue_manager/plugin.cfg", "res://addo
 [gui]
 
 common/drop_mouse_on_gui_input_disabled=true
+
+[input]
+
+jump={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":0,"physical_scancode":32,"unicode":0,"echo":false,"script":null)
+ ]
+}
+
+[layer_names]
+
+2d_physics/layer_1="world"
+2d_physics/layer_2="props"
+2d_physics/layer_3="player"
+2d_physics/layer_4="npc"
 
 [physics]
 
