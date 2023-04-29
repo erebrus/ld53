@@ -171,21 +171,17 @@ _global_script_class_icons={
 [application]
 
 config/name="ld53"
+run/main_scene="res://src/Map.tscn"
 config/icon="res://icon.png"
 
-[autoload]
+[display]
 
-DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
-Logger="*res://addons/gs_logger/logger.gd"
-HyperLog="*res://addons/hyperlog/hyperlog.tscn"
-
-[editor]
-
-script_templates_search_path="res://addons/xsm/templates/"
-
-[editor_plugins]
-
-enabled=PoolStringArray( "res://addons/dialogue_manager/plugin.cfg", "res://addons/gs_logger/plugin.cfg", "res://addons/hyperlog/plugin.cfg", "res://addons/randomAudioStreamPlayer/plugin.cfg", "res://addons/xsm/plugin.cfg" )
+window/size/width=640
+window/size/height=360
+window/size/test_width=1920
+window/size/test_height=1080
+window/stretch/mode="2d"
+window/stretch/aspect="keep"
 
 [gui]
 
