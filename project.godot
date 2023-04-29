@@ -8,10 +8,184 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Reference",
+"class": "Appender",
+"language": "GDScript",
+"path": "res://addons/gs_logger/appender.gd"
+}, {
+"base": "Appender",
+"class": "ConsoleAppender",
+"language": "GDScript",
+"path": "res://addons/gs_logger/appenders/console_appender.gd"
+}, {
+"base": "Resource",
+"class": "DialogueResource",
+"language": "GDScript",
+"path": "res://addons/dialogue_manager/dialogue_resource.gd"
+}, {
+"base": "Reference",
+"class": "Easing",
+"language": "GDScript",
+"path": "res://addons/EasingFunctions/EasingFunctions.gd"
+}, {
+"base": "Reference",
+"class": "EasingV2",
+"language": "GDScript",
+"path": "res://addons/EasingFunctions/EasingFunctions_V2.gd"
+}, {
+"base": "Reference",
+"class": "EasingV3",
+"language": "GDScript",
+"path": "res://addons/EasingFunctions/EasingFunctions_V3.gd"
+}, {
+"base": "Appender",
+"class": "FileAppender",
+"language": "GDScript",
+"path": "res://addons/gs_logger/appenders/file_appender.gd"
+}, {
+"base": "Layout",
+"class": "HtmlLayout",
+"language": "GDScript",
+"path": "res://addons/gs_logger/layouts/html_layout.gd"
+}, {
+"base": "Reference",
+"class": "Layout",
+"language": "GDScript",
+"path": "res://addons/gs_logger/layout.gd"
+}, {
+"base": "PanelContainer",
+"class": "LogContainer",
+"language": "GDScript",
+"path": "res://addons/hyperlog/log_container.gd"
+}, {
+"base": "Reference",
+"class": "Message",
+"language": "GDScript",
+"path": "res://addons/gs_logger/message.gd"
+}, {
+"base": "Layout",
+"class": "PatternLayout",
+"language": "GDScript",
+"path": "res://addons/gs_logger/layouts/pattern_layout.gd"
+}, {
+"base": "Object",
+"class": "RNGTools",
+"language": "GDScript",
+"path": "res://addons/rngtools/RNGTools.gd"
+}, {
+"base": "Node",
+"class": "State",
+"language": "GDScript",
+"path": "res://addons/xsm/state.gd"
+}, {
+"base": "State",
+"class": "StateAnimation",
+"language": "GDScript",
+"path": "res://addons/xsm/state_animation.gd"
+}, {
+"base": "State",
+"class": "StateLoop",
+"language": "GDScript",
+"path": "res://addons/xsm/state_loop.gd"
+}, {
+"base": "State",
+"class": "StateRand",
+"language": "GDScript",
+"path": "res://addons/xsm/state_rand.gd"
+}, {
+"base": "State",
+"class": "StateRegions",
+"language": "GDScript",
+"path": "res://addons/xsm/state_regions.gd"
+}, {
+"base": "Control",
+"class": "Tracker",
+"language": "GDScript",
+"path": "res://addons/hyperlog/trackers/tracker.gd"
+}, {
+"base": "Tracker",
+"class": "TrackerAngle",
+"language": "GDScript",
+"path": "res://addons/hyperlog/trackers/tracker_angle.gd"
+}, {
+"base": "Tracker",
+"class": "TrackerBar",
+"language": "GDScript",
+"path": "res://addons/hyperlog/trackers/tracker_bar.gd"
+}, {
+"base": "Tracker",
+"class": "TrackerColor",
+"language": "GDScript",
+"path": "res://addons/hyperlog/trackers/tracker_color.gd"
+}, {
+"base": "Tracker",
+"class": "TrackerGraph",
+"language": "GDScript",
+"path": "res://addons/hyperlog/trackers/tracker_graph.gd"
+}, {
+"base": "Tracker",
+"class": "TrackerText",
+"language": "GDScript",
+"path": "res://addons/hyperlog/trackers/tracker_text.gd"
+}, {
+"base": "Reference",
+"class": "Utils",
+"language": "GDScript",
+"path": "res://addons/gs_logger/utils.gd"
+}, {
+"base": "Resource",
+"class": "ValueTracker",
+"language": "GDScript",
+"path": "res://addons/hyperlog/value_tracker.gd"
+} ]
+_global_script_class_icons={
+"Appender": "",
+"ConsoleAppender": "",
+"DialogueResource": "",
+"Easing": "",
+"EasingV2": "",
+"EasingV3": "",
+"FileAppender": "",
+"HtmlLayout": "",
+"Layout": "",
+"LogContainer": "",
+"Message": "",
+"PatternLayout": "",
+"RNGTools": "",
+"State": "res://addons/xsm/icons/state.png",
+"StateAnimation": "res://addons/xsm/icons/state.png",
+"StateLoop": "res://addons/xsm/icons/state_loop.png",
+"StateRand": "res://addons/xsm/icons/state_rand.png",
+"StateRegions": "res://addons/xsm/icons/state_regions.png",
+"Tracker": "",
+"TrackerAngle": "",
+"TrackerBar": "",
+"TrackerColor": "",
+"TrackerGraph": "",
+"TrackerText": "",
+"Utils": "",
+"ValueTracker": ""
+}
+
 [application]
 
 config/name="ld53"
 config/icon="res://icon.png"
+
+[autoload]
+
+DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
+Logger="*res://addons/gs_logger/logger.gd"
+HyperLog="*res://addons/hyperlog/hyperlog.tscn"
+
+[editor]
+
+script_templates_search_path="res://addons/xsm/templates/"
+
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/dialogue_manager/plugin.cfg", "res://addons/gs_logger/plugin.cfg", "res://addons/hyperlog/plugin.cfg", "res://addons/randomAudioStreamPlayer/plugin.cfg", "res://addons/xsm/plugin.cfg" )
 
 [gui]
 
