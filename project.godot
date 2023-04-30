@@ -19,11 +19,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/gs_logger/appenders/console_appender.gd"
 }, {
-"base": "Resource",
-"class": "DialogueResource",
-"language": "GDScript",
-"path": "res://addons/dialogue_manager/dialogue_resource.gd"
-}, {
 "base": "Reference",
 "class": "Easing",
 "language": "GDScript",
@@ -73,11 +68,6 @@ _global_script_classes=[ {
 "class": "Message",
 "language": "GDScript",
 "path": "res://addons/gs_logger/message.gd"
-}, {
-"base": "KinematicBody2D",
-"class": "Npc",
-"language": "GDScript",
-"path": "res://src/npc/npc.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "Package",
@@ -162,7 +152,6 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "Appender": "",
 "ConsoleAppender": "",
-"DialogueResource": "",
 "Easing": "",
 "EasingV2": "",
 "EasingV3": "",
@@ -173,7 +162,6 @@ _global_script_class_icons={
 "Layout": "",
 "LogContainer": "",
 "Message": "",
-"Npc": "",
 "Package": "",
 "PatternLayout": "",
 "RNGTools": "",
@@ -200,7 +188,6 @@ config/icon="res://icon.png"
 
 [autoload]
 
-DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
 Logger="*res://addons/gs_logger/logger.gd"
 HyperLog="*res://addons/hyperlog/hyperlog.tscn"
 Globals="*res://src/Globals.gd"
@@ -223,7 +210,7 @@ script_templates_search_path="res://addons/xsm/templates/"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/dialogue_manager/plugin.cfg", "res://addons/gs_logger/plugin.cfg", "res://addons/hyperlog/plugin.cfg", "res://addons/randomAudioStreamPlayer/plugin.cfg", "res://addons/xsm/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/gs_logger/plugin.cfg", "res://addons/hyperlog/plugin.cfg", "res://addons/randomAudioStreamPlayer/plugin.cfg", "res://addons/xsm/plugin.cfg" )
 
 [global]
 
@@ -281,6 +268,7 @@ deliver={
 2d_physics/layer_2="props"
 2d_physics/layer_3="player"
 2d_physics/layer_4="npc"
+2d_physics/layer_5="packages"
 
 [physics]
 

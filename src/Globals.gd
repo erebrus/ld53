@@ -63,8 +63,8 @@ func read_barks():
 
 
 func read_names():
-	first_names = get_list_from_file("data/first_names.txt")
-	last_names = get_list_from_file("data/last_names.txt")
+	first_names = get_list_from_file("res://data/first_names.txt")
+	last_names = get_list_from_file("res://data/last_names.txt")
 
 
 func get_list_from_file(filename):

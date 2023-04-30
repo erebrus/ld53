@@ -1,6 +1,6 @@
 extends Node2D
 
-const AntScene:PackedScene = preload("res://src/npc/Npc.tscn")
+const AntScene:PackedScene = preload("res://src/npc/npc2.tscn")
 const FEMALE_NAME_IDX=21
 
 var ant_sprite_name_map = {
@@ -19,6 +19,7 @@ enum FacialHair {NONE, YELLOW, BLUE, GREEN}
 
 
 func _ready() -> void:
+
 	var ant = AntScene.instance()
 
 	ant.call_name = pick_name()
@@ -27,12 +28,12 @@ func _ready() -> void:
 	var body_type = RNGTools.pick(BodyType.values())
 	var colour = RNGTools.pick(BellyColour.values())
 	var head = get_head_res(body_type)
-	
+
 	var tie = "" if is_female else get_tie_res(RNGTools.pick(Tie.values()))
 	var glasses = get_glasses_res(RNGTools.pick(Glasses.values()))
 	var facial = "" if is_female else get_facial_res(RNGTools.pick(FacialHair.values()))
 	var hair = get_hair_res(RNGTools.pick( [1,2,3,4] if is_female else Hair.values()))
-	
+
 	ant.set_body(get_body_res(body_type, colour))
 	ant.set_head(head)
 	ant.set_tie(tie)
@@ -40,7 +41,7 @@ func _ready() -> void:
 	ant.set_facial(facial)
 	ant.set_hair(hair)
 
-	
+
 	yield(get_tree(),"idle_frame")	
 	get_parent().add_child(ant)
 	ant.global_position = global_position

@@ -1,5 +1,5 @@
 extends KinematicBody2D
-class_name Npc
+
 
 const CANDY_MODIFIER :=.2
 const TIMELINESS_MODIFIERS:Dictionary = {
@@ -36,13 +36,13 @@ var target_position
 
 onready var sprite := $Sprite
 onready var tree := $AnimationTree
-
+#
 func _ready():
 	var rng = RandomNumberGenerator.new()
 	rng.randomize()
 	var seek = rng.randf_range(0, 2)
 	tree.set("parameters/Idle/Seek/seek_position", seek)
-	
+
 func get_id()->String:
 	return "%s (%s)" % [call_name, call_section]
 
@@ -56,13 +56,13 @@ func get_id()->String:
 #	velocity=move_and_slide(velocity, Vector2.UP)
 #
 #	_update_sprite()
-	
+
 #func _update_sprite():
 #	if sign(last_direction.x) != sign(velocity.x):
 #		last_direction=Vector2(sign(velocity.x),0).normalized()
 #		sprite.flip_h= last_direction.x < 0
-		
-	
+
+
 
 func process_package(package):
 	if package.target_name == call_name and \
@@ -77,7 +77,7 @@ func process_package(package):
 		Logger.debug("%s - received wrong package" % get_id())
 		Globals.emit_signal("bark", self, get_wrong_recipient_message())
 		return false
-		
+
 
 func get_wrong_recipient_message():
 	#TODO make this a random message
@@ -121,11 +121,11 @@ func set_hair(res):
 		Logger.debug("%s - set hair res: %s" % [get_id(), res])
 	else:
 		$AntPivot/HeadPivot/Hair.texture = null
-	
+
 func set_head(res):
 	$AntPivot/HeadPivot/Head.texture = load(res)
 	Logger.debug("%s - set hair res: %s" % [get_id(), res])
-	
+
 func set_tie(res):
 	if res:
 		$AntPivot/Tie.texture = load(res)
