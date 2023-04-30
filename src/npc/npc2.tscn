@@ -223,6 +223,8 @@ parameters/Idle/Seek/seek_position = -1.0
 
 [node name="Chat" parent="." instance=ExtResource( 10 )]
 position = Vector2( 59, 25 )
+z_index = 2
+z_as_relative = false
 
 [connection signal="body_entered" from="DetectionBox" to="." method="_on_DetectionBox_body_entered"]
 [connection signal="body_exited" from="DetectionBox" to="." method="_on_DetectionBox_body_exited"]
