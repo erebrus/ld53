@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/OFFICE BODY.png-cc2e4a2dd169396f7a21529d0d7db481.stex"
+path="res://.import/OFFICE BODY.png-ff89318d367d4b2fb83d8e1baa84544e.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/gfx/npcs/OFFICE BODY.png"
-dest_files=[ "res://.import/OFFICE BODY.png-cc2e4a2dd169396f7a21529d0d7db481.stex" ]
+source_file="res://assets/gfx/npcs/refs/OFFICE BODY.png"
+dest_files=[ "res://.import/OFFICE BODY.png-ff89318d367d4b2fb83d8e1baa84544e.stex" ]
 
 [params]
 

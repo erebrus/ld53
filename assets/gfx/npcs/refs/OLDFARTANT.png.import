@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/OLDFARTANT.png-318facef7f6d395f9b086a860eca10c5.stex"
+path="res://.import/OLDFARTANT.png-5860b69eea63138f87e48f156c03d0b6.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/gfx/npcs/OLDFARTANT.png"
-dest_files=[ "res://.import/OLDFARTANT.png-318facef7f6d395f9b086a860eca10c5.stex" ]
+source_file="res://assets/gfx/npcs/refs/OLDFARTANT.png"
+dest_files=[ "res://.import/OLDFARTANT.png-5860b69eea63138f87e48f156c03d0b6.stex" ]
 
 [params]
 

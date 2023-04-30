@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/OLDFARTHEAD.png-514c62cdb3e4cd72fe2784126ac8789b.stex"
+path="res://.import/OLDFARTHEAD.png-5e488f10a03e90f175b4e8ee03521e93.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/gfx/npcs/OLDFARTHEAD.png"
-dest_files=[ "res://.import/OLDFARTHEAD.png-514c62cdb3e4cd72fe2784126ac8789b.stex" ]
+source_file="res://assets/gfx/npcs/refs/OLDFARTHEAD.png"
+dest_files=[ "res://.import/OLDFARTHEAD.png-5e488f10a03e90f175b4e8ee03521e93.stex" ]
 
 [params]
 

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/NERDANT.png-b715398699abab5f3d6a00b857a1803e.stex"
+path="res://.import/hair_pink_long.png-4b5a6cc434204a27fd4d6e234b0a54c5.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/gfx/npcs/refs/NERDANT.png"
-dest_files=[ "res://.import/NERDANT.png-b715398699abab5f3d6a00b857a1803e.stex" ]
+source_file="res://assets/gfx/npcs/hair/hair_pink_long.png"
+dest_files=[ "res://.import/hair_pink_long.png-4b5a6cc434204a27fd4d6e234b0a54c5.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
+flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
@@ -31,5 +31,5 @@ process/invert_color=false
 process/normal_map_invert_y=false
 stream=false
 size_limit=0
-detect_3d=true
+detect_3d=false
 svg/scale=1.0

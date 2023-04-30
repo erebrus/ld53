@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/OLD FART BODY.png-faaafe2c5ee62272cf3749196195d876.stex"
+path="res://.import/OLD FART BODY.png-b3db58ca666ef3eb4ae46a7b0bc72400.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/gfx/npcs/OLD FART BODY.png"
-dest_files=[ "res://.import/OLD FART BODY.png-faaafe2c5ee62272cf3749196195d876.stex" ]
+source_file="res://assets/gfx/npcs/refs/OLD FART BODY.png"
+dest_files=[ "res://.import/OLD FART BODY.png-b3db58ca666ef3eb4ae46a7b0bc72400.stex" ]
 
 [params]
 
