@@ -22,7 +22,7 @@ onready var timer_fs = $Sfx/FootstepTimer
 onready var reload_timer = $ReloadTimer
 onready var xsm := $XSM
 onready var packages_container := $packages
-
+onready var sprite :=$Sprite
 onready var sfx_run := $Sfx/SFXRun
 onready var sfx_jump := $Sfx/SFXJump
 onready var sfx_landing := $Sfx/SFXLand
