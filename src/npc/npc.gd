@@ -67,15 +67,17 @@ func get_id()->String:
 func process_package(package):
 	if package.target_name == call_name and \
 		package.target_section == call_section:
-			Logger.debug("%s - received wrong package" % get_id())
-			Globals.emit_signal("bark", self, get_wrong_recipient_message())
+			var timeliness = package.get_timeliness(Globals.time)
+			Logger.debug("%s - received package. Timeliness = %d" % [get_id(), timeliness] )
+			update_relationship(TIMELINESS_MODIFIERS[timeliness])
+			Logger.debug("%s - new relationship state: %f" % [get_id(), relationship])
+			Globals.emit_signal("reply_package", package, self, timeliness)
+			return true	
 	else:
-		var timeliness = package.get_timeliness(Globals.get_time())
-		Logger.debug("%s - received package. Timeliness = %d" % [get_id(), timeliness] )
-		update_relationship(TIMELINESS_MODIFIERS[timeliness])
-		Logger.debug("%s - new relationship state: %f" % [get_id(), relationship])
-		Globals.emit_signal("reply_package", package, self, timeliness)
-		package.consume()
+		Logger.debug("%s - received wrong package" % get_id())
+		Globals.emit_signal("bark", self, get_wrong_recipient_message())
+		return false
+		
 
 func get_wrong_recipient_message():
 	#TODO make this a random message
@@ -85,17 +87,6 @@ func update_relationship(delta):
 	relationship = clamp(relationship + delta, -1,1)
 
 
-func _on_DetectionArea_body_entered(body: Node) -> void:
-	if relationship > -.1:
-		return
-	if relationship > -.9:
-		if randf()< abs(relationship)/2:			
-			Globals.emit_signal("bark", self, RNGTools.pick(BARKS))
-	else:
-		if randf() > .5:
-			body.trip()
-		else:
-			Globals.emit_signal("bark", self, RNGTools.pick(BARKS))
 
 
 func give_candy():
@@ -125,3 +116,23 @@ func set_head(res):
 func set_tie(res):
 	Logger.debug("%s - set tie res: %s" % [get_id(), res])
 
+
+func _on_DetectionArea_body_entered(body: Node) -> void:
+	Logger.debug("%s - detected played." % get_id())
+	body.target = self
+	if relationship > -.1:
+		return
+	if relationship > -.9:
+		if randf()< abs(relationship)/2:			
+			Globals.emit_signal("bark", self, RNGTools.pick(BARKS))
+	else:
+		if randf() > .5:
+			body.trip()
+		else:
+			Globals.emit_signal("bark", self, RNGTools.pick(BARKS))
+
+
+func _on_DetectionArea_body_exited(body: Node) -> void:
+	if body.target == self:
+		body.target = null
+		Logger.trace("%s - no longer detects played." % get_id())

@@ -32,7 +32,7 @@ var can_play_footstep:bool = true
 var dead:=false
 
 var over_package = null
-
+var target
 
 func _ready():
 
@@ -73,6 +73,9 @@ func control(_delta:float) -> void:
 
 	if Input.is_action_just_pressed("pickup"):
 		pickup()
+		
+	if Input.is_action_just_pressed("deliver"):
+		deliver()
 
 func on_dash() -> void:
 	pass
@@ -168,6 +171,7 @@ func trip():
 func pickup():
 	if not over_package and packages_container.get_child_count() == 0:
 		return
+	
 	if over_package:	
 		over_package.global_position = packages_container.global_position
 		over_package.being_carried=true
@@ -182,4 +186,11 @@ func pickup():
 		package.being_carried=false
 		over_package=package
 		
-	
+func deliver():
+	if not target or packages_container.get_child_count() == 0:
+		return
+	var package = packages_container.get_child(0)
+	if target.process_package(package):
+		package.get_parent().remove_child(package)
+		package.consume()
+		

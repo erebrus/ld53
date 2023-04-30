@@ -1,6 +1,6 @@
 [gd_scene load_steps=22 format=2]
 
-[ext_resource path="res://assets/gfx/player/PLAYER ANT.png" type="Texture" id=1]
+[ext_resource path="res://assets/gfx/player/antmc.png" type="Texture" id=1]
 [ext_resource path="res://src/player/Fall.gd" type="Script" id=2]
 [ext_resource path="res://src/player/Idle.gd" type="Script" id=3]
 [ext_resource path="res://src/player/Walk.gd" type="Script" id=4]
@@ -192,7 +192,7 @@ collision_layer = 4
 script = ExtResource( 5 )
 
 [node name="Sprite" type="AnimatedSprite" parent="."]
-position = Vector2( 0, -19 )
+position = Vector2( 0, -22 )
 frames = SubResource( 486 )
 animation = "idle"
 playing = true
@@ -221,7 +221,7 @@ script = ExtResource( 9 )
 history_size = 0
 fsm_owner = NodePath("../PlatformController")
 disabled = false
-debug_mode = true
+debug_mode = false
 timed = false
 next_state = NodePath("Idle")
 
