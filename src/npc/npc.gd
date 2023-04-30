@@ -41,7 +41,7 @@ func _ready():
 	var rng = RandomNumberGenerator.new()
 	rng.randomize()
 	var seek = rng.randf_range(0, 2)
-	tree.set("parameters/Idle/Seek/seek_position", seek)
+#	tree.set("parameters/Idle/Seek/seek_position", seek)
 
 func get_id()->String:
 	return "%s (%s)" % [call_name, call_section]
