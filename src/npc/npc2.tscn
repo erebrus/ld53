@@ -136,7 +136,7 @@ nodes/Animation/position = Vector2( -300, 100 )
 "nodes/Animation 2/position" = Vector2( -340, 240 )
 nodes/Seek/node = SubResource( 9 )
 nodes/Seek/position = Vector2( 120, 160 )
-node_connections = [ "Add2", 0, "Animation", "Add2", 1, "Animation 2", "Seek", 0, "Add2", "output", 0, "Seek" ]
+node_connections = [ "Seek", 0, "Add2", "Add2", 0, "Animation", "Add2", 1, "Animation 2", "output", 0, "Seek" ]
 
 [sub_resource type="AnimationNodeStateMachine" id=11]
 states/Idle/node = SubResource( 10 )

@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=2]
+[gd_scene load_steps=78 format=2]
 
 [ext_resource path="res://assets/gfx/player/ant-idle.png" type="Texture" id=1]
 [ext_resource path="res://src/player/Fall.gd" type="Script" id=2]
@@ -9,11 +9,16 @@
 [ext_resource path="res://src/player/Jump.gd" type="Script" id=7]
 [ext_resource path="res://addons/randomAudioStreamPlayer/random_audio_stream_player_2D.gd" type="Script" id=8]
 [ext_resource path="res://addons/xsm/state.gd" type="Script" id=9]
-[ext_resource path="res://addons/xsm/state_animation.gd" type="Script" id=10]
+[ext_resource path="res://src/player/Trip.gd" type="Script" id=10]
 [ext_resource path="res://src/player/Dash.gd" type="Script" id=11]
 [ext_resource path="res://assets/gfx/player/ant-jump.png" type="Texture" id=12]
 [ext_resource path="res://src/player/CanDash.gd" type="Script" id=13]
 [ext_resource path="res://assets/gfx/player/ant-run.png" type="Texture" id=14]
+[ext_resource path="res://assets/gfx/player/ant-wobble.png" type="Texture" id=15]
+[ext_resource path="res://src/player/Wobble.gd" type="Script" id=16]
+[ext_resource path="res://assets/gfx/player/ant-slip.png" type="Texture" id=17]
+[ext_resource path="res://assets/gfx/player/ant-trip.png" type="Texture" id=18]
+[ext_resource path="res://src/player/Slip.gd" type="Script" id=19]
 
 [sub_resource type="AtlasTexture" id=490]
 atlas = ExtResource( 12 )
@@ -91,6 +96,110 @@ region = Rect2( 96, 0, 48, 48 )
 atlas = ExtResource( 14 )
 region = Rect2( 144, 0, 48, 48 )
 
+[sub_resource type="AtlasTexture" id=511]
+atlas = ExtResource( 17 )
+region = Rect2( 0, 0, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=512]
+atlas = ExtResource( 17 )
+region = Rect2( 48, 0, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=513]
+atlas = ExtResource( 17 )
+region = Rect2( 96, 0, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=514]
+atlas = ExtResource( 17 )
+region = Rect2( 144, 0, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=515]
+atlas = ExtResource( 17 )
+region = Rect2( 192, 0, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=516]
+atlas = ExtResource( 17 )
+region = Rect2( 240, 0, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=517]
+atlas = ExtResource( 17 )
+region = Rect2( 288, 0, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=518]
+atlas = ExtResource( 17 )
+region = Rect2( 336, 0, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=519]
+atlas = ExtResource( 17 )
+region = Rect2( 384, 0, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=520]
+atlas = ExtResource( 18 )
+region = Rect2( 0, 0, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=521]
+atlas = ExtResource( 18 )
+region = Rect2( 48, 0, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=522]
+atlas = ExtResource( 18 )
+region = Rect2( 96, 0, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=523]
+atlas = ExtResource( 18 )
+region = Rect2( 144, 0, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=524]
+atlas = ExtResource( 18 )
+region = Rect2( 192, 0, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=525]
+atlas = ExtResource( 18 )
+region = Rect2( 240, 0, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=526]
+atlas = ExtResource( 18 )
+region = Rect2( 288, 0, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=527]
+atlas = ExtResource( 18 )
+region = Rect2( 336, 0, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=528]
+atlas = ExtResource( 18 )
+region = Rect2( 384, 0, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=529]
+atlas = ExtResource( 18 )
+region = Rect2( 432, 0, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=530]
+atlas = ExtResource( 15 )
+region = Rect2( 0, 0, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=531]
+atlas = ExtResource( 15 )
+region = Rect2( 48, 0, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=532]
+atlas = ExtResource( 15 )
+region = Rect2( 96, 0, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=533]
+atlas = ExtResource( 15 )
+region = Rect2( 144, 0, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=534]
+atlas = ExtResource( 15 )
+region = Rect2( 192, 0, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=535]
+atlas = ExtResource( 15 )
+region = Rect2( 240, 0, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=536]
+atlas = ExtResource( 15 )
+region = Rect2( 288, 0, 48, 48 )
+
 [sub_resource type="SpriteFrames" id=486]
 animations = [ {
 "frames": [ SubResource( 490 ) ],
@@ -113,10 +222,20 @@ animations = [ {
 "name": "run",
 "speed": 8.0
 }, {
-"frames": [  ],
+"frames": [ SubResource( 511 ), SubResource( 512 ), SubResource( 513 ), SubResource( 513 ), SubResource( 513 ), SubResource( 514 ), SubResource( 515 ), SubResource( 516 ), SubResource( 517 ), SubResource( 518 ), SubResource( 519 ) ],
+"loop": false,
+"name": "slip",
+"speed": 10.0
+}, {
+"frames": [ SubResource( 520 ), SubResource( 521 ), SubResource( 522 ), SubResource( 523 ), SubResource( 524 ), SubResource( 524 ), SubResource( 524 ), SubResource( 525 ), SubResource( 526 ), SubResource( 527 ), SubResource( 528 ), SubResource( 529 ) ],
 "loop": false,
 "name": "trip",
-"speed": 14.0
+"speed": 10.0
+}, {
+"frames": [ SubResource( 530 ), SubResource( 531 ), SubResource( 532 ), SubResource( 533 ), SubResource( 534 ), SubResource( 535 ), SubResource( 536 ) ],
+"loop": true,
+"name": "wobble",
+"speed": 10.0
 } ]
 
 [sub_resource type="CapsuleShape2D" id=1]
@@ -238,9 +357,65 @@ tracks/1/keys = {
 "values": [ "run" ]
 }
 
+[sub_resource type="Animation" id=537]
+resource_name = "Slip"
+length = 1.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "slip" ]
+}
+
+[sub_resource type="Animation" id=538]
+resource_name = "Wobble"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "wobble" ]
+}
+
 [sub_resource type="Animation" id=489]
 resource_name = "trip"
-length = 0.5
+length = 1.2
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -344,8 +519,8 @@ script = ExtResource( 5 )
 [node name="Sprite" type="AnimatedSprite" parent="."]
 position = Vector2( 0, -22 )
 frames = SubResource( 486 )
-animation = "jump"
-frame = 5
+animation = "wobble"
+frame = 3
 playing = true
 
 [node name="PlatformController" parent="." instance=ExtResource( 6 )]
@@ -442,11 +617,33 @@ script = ExtResource( 10 )
 animation_player = NodePath("../../AnimationPlayer")
 anim_on_enter = "trip"
 anim_times_to_play = 1
-on_anim_finished = 4
+on_anim_finished = 0
 disabled = false
 debug_mode = false
 timed = false
-next_state = NodePath("../Idle")
+next_state = NodePath("")
+
+[node name="Slip" type="Node" parent="XSM"]
+script = ExtResource( 19 )
+animation_player = NodePath("../../AnimationPlayer")
+anim_on_enter = "Slip"
+anim_times_to_play = 1
+on_anim_finished = 0
+disabled = false
+debug_mode = false
+timed = false
+next_state = NodePath("")
+
+[node name="Wobble" type="Node" parent="XSM"]
+script = ExtResource( 16 )
+animation_player = NodePath("../../AnimationPlayer")
+anim_on_enter = "Wobble"
+anim_times_to_play = 1
+on_anim_finished = 0
+disabled = false
+debug_mode = false
+timed = false
+next_state = NodePath("")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Fall = SubResource( 509 )
@@ -454,6 +651,8 @@ anims/Idle = SubResource( 97 )
 anims/Jump = SubResource( 487 )
 anims/RESET = SubResource( 204 )
 anims/Run = SubResource( 488 )
+anims/Slip = SubResource( 537 )
+anims/Wobble = SubResource( 538 )
 anims/trip = SubResource( 489 )
 
 [node name="DirAnimationPlayer" type="AnimationPlayer" parent="."]

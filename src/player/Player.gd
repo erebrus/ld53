@@ -76,6 +76,15 @@ func control(_delta:float) -> void:
 		
 	if Input.is_action_just_pressed("deliver"):
 		deliver()
+		
+	if Input.is_action_just_pressed("trip"):
+		xsm.change_state("Trip")
+	
+	if Input.is_action_just_pressed("slip"):
+		xsm.change_state("Slip")	
+		
+	if Input.is_action_just_pressed("wobble"):
+		xsm.change_state("Wobble")	
 
 func on_dash() -> void:
 	pass
