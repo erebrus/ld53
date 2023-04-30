@@ -36,7 +36,6 @@ var target_position
 
 onready var sprite := $Sprite
 onready var tree := $AnimationTree
-onready var body = $Body
 
 func _ready():
 	var rng = RandomNumberGenerator.new()
@@ -117,8 +116,11 @@ func set_facial(res):
 		$AntPivot/HeadPivot/FacialHair.texture = null
 
 func set_hair(res):
-	$AntPivot/HeadPivot/Hair.texture = load(res)
-	Logger.debug("%s - set hair res: %s" % [get_id(), res])
+	if res:
+		$AntPivot/HeadPivot/Hair.texture = load(res)
+		Logger.debug("%s - set hair res: %s" % [get_id(), res])
+	else:
+		$AntPivot/HeadPivot/Hair.texture = null
 	
 func set_head(res):
 	$AntPivot/HeadPivot/Head.texture = load(res)
