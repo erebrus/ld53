@@ -19,7 +19,9 @@ var moving = false
 var direction = -1
 var levels = []
 var velocity = 0
-var speed = 40
+var speed = 100
+var slow_down_speed = 40
+var slowest_speed = 10
 var time_since_request = 0
 var target_pos = 0
 
@@ -99,8 +101,11 @@ func _physics_process(delta: float):
 	time_since_request += delta
 	if moving:
 		distance = abs(levels[target_level] - position.y)
-		if distance < 100:
-			velocity = lerp(speed, 5, 1 - (distance / 100))
+		
+		if distance < 20:
+			velocity = lerp(speed, slowest_speed, 1 - (distance / 20))
+		if distance < 40:
+			velocity = lerp(speed, slow_down_speed, 1 - (distance / 40))
 		else:
 			velocity = lerp(0, speed, time_since_request / 4)
 		
