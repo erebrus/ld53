@@ -36,6 +36,7 @@ var target_position
 
 onready var sprite := $Sprite
 onready var tree := $AnimationTree
+onready var body = $Body
 
 func _ready():
 	var rng = RandomNumberGenerator.new()
@@ -98,24 +99,29 @@ func ask_about(target_name, target_address):
 	Logger.error("%s - asked about %s (%s)" % [get_id(), target_name, target_address])
 
 func set_body(res):
+	$Body.texture = load(res)
 	Logger.debug("%s - set body res: %s" % [get_id(), res])
 
-
 func set_glasses(res):
+	$HeadPivot/Glasses.texture = load(res)
 	Logger.debug("%s - set glasses res: %s" % [get_id(), res])
 
 
 func set_facial(res):
+	$HeadPivot/FacialHair.texture = load(res)
 	Logger.debug("%s - set facial hair res: %s" % [get_id(), res])
 
 func set_hair(res):
+	$HeadPivot/Hair.texture = load(res)
 	Logger.debug("%s - set hair res: %s" % [get_id(), res])
 	
 func set_head(res):
+	$HeadPivot/Head.texture = load(res)
 	Logger.debug("%s - set hair res: %s" % [get_id(), res])
+	
 func set_tie(res):
+	$Tie.texture = load(res)
 	Logger.debug("%s - set tie res: %s" % [get_id(), res])
-
 
 func _on_DetectionArea_body_entered(body: Node) -> void:
 	Logger.debug("%s - detected played." % get_id())

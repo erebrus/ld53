@@ -1,6 +1,11 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=19 format=2]
 
+[ext_resource path="res://assets/gfx/player/Player_ArmR_Idle.png" type="Texture" id=1]
+[ext_resource path="res://assets/gfx/npcs/hair/hair_blue_buns.png" type="Texture" id=2]
+[ext_resource path="res://assets/gfx/npcs/ants/ant_1_body_blue.png" type="Texture" id=3]
+[ext_resource path="res://assets/gfx/npcs/ants/ant_1_head_blue.png" type="Texture" id=4]
 [ext_resource path="res://src/npc/npc.gd" type="Script" id=5]
+[ext_resource path="res://assets/gfx/player/Player_ArmL_Idle.png" type="Texture" id=6]
 
 [sub_resource type="AnimationNodeAdd2" id=35]
 
@@ -22,7 +27,7 @@ nodes/Seek/node = SubResource( 24 )
 nodes/Seek/position = Vector2( -100, 200 )
 nodes/Type/node = SubResource( 33 )
 nodes/Type/position = Vector2( -580, 340 )
-node_connections = [ "Add2", 0, "Animation", "Add2", 1, "Type", "Seek", 0, "Add2", "output", 0, "Seek" ]
+node_connections = [ "Seek", 0, "Add2", "Add2", 0, "Animation", "Add2", 1, "Type", "output", 0, "Seek" ]
 
 [sub_resource type="AnimationNodeStateMachine" id=20]
 states/Idle/node = SubResource( 25 )
@@ -37,7 +42,7 @@ resource_name = "Idle"
 length = 2.0
 loop = true
 tracks/0/type = "bezier"
-tracks/0/path = NodePath("Head Pivot:position:x")
+tracks/0/path = NodePath("HeadPivot:position:x")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -47,7 +52,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 1, 2 )
 }
 tracks/1/type = "bezier"
-tracks/1/path = NodePath("Head Pivot:position:y")
+tracks/1/path = NodePath("HeadPivot:position:y")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -60,7 +65,7 @@ tracks/1/keys = {
 [sub_resource type="Animation" id=22]
 length = 0.001
 tracks/0/type = "bezier"
-tracks/0/path = NodePath("Head Pivot:position:x")
+tracks/0/path = NodePath("HeadPivot:position:x")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -70,7 +75,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 )
 }
 tracks/1/type = "bezier"
-tracks/1/path = NodePath("Head Pivot:position:y")
+tracks/1/path = NodePath("HeadPivot:position:y")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -80,7 +85,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 )
 }
 tracks/2/type = "bezier"
-tracks/2/path = NodePath("ArmL:position:x")
+tracks/2/path = NodePath("ArmPivot/ArmL:position:x")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -90,7 +95,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 )
 }
 tracks/3/type = "bezier"
-tracks/3/path = NodePath("ArmL:position:y")
+tracks/3/path = NodePath("ArmPivot/ArmL:position:y")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -100,7 +105,7 @@ tracks/3/keys = {
 "times": PoolRealArray( 0 )
 }
 tracks/4/type = "bezier"
-tracks/4/path = NodePath("ArmR:position:x")
+tracks/4/path = NodePath("ArmPivot/ArmR:position:x")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -110,7 +115,7 @@ tracks/4/keys = {
 "times": PoolRealArray( 0 )
 }
 tracks/5/type = "bezier"
-tracks/5/path = NodePath("ArmR:position:y")
+tracks/5/path = NodePath("ArmPivot/ArmR:position:y")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -125,7 +130,7 @@ resource_name = "Type"
 length = 0.6
 loop = true
 tracks/0/type = "bezier"
-tracks/0/path = NodePath("ArmL:position:x")
+tracks/0/path = NodePath("ArmPivot/ArmL:position:x")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -135,7 +140,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.3, 0.6 )
 }
 tracks/1/type = "bezier"
-tracks/1/path = NodePath("ArmL:position:y")
+tracks/1/path = NodePath("ArmPivot/ArmL:position:y")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -145,7 +150,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0, 0.3, 0.6 )
 }
 tracks/2/type = "bezier"
-tracks/2/path = NodePath("ArmR:position:x")
+tracks/2/path = NodePath("ArmPivot/ArmR:position:x")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -155,7 +160,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0, 0.2, 0.4, 0.6 )
 }
 tracks/3/type = "bezier"
-tracks/3/path = NodePath("ArmR:position:y")
+tracks/3/path = NodePath("ArmPivot/ArmR:position:y")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -175,23 +180,42 @@ extents = Vector2( 8, 17 )
 collision_layer = 8
 script = ExtResource( 5 )
 
-[node name="Body" type="AnimatedSprite" parent="."]
+[node name="Body" type="Sprite" parent="."]
+texture = ExtResource( 3 )
 centered = false
 
-[node name="ArmL" type="AnimatedSprite" parent="."]
+[node name="Tie" type="Sprite" parent="."]
+
+[node name="ArmPivot" type="Node2D" parent="."]
+position = Vector2( -23, -19 )
+
+[node name="ArmL" type="Sprite" parent="ArmPivot"]
+texture = ExtResource( 6 )
+centered = false
+region_enabled = true
+region_rect = Rect2( 0, 0, 64, 64 )
+
+[node name="ArmR" type="Sprite" parent="ArmPivot"]
+texture = ExtResource( 1 )
+centered = false
+region_enabled = true
+region_rect = Rect2( 0, 0, 64, 64 )
+
+[node name="HeadPivot" type="Node2D" parent="."]
+
+[node name="Head" type="Sprite" parent="HeadPivot"]
+texture = ExtResource( 4 )
 centered = false
 
-[node name="ArmR" type="AnimatedSprite" parent="."]
+[node name="Hair" type="Sprite" parent="HeadPivot"]
+texture = ExtResource( 4 )
 centered = false
 
-[node name="Head Pivot" type="Node2D" parent="."]
-
-[node name="Head" type="AnimatedSprite" parent="Head Pivot"]
-animation = "Idle"
+[node name="Glasses" type="Sprite" parent="HeadPivot"]
+texture = ExtResource( 2 )
 centered = false
 
-[node name="Accesory" type="AnimatedSprite" parent="Head Pivot"]
-centered = false
+[node name="FacialHair" type="Sprite" parent="HeadPivot"]
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource( 20 )
