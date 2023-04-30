@@ -327,4 +327,7 @@ random_pitch_range = 0
 [node name="FootstepTimer" type="Timer" parent="Sfx"]
 wait_time = 0.3
 
+[node name="packages" type="Node2D" parent="."]
+position = Vector2( -15, -14 )
+
 [connection signal="timeout" from="Sfx/FootstepTimer" to="." method="_on_FootstepTimer_timeout"]

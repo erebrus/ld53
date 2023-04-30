@@ -3,6 +3,8 @@ extends Node
 signal reply_package(package, source, reply)
 signal bark(source, message)
 
+#move to map
+var time=GameTime.new()
 
 var first_names:Array
 var last_names:Array
@@ -22,7 +24,7 @@ var debug_build := false
 
 var music:AudioStreamPlayer
 
-var lives
+
 
 func _ready():
 	_init_logger()	
