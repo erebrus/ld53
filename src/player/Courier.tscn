@@ -106,7 +106,7 @@ animations = [ {
 "frames": [ SubResource( 499 ), SubResource( 500 ), SubResource( 501 ), SubResource( 502 ), SubResource( 503 ), SubResource( 504 ) ],
 "loop": false,
 "name": "jump",
-"speed": 12.0
+"speed": 24.0
 }, {
 "frames": [ SubResource( 505 ), SubResource( 506 ), SubResource( 507 ), SubResource( 508 ) ],
 "loop": true,
