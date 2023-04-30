@@ -56,7 +56,7 @@ func setup_debug(val:bool):
 func update_sprite():
 
 	
-	if facing_direction != last_direction:		
+	if facing_direction != last_direction and facing_direction!=Vector2.ZERO:		
 		last_direction = facing_direction
 		var desired_direction = "right" if facing_direction.x > 0 else "left"
 		if desired_direction != direction_player.current_animation:
@@ -172,19 +172,26 @@ func pickup():
 	if not over_package and packages_container.get_child_count() == 0:
 		return
 	
-	if over_package:	
-		over_package.global_position = packages_container.global_position
+	if over_package:			
 		over_package.being_carried=true
 		over_package.get_parent().remove_child(over_package)		
 		packages_container.add_child(over_package)				
+		over_package.global_position = packages_container.global_position	 \
+			+ Vector2(0, -8)*(packages_container.get_child_count()-1)	
 		over_package=null
 	else:
 		var package = packages_container.get_child(0)
+		var prev_pos = package.global_position
 		package.get_parent().remove_child(package)
 		get_parent().add_child(package)
-		package.global_position = global_position
+		package.global_position = prev_pos
 		package.being_carried=false
 		over_package=package
+		
+		for i in range(packages_container.get_child_count()):
+			var p = packages_container.get_child(i)
+			p.global_position = packages_container.global_position	 \
+			+ Vector2(0, -8)*i	
 		
 func deliver():
 	if not target or packages_container.get_child_count() == 0:

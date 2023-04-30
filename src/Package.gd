@@ -1,4 +1,4 @@
-extends Node2D
+extends KinematicBody2D
 class_name Package
 
 enum Timeliness {QUICK, JUST_IN_TIME, DELAYED, VERY_DELAYED}
@@ -11,6 +11,7 @@ var target_name:String
 var target_section:String
 
 var being_carried:=false
+var velocity:Vector2 =Vector2.ZERO
 
 func init(recipient):
 	target_name = recipient.call_name
@@ -37,7 +38,11 @@ func consume():
 	queue_free()
 	
 	
-
+func _physics_process(delta: float) -> void:
+	if not being_carried:
+		if not is_on_floor():
+			velocity.y += 1000 * delta
+		velocity=move_and_slide(velocity, Vector2.UP)
 
 func _on_Package_body_entered(body: Node) -> void:
 	if being_carried:

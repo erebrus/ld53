@@ -41,6 +41,7 @@ var music:AudioStreamPlayer
 
 
 func _ready():
+	randomize()
 	_init_logger()	
 	connect("bark", self, "log_bark")
 	connect("reply_package", self, "log_reply")
