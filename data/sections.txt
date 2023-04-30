@@ -1,0 +1,22 @@
+Front Desk, 1
+Human Resources,2 
+Accounting,3
+Customer Service,2
+Information Technology,3
+Marketing,2
+Sales,3
+Legal,2
+Administration,3
+Quality Assurance,2
+Facilities Management,3
+Research and Development,2
+Product Development,0
+Public Relations,0
+Shipping and Receiving,0
+Supply Chain Management,0
+Operations,0
+Executive Management,0
+Creative Services,0
+Training and Development,0
+Business Intelligence,0
+Strategic Planning,0

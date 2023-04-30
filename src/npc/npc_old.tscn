@@ -1,0 +1,202 @@
+[gd_scene load_steps=27 format=2]
+
+[ext_resource path="res://assets/prototype/gfx/enemies/02 Enemy_Cone_OK/Idle/Enemy_Cone Idle_04.png" type="Texture" id=1]
+[ext_resource path="res://assets/prototype/gfx/enemies/02 Enemy_Cone_OK/Idle/Enemy_Cone Idle_01.png" type="Texture" id=2]
+[ext_resource path="res://assets/prototype/gfx/characters/player/player-master.png" type="Texture" id=3]
+[ext_resource path="res://assets/prototype/gfx/enemies/02 Enemy_Cone_OK/Run/Enemy_Cone Run_01.png" type="Texture" id=4]
+[ext_resource path="res://assets/prototype/gfx/enemies/02 Enemy_Cone_OK/Idle/Enemy_Cone Idle_03.png" type="Texture" id=5]
+[ext_resource path="res://assets/prototype/gfx/enemies/02 Enemy_Cone_OK/Run/Enemy Cone Run_03.png" type="Texture" id=6]
+[ext_resource path="res://assets/prototype/gfx/enemies/02 Enemy_Cone_OK/Run/Enemy Cone Run_04.png" type="Texture" id=7]
+[ext_resource path="res://assets/prototype/gfx/enemies/02 Enemy_Cone_OK/Run/Enemy Cone Run_02.png" type="Texture" id=8]
+[ext_resource path="res://src/npc/npc.gd" type="Script" id=9]
+[ext_resource path="res://assets/prototype/gfx/enemies/02 Enemy_Cone_OK/Run/Enemy Cone Run_05.png" type="Texture" id=10]
+[ext_resource path="res://assets/prototype/gfx/enemies/02 Enemy_Cone_OK/Idle/Enemy_Cone Idle_02.png" type="Texture" id=11]
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 72, 64, 72 )
+
+[sub_resource type="AtlasTexture" id=9]
+atlas = ExtResource( 3 )
+region = Rect2( 64, 72, 64, 72 )
+
+[sub_resource type="AtlasTexture" id=10]
+atlas = ExtResource( 3 )
+region = Rect2( 128, 72, 64, 72 )
+
+[sub_resource type="AtlasTexture" id=11]
+atlas = ExtResource( 3 )
+region = Rect2( 192, 72, 64, 72 )
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 3 )
+region = Rect2( 256, 72, 64, 72 )
+
+[sub_resource type="AtlasTexture" id=13]
+atlas = ExtResource( 3 )
+region = Rect2( 320, 72, 64, 72 )
+
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 3 )
+region = Rect2( 384, 72, 64, 72 )
+
+[sub_resource type="AtlasTexture" id=15]
+atlas = ExtResource( 3 )
+region = Rect2( 448, 72, 64, 72 )
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 2 ), ExtResource( 11 ), ExtResource( 5 ), ExtResource( 1 ) ],
+"loop": true,
+"name": "idle",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 2 ), ExtResource( 11 ), ExtResource( 5 ), ExtResource( 1 ) ],
+"loop": true,
+"name": "sit",
+"speed": 4.0
+}, {
+"frames": [ SubResource( 8 ), SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ) ],
+"loop": false,
+"name": "trip",
+"speed": 12.0
+}, {
+"frames": [ ExtResource( 8 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 10 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "walk",
+"speed": 10.0
+} ]
+
+[sub_resource type="CapsuleShape2D" id=2]
+height = 12.0
+
+[sub_resource type="Animation" id=3]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0 ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "idle"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "idle" ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "sit"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "sit" ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "walk"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "walk" ]
+}
+
+[sub_resource type="RectangleShape2D" id=7]
+extents = Vector2( 31, 17 )
+
+[node name="npc" type="KinematicBody2D"]
+collision_layer = 8
+collision_mask = 3
+script = ExtResource( 9 )
+
+[node name="Sprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+animation = "trip"
+playing = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -1, 4 )
+shape = SubResource( 2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 3 )
+anims/idle = SubResource( 4 )
+anims/sit = SubResource( 6 )
+anims/walk = SubResource( 5 )
+
+[node name="DetectionArea" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+position = Vector2( 0, -7 )
+shape = SubResource( 7 )
+
+[connection signal="body_entered" from="DetectionArea" to="." method="_on_DetectionArea_body_entered"]
