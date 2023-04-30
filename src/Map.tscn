@@ -147,7 +147,7 @@ position = Vector2( 448, 1536 )
 environment = SubResource( 1 )
 
 [node name="Courier" parent="." instance=ExtResource( 4 )]
-position = Vector2( 480, 224 )
+position = Vector2( 480, 192 )
 scale = Vector2( 0.5, 0.5 )
 z_index = 1
 
@@ -160,7 +160,6 @@ script = ExtResource( 5 )
 
 [node name="Elevator" parent="." instance=ExtResource( 7 )]
 position = Vector2( 512, 160 )
-z_index = 2
 
 [node name="ElevatorBackface" type="Sprite" parent="Elevator"]
 z_as_relative = false
