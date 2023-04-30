@@ -1,0 +1,45 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://assets/gfx/world/World Tileset.png" type="Texture" id=1]
+[ext_resource path="res://src/Elevator.gd" type="Script" id=2]
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 44, 4 )
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 1 )
+region = Rect2( 352, 96, 96, 96 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 1 )
+region = Rect2( 448, 128, 32, 32 )
+
+[node name="Elevator" type="RigidBody2D"]
+mode = 3
+custom_integrator = true
+can_sleep = false
+script = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 45, 74 )
+shape = SubResource( 3 )
+
+[node name="Body" type="Sprite" parent="."]
+texture = SubResource( 1 )
+centered = false
+
+[node name="Brackets" type="Sprite" parent="."]
+position = Vector2( 32, -32 )
+texture = SubResource( 2 )
+centered = false
+
+[node name="Brackets2" type="Sprite" parent="."]
+position = Vector2( 32, 64 )
+texture = SubResource( 2 )
+centered = false
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
