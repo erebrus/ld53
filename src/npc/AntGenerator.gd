@@ -16,9 +16,13 @@ enum Hair {NONE, PINK_LONG, BLUE_LONG, BLUE_BUNS, BLUE_SHORT, BLONDE_SHORT, GREE
 enum Glasses {NONE, BLUE, GREEN, SUN_GREEN, SUN_YELLOW}
 enum FacialHair {NONE, YELLOW, BLUE, GREEN}
 
+export var disabled:=false
 
 
 func _ready() -> void:
+	if disabled:
+		return
+	
 	var ant = AntScene.instance()
 
 	ant.call_name = pick_name()

@@ -23,11 +23,11 @@ func get_timeliness(time:GameTime):
 	if time.day > start_day:
 		return Timeliness.VERY_DELAYED
 	if time.cycle > start_cycle:
-		if time.cycle > start_cycle+1 or time.time > Globals.CYCLE_DURATION/2:
+		if time.cycle > start_cycle+1 or time.time > GameTime.CYCLE_DURATION/2:
 			return Timeliness.VERY_DELAYED
 		else:
 			return Timeliness.DELAYED
-	elif time.time > Globals.CYCLE_DURATION/2:
+	elif time.time > GameTime.CYCLE_DURATION/2:
 		return Timeliness.JUST_IN_TIME
 	else:
 		return Timeliness.QUICK
@@ -44,6 +44,7 @@ func _on_Package_body_entered(body: Node) -> void:
 		return
 	if body.is_in_group("player"):
 		body.over_package=self
+		Logger.debug("Player hovering over package for %s (%s)" % [target_name, target_section])
 
 
 func _on_Package_body_exited(body: Node) -> void:
