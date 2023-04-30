@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Footstep_bigger_4.wav-d9f15d61c075f63be14ab33f3149dc85.sample"
+
+[deps]
+
+source_file="res://assets/sfx/Footstep_bigger_4.wav"
+dest_files=[ "res://.import/Footstep_bigger_4.wav-d9f15d61c075f63be14ab33f3149dc85.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

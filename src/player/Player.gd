@@ -21,6 +21,7 @@ onready var direction_player:AnimationPlayer = $DirAnimationPlayer
 onready var timer_fs = $Sfx/FootstepTimer
 onready var reload_timer = $ReloadTimer
 onready var xsm := $XSM
+onready var packages_container := $packages
 
 onready var sfx_run := $Sfx/SFXRun
 onready var sfx_jump := $Sfx/SFXJump
@@ -29,6 +30,9 @@ onready var sfx_landing := $Sfx/SFXLand
 var can_play_footstep:bool = true
 
 var dead:=false
+
+var over_package = null
+
 
 func _ready():
 
@@ -67,6 +71,8 @@ func control(_delta:float) -> void:
 	if Input.is_action_just_pressed("jump"):
 		Logger.debug("Jump was pressed. (global, should be processed by now) . States = %s" % $XSM.get_active_states())
 
+	if Input.is_action_just_pressed("pickup"):
+		pickup()
 
 func on_dash() -> void:
 	pass
@@ -158,3 +164,22 @@ func set_platform_collision_enabled(val):
 
 func trip():
 	xsm.change_state("Trip")
+
+func pickup():
+	if not over_package and packages_container.get_child_count() == 0:
+		return
+	if over_package:	
+		over_package.global_position = packages_container.global_position
+		over_package.being_carried=true
+		over_package.get_parent().remove_child(over_package)		
+		packages_container.add_child(over_package)				
+		over_package=null
+	else:
+		var package = packages_container.get_child(0)
+		package.get_parent().remove_child(package)
+		get_parent().add_child(package)
+		package.global_position = global_position
+		package.being_carried=false
+		over_package=package
+		
+	
