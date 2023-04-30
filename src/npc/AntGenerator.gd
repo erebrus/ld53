@@ -16,13 +16,9 @@ enum Hair {NONE, PINK_LONG, BLUE_LONG, BLUE_BUNS, BLUE_SHORT, BLONDE_SHORT, GREE
 enum Glasses {NONE, BLUE, GREEN, SUN_GREEN, SUN_YELLOW}
 enum FacialHair {NONE, YELLOW, BLUE, GREEN}
 
-export var disabled:=false
 
 
 func _ready() -> void:
-	if disabled:
-		return
-	
 	var ant = AntScene.instance()
 
 	ant.call_name = pick_name()
@@ -32,9 +28,9 @@ func _ready() -> void:
 	var colour = RNGTools.pick(BellyColour.values())
 	var head = get_head_res(body_type)
 	
-	var tie = Tie.NONE if is_female else get_tie_res(RNGTools.pick(Tie.values()))
+	var tie = "" if is_female else get_tie_res(RNGTools.pick(Tie.values()))
 	var glasses = get_glasses_res(RNGTools.pick(Glasses.values()))
-	var facial = FacialHair.NONE if is_female else get_facial_res(RNGTools.pick(FacialHair.values()))
+	var facial = "" if is_female else get_facial_res(RNGTools.pick(FacialHair.values()))
 	var hair = get_hair_res(RNGTools.pick( [1,2,3,4] if is_female else Hair.values()))
 	
 	ant.set_body(get_body_res(body_type, colour))
