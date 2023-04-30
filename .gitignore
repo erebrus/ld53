@@ -14,12 +14,3 @@ export_presets.cfg
 data_*/
 mono_crash.*.json
 .DS_Store
-assets/.DS_Store
-assets/prototype/.DS_Store
-assets/prototype/gfx/.DS_Store
-assets/prototype/gfx/characters/.DS_Store
-assets/prototype/gfx/characters/player/.DS_Store
-assets/prototype/gfx/enemies/.DS_Store
-src/.DS_Store
-assets/.DS_Store
-.DS_Store
