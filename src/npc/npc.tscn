@@ -221,6 +221,7 @@ centered = false
 
 [node name="FacialHair" type="Sprite" parent="AntPivot/HeadPivot"]
 texture = ExtResource( 9 )
+
 centered = false
 
 [node name="Glasses" type="Sprite" parent="AntPivot/HeadPivot"]
