@@ -187,17 +187,18 @@ func pickup():
 		package.global_position = prev_pos
 		package.being_carried=false
 		over_package=package
+		reset_package_position()
 		
-		for i in range(packages_container.get_child_count()):
+func reset_package_position():
+	for i in range(packages_container.get_child_count()):
 			var p = packages_container.get_child(i)
 			p.global_position = packages_container.global_position	 \
 			+ Vector2(0, -8)*i	
-		
 func deliver():
 	if not target or packages_container.get_child_count() == 0:
 		return
 	var package = packages_container.get_child(0)
 	if target.process_package(package):
-		package.get_parent().remove_child(package)
 		package.consume()
+		reset_package_position()
 		
