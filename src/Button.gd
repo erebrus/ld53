@@ -12,9 +12,6 @@ var time_since_press = 100.0
 var wait_period = 2.0
 export var level = 0
 
-signal up_button_pressed(requested_level)
-signal down_button_pressed(requested_level)
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	sprite.play("Default")

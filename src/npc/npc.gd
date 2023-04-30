@@ -34,14 +34,14 @@ var last_direction= Vector2.RIGHT
 var velocity:Vector2 = Vector2.ZERO
 var target_position 
 
-onready var sprite := $Sprite
+#onready var sprite := $Sprite
 onready var tree := $AnimationTree
 #
 func _ready():
 	var rng = RandomNumberGenerator.new()
 	rng.randomize()
 	var seek = rng.randf_range(0, 2)
-#	tree.set("parameters/Idle/Seek/seek_position", seek)
+	tree.set("parameters/Idle/Seek/seek_position", seek)
 
 func get_id()->String:
 	return "%s (%s)" % [call_name, call_section]

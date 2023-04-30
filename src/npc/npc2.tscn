@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://assets/gfx/player/Player_ArmL_Idle.png" type="Texture" id=1]
 [ext_resource path="res://assets/gfx/npcs/tie/tie_blue.png" type="Texture" id=2]
@@ -15,6 +15,136 @@ extents = Vector2( 8, 17 )
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 38, 10 )
+
+[sub_resource type="Animation" id=3]
+resource_name = "Idle"
+loop = true
+tracks/0/type = "bezier"
+tracks/0/path = NodePath("AntPivot/HeadPivot:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( -8.34465e-07, -0.25, 0, 0.25, 0, -1, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.5, 1 )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath("AntPivot/HeadPivot:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( -1.19209e-07, -0.25, 0, 0.25, 0, 2, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.5, 1 )
+}
+
+[sub_resource type="Animation" id=4]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/path = NodePath("AntPivot/HeadPivot:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( -8.34465e-07, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath("AntPivot/HeadPivot:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( -1.19209e-07, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("AntPivot/ArmPivot/ArmL:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("AntPivot/ArmPivot/ArmR:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "Type"
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("AntPivot/ArmPivot/ArmL:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, -4 ), Vector2( 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("AntPivot/ArmPivot/ArmR:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, -4 ), Vector2( 0, 0 ), Vector2( 0, -4 ) ]
+}
+
+[sub_resource type="AnimationNodeAdd2" id=6]
+
+[sub_resource type="AnimationNodeAnimation" id=7]
+animation = "Type"
+
+[sub_resource type="AnimationNodeAnimation" id=8]
+animation = "Idle"
+
+[sub_resource type="AnimationNodeTimeSeek" id=9]
+
+[sub_resource type="AnimationNodeBlendTree" id=10]
+graph_offset = Vector2( -648, 21 )
+nodes/Add2/node = SubResource( 6 )
+nodes/Add2/position = Vector2( -120, 200 )
+nodes/Animation/node = SubResource( 8 )
+nodes/Animation/position = Vector2( -300, 100 )
+"nodes/Animation 2/node" = SubResource( 7 )
+"nodes/Animation 2/position" = Vector2( -340, 240 )
+nodes/Seek/node = SubResource( 9 )
+nodes/Seek/position = Vector2( 120, 160 )
+node_connections = [ "Add2", 0, "Animation", "Add2", 1, "Animation 2", "Seek", 0, "Add2", "output", 0, "Seek" ]
+
+[sub_resource type="AnimationNodeStateMachine" id=11]
+states/Idle/node = SubResource( 10 )
+states/Idle/position = Vector2( 173, 65 )
+start_node = "Idle"
+graph_offset = Vector2( -362, -55 )
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=12]
 
 [node name="Npc" type="KinematicBody2D" groups=["npc"]]
 collision_layer = 8
@@ -35,21 +165,19 @@ centered = false
 position = Vector2( -23, -19 )
 
 [node name="ArmL" type="Sprite" parent="AntPivot/ArmPivot"]
-position = Vector2( 0, -3.90317 )
 texture = ExtResource( 1 )
 centered = false
 region_enabled = true
 region_rect = Rect2( 0, 0, 64, 64 )
 
 [node name="ArmR" type="Sprite" parent="AntPivot/ArmPivot"]
-position = Vector2( 0, -0.00116915 )
 texture = ExtResource( 8 )
 centered = false
 region_enabled = true
 region_rect = Rect2( 0, 0, 64, 64 )
 
 [node name="HeadPivot" type="Node2D" parent="AntPivot"]
-position = Vector2( -0.864354, 1.72871 )
+position = Vector2( -8.34465e-07, -1.19209e-07 )
 
 [node name="Head" type="Sprite" parent="AntPivot/HeadPivot"]
 texture = ExtResource( 7 )
@@ -78,6 +206,19 @@ collision_mask = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionBox"]
 position = Vector2( 39, 51 )
 shape = SubResource( 2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Idle = SubResource( 3 )
+anims/RESET = SubResource( 4 )
+anims/Type = SubResource( 5 )
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource( 11 )
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/playback = SubResource( 12 )
+parameters/Idle/Add2/add_amount = 1.0
+parameters/Idle/Seek/seek_position = -1.0
 
 [connection signal="body_entered" from="DetectionBox" to="." method="_on_DetectionArea_body_entered"]
 [connection signal="body_exited" from="DetectionBox" to="." method="_on_DetectionArea_body_exited"]
