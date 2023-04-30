@@ -35,26 +35,32 @@ var velocity:Vector2 = Vector2.ZERO
 var target_position 
 
 onready var sprite := $Sprite
+onready var tree := $AnimationTree
 
-
+func _ready():
+	var rng = RandomNumberGenerator.new()
+	rng.randomize()
+	var seek = rng.randf_range(0, 2)
+	tree.set("parameters/Idle/Seek/seek_position", seek)
+	
 func get_id()->String:
 	return "%s (%s)" % [call_name, call_section]
 
-func _physics_process(delta: float) -> void:	
-	velocity=Vector2.ZERO
-	if target_position:
-		velocity = Vector2.RIGHT * max_speed * sign(target_position.x - global_position.x)
-		
-	if not is_on_floor():
-		velocity.y += 1000 * delta
-	velocity=move_and_slide(velocity, Vector2.UP)
-
-	_update_sprite()
+#func _physics_process(delta: float) -> void:	
+#	velocity=Vector2.ZERO
+#	if target_position:
+#		velocity = Vector2.RIGHT * max_speed * sign(target_position.x - global_position.x)
+#
+#	if not is_on_floor():
+#		velocity.y += 1000 * delta
+#	velocity=move_and_slide(velocity, Vector2.UP)
+#
+#	_update_sprite()
 	
-func _update_sprite():
-	if sign(last_direction.x) != sign(velocity.x):
-		last_direction=Vector2(sign(velocity.x),0).normalized()
-		sprite.flip_h= last_direction.x < 0
+#func _update_sprite():
+#	if sign(last_direction.x) != sign(velocity.x):
+#		last_direction=Vector2(sign(velocity.x),0).normalized()
+#		sprite.flip_h= last_direction.x < 0
 		
 	
 
@@ -99,3 +105,18 @@ func give_candy():
 
 func ask_about(target_name, target_address):
 	Logger.error("%s - asked about %s (%s)" % [get_id(), target_name, target_address])
+
+func set_body(res):
+	Logger.debug("%s - set body res: %s" % [get_id(), res])
+
+
+func set_glasses(res):
+	Logger.debug("%s - set glasses res: %s" % [get_id(), res])
+
+
+func set_facial(res):
+	Logger.debug("%s - set facial hair res: %s" % [get_id(), res])
+
+
+func set_hair(res):
+	Logger.debug("%s - set hair res: %s" % [get_id(), res])

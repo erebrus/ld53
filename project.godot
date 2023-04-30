@@ -195,7 +195,7 @@ _global_script_class_icons={
 [application]
 
 config/name="ld53"
-run/main_scene="res://src/Map.tscn"
+run/main_scene="res://src/GeneratedMap.tscn"
 config/icon="res://icon.png"
 
 [autoload]

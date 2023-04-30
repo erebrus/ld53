@@ -1,11 +1,111 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=37 format=2]
 
-[ext_resource path="res://assets/gfx/npcs/anim_resources/head_prototype.tres" type="SpriteFrames" id=1]
-[ext_resource path="res://assets/gfx/npcs/anim_resources/body_prototype.tres" type="SpriteFrames" id=2]
-[ext_resource path="res://assets/gfx/npcs/anim_resources/larm_prototype.tres" type="SpriteFrames" id=3]
-[ext_resource path="res://assets/gfx/npcs/anim_resources/rarm_prototype.tres" type="SpriteFrames" id=4]
-[ext_resource path="res://src/npc/npc.gd" type="Script" id=5]
-[ext_resource path="res://assets/gfx/npcs/anim_resources/accessory_prototype.tres" type="SpriteFrames" id=6]
+[ext_resource path="res://assets/gfx/player/Player_Head0_Idle.png" type="Texture" id=1]
+[ext_resource path="res://assets/gfx/player/Player_Body0_Idle.png" type="Texture" id=2]
+[ext_resource path="res://assets/gfx/player/Player_ArmR_Idle.png" type="Texture" id=3]
+[ext_resource path="res://assets/gfx/player/Player_Glasses_Idle.png" type="Texture" id=4]
+[ext_resource path="res://src/npc/AntGenerator.gd" type="Script" id=5]
+[ext_resource path="res://assets/gfx/player/Player_ArmL_Idle.png" type="Texture" id=6]
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 2 )
+region = Rect2( 64, 0, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 2 )
+region = Rect2( 128, 0, 64, 64 )
+
+[sub_resource type="SpriteFrames" id=8]
+animations = [ {
+"frames": [ SubResource( 5 ), SubResource( 6 ), SubResource( 7 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="AtlasTexture" id=26]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 0, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=27]
+atlas = ExtResource( 6 )
+region = Rect2( 64, 0, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=28]
+atlas = ExtResource( 6 )
+region = Rect2( 128, 0, 64, 64 )
+
+[sub_resource type="SpriteFrames" id=29]
+animations = [ {
+"frames": [ SubResource( 26 ), SubResource( 27 ), SubResource( 28 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="AtlasTexture" id=30]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 0, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=31]
+atlas = ExtResource( 3 )
+region = Rect2( 64, 0, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=32]
+atlas = ExtResource( 3 )
+region = Rect2( 128, 0, 64, 64 )
+
+[sub_resource type="SpriteFrames" id=12]
+animations = [ {
+"frames": [ SubResource( 30 ), SubResource( 31 ), SubResource( 32 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 1 )
+region = Rect2( 64, 0, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 1 )
+region = Rect2( 128, 0, 64, 64 )
+
+[sub_resource type="SpriteFrames" id=4]
+animations = [ {
+"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ) ],
+"loop": true,
+"name": "Idle",
+"speed": 5.0
+} ]
+
+[sub_resource type="AtlasTexture" id=13]
+atlas = ExtResource( 4 )
+region = Rect2( 0, 0, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 4 )
+region = Rect2( 64, 0, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=15]
+atlas = ExtResource( 4 )
+region = Rect2( 128, 0, 64, 64 )
+
+[sub_resource type="SpriteFrames" id=16]
+animations = [ {
+"frames": [ SubResource( 13 ), SubResource( 14 ), SubResource( 15 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
 
 [sub_resource type="AnimationNodeAdd2" id=35]
 
@@ -33,7 +133,7 @@ node_connections = [ "Add2", 0, "Animation", "Add2", 1, "Type", "Seek", 0, "Add2
 states/Idle/node = SubResource( 25 )
 states/Idle/position = Vector2( 0, 54 )
 start_node = "Idle"
-graph_offset = Vector2( -1002.62, -251.562 )
+graph_offset = Vector2( -671, -162 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=18]
 
@@ -170,33 +270,30 @@ tracks/3/keys = {
 "times": PoolRealArray( 0, 0.1, 0.4, 0.6 )
 }
 
-[sub_resource type="RectangleShape2D" id=36]
-extents = Vector2( 31, 17 )
-
-[node name="Office Ant" type="KinematicBody2D"]
+[node name="AntGenerator" type="Node2D"]
 script = ExtResource( 5 )
 
 [node name="Body" type="AnimatedSprite" parent="."]
-frames = ExtResource( 2 )
+frames = SubResource( 8 )
 centered = false
 
 [node name="ArmL" type="AnimatedSprite" parent="."]
-frames = ExtResource( 3 )
+frames = SubResource( 29 )
 centered = false
 
 [node name="ArmR" type="AnimatedSprite" parent="."]
-frames = ExtResource( 4 )
+frames = SubResource( 12 )
 centered = false
 
 [node name="Head Pivot" type="Node2D" parent="."]
 
 [node name="Head" type="AnimatedSprite" parent="Head Pivot"]
-frames = ExtResource( 1 )
+frames = SubResource( 4 )
 animation = "Idle"
 centered = false
 
-[node name="Accesory" type="AnimatedSprite" parent="Head Pivot" groups=["npc"]]
-frames = ExtResource( 6 )
+[node name="Accesory" type="AnimatedSprite" parent="Head Pivot"]
+frames = SubResource( 16 )
 centered = false
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
@@ -211,12 +308,3 @@ parameters/Idle/Seek/seek_position = -1.0
 anims/Idle = SubResource( 21 )
 anims/RESET = SubResource( 22 )
 anims/Type = SubResource( 34 )
-
-[node name="DetectionArea" type="Area2D" parent="."]
-position = Vector2( 39, 58 )
-collision_layer = 8
-collision_mask = 4
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
-position = Vector2( 0, -7 )
-shape = SubResource( 36 )
