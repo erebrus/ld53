@@ -117,6 +117,11 @@ func set_glasses(res):
 func set_facial(res):
 	Logger.debug("%s - set facial hair res: %s" % [get_id(), res])
 
-
 func set_hair(res):
 	Logger.debug("%s - set hair res: %s" % [get_id(), res])
+	
+func set_head(res):
+	Logger.debug("%s - set hair res: %s" % [get_id(), res])
+func set_tie(res):
+	Logger.debug("%s - set tie res: %s" % [get_id(), res])
+
