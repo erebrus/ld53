@@ -208,6 +208,11 @@ func deliver():
 		return
 	var package = packages_container.get_child(0)
 	if target.process_package(package):
-		package.consume()
+		Globals.emit_signal("package_received")
+		var glob = package.global_position
+		remove_child(package)
+		get_parent().add_child(package)
+		package.global_position = glob
+		package.consume(target)
 		reset_package_position()
 		

@@ -3,6 +3,12 @@ extends Node
 signal reply_package(package, source, reply)
 signal bark(source, message)
 
+signal trip()
+signal player_in_moving_elevator()
+signal player_in_slowing_elevator()
+signal player_in_stopped_elevator()
+signal package_received()
+
 #move to map
 var time=GameTime.new()
 
@@ -37,8 +43,6 @@ var config:ConfigFile
 var debug_build := false
 
 var music:AudioStreamPlayer
-
-
 
 func _ready():
 	randomize()

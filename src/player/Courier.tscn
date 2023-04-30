@@ -520,6 +520,7 @@ script = ExtResource( 5 )
 position = Vector2( 0, -22 )
 frames = SubResource( 486 )
 animation = "wobble"
+frame = 2
 playing = true
 
 [node name="PlatformController" parent="." instance=ExtResource( 6 )]

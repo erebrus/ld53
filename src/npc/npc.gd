@@ -158,7 +158,6 @@ func show_dialog(text: String) -> void:
 
 
 func _on_DetectionBox_body_entered(body):
-	show_dialog(get_wrong_recipient_message())
 	Logger.debug("%s - detected played." % get_id())
 	body.target = self
 	if relationship > -.1:
