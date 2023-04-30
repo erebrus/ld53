@@ -3,14 +3,19 @@ extends Node2D
 const AntScene:PackedScene = preload("res://src/npc/Npc.tscn")
 const FEMALE_NAME_IDX=21
 
+var ant_sprite_name_map = {
+	BodyType.THIN: "ant_1",
+	BodyType.NORMAL: "ant_4",
+	BodyType.FAT: "ant_2",
+	BodyType.OLD: "ant_3",
+}
 enum BodyType {THIN, NORMAL, FAT, OLD}
 enum BellyColour {GREEN, GREY, ORANGE, BLUE}
 enum Tie {NONE, BLUE, YELLOW}
 enum Hair {NONE, PINK_LONG, BLUE_LONG, BLUE_BUNS, BLUE_SHORT, BLONDE_SHORT, GREEN_SHORT}
 enum Glasses {NONE, BLUE, GREEN, SUN_GREEN, SUN_YELLOW}
 enum FacialHair {NONE, YELLOW, BLUE, GREEN}
-var body_preffix = "res://assets/gfx/npcs/anim_resources/body"
-var body_suffix = ".tres"
+
 
 
 func _ready() -> void:
@@ -44,37 +49,37 @@ func _ready() -> void:
 	
 
 func get_head_res(type):
-	var str_type = Hair.keys()[type].to_lower()
-	return "res://assets/gfx/npcs/anim_resources/head_%s.tres" % str_type
+	var str_type = ant_sprite_name_map[type]
+	return "res://assets/gfx/npcs/ants/%s_head_orange.png" % str_type #color doesn't matter
 	
 func get_hair_res(type):
 	if type == 0:
 		return null
 	var str_type = Hair.keys()[type].to_lower()
-	return "res://assets/gfx/npcs/anim_resources/hair_%s.tres" % str_type
+	return "res://assets/gfx/npcs/hair/hair_%s.png" % str_type
 
 func get_tie_res(type):
 	if type == 0:
 		return null
 	var str_type = Hair.keys()[type].to_lower()
-	return "res://assets/gfx/npcs/anim_resources/tie_%s.tres" % str_type
+	return "res://assets/gfx/npcs/tie/tie_%s.png" % str_type
 
 func get_facial_res(type):
 	if type == 0:
 		return null
 	var str_type = FacialHair.keys()[type].to_lower()
-	return "res://assets/gfx/npcs/anim_resources/facial_%s.tres" % str_type
+	return "res://assets/gfx/npcs/facial/facial_%s.png" % str_type
 		
 func get_glasses_res(type):
 	if type == 0:
 		return null
 	var str_type = Glasses.keys()[type].to_lower()
-	return "res://assets/gfx/npcs/anim_resources/glasses_%s.tres" % str_type 
+	return "res://assets/gfx/npcs/glasses/glasses_%s.png" % str_type 
 
 func get_body_res(type, colour):
-	var str_type = BodyType.keys()[type].to_lower()
+	var str_type = ant_sprite_name_map[type]
 	var str_colour = BellyColour.keys()[colour].to_lower()
-	return "res://assets/gfx/npcs/anim_resources/body_%s_%s.tres" % [str_type, str_colour] 
+	return "res://assets/gfx/npcs/ants/%s_body_%s.png" % [str_type, str_colour] 
 
 func pick_name()->String:
 	var name = RNGTools.pick(Globals.game_names)
@@ -84,7 +89,7 @@ func pick_name()->String:
 func check_if_female(name):
 	var idx=0
 	for fname in Globals.first_names:
-		if fname.starts_with(name):
+		if name.begins_with(fname):
 			if idx <= FEMALE_NAME_IDX:
 				return true
 			else:

@@ -1,11 +1,6 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=13 format=2]
 
-[ext_resource path="res://assets/gfx/npcs/anim_resources/head_prototype.tres" type="SpriteFrames" id=1]
-[ext_resource path="res://assets/gfx/npcs/anim_resources/body_prototype.tres" type="SpriteFrames" id=2]
-[ext_resource path="res://assets/gfx/npcs/anim_resources/larm_prototype.tres" type="SpriteFrames" id=3]
-[ext_resource path="res://assets/gfx/npcs/anim_resources/rarm_prototype.tres" type="SpriteFrames" id=4]
 [ext_resource path="res://src/npc/npc.gd" type="Script" id=5]
-[ext_resource path="res://assets/gfx/npcs/anim_resources/accessory_prototype.tres" type="SpriteFrames" id=6]
 
 [sub_resource type="AnimationNodeAdd2" id=35]
 
@@ -173,30 +168,25 @@ tracks/3/keys = {
 [sub_resource type="RectangleShape2D" id=36]
 extents = Vector2( 31, 17 )
 
-[node name="Office Ant" type="KinematicBody2D"]
+[node name="Office Ant" type="KinematicBody2D" groups=["npc"]]
 script = ExtResource( 5 )
 
 [node name="Body" type="AnimatedSprite" parent="."]
-frames = ExtResource( 2 )
 centered = false
 
 [node name="ArmL" type="AnimatedSprite" parent="."]
-frames = ExtResource( 3 )
 centered = false
 
 [node name="ArmR" type="AnimatedSprite" parent="."]
-frames = ExtResource( 4 )
 centered = false
 
 [node name="Head Pivot" type="Node2D" parent="."]
 
 [node name="Head" type="AnimatedSprite" parent="Head Pivot"]
-frames = ExtResource( 1 )
 animation = "Idle"
 centered = false
 
-[node name="Accesory" type="AnimatedSprite" parent="Head Pivot" groups=["npc"]]
-frames = ExtResource( 6 )
+[node name="Accesory" type="AnimatedSprite" parent="Head Pivot"]
 centered = false
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
