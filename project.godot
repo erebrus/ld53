@@ -200,11 +200,11 @@ config/icon="res://icon.png"
 
 [autoload]
 
+DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
 Logger="*res://addons/gs_logger/logger.gd"
 HyperLog="*res://addons/hyperlog/hyperlog.tscn"
-MapEvents="*res://src/MapEvents.gd"
 Globals="*res://src/Globals.gd"
-DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
+MapEvents="*res://src/MapEvents.gd"
 
 [display]
 

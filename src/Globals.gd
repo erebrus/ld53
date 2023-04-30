@@ -6,10 +6,24 @@ signal bark(source, message)
 #move to map
 var time=GameTime.new()
 
+
+
 var first_names:Array
 var last_names:Array
 var game_names:Array=[]
 
+enum BarkType {QUICK, JUST_IN_TIME, DELAYED, VERY_DELAYED, BARK, BARK_TRIP, BARK_SLIP}
+var BarkFiles = [
+	"res://data/reply_quick.txt",
+	"res://data/reply_in_time.txt",
+	"res://data/reply_late.txt",
+	"res://data/reply_very_late.txt",
+	"res://data/barks.txt",
+	"res://data/bark_trip.txt",
+	"res://data/bark_slip.txt"	
+	
+]
+var barks:Dictionary = {}
 
 enum GameLogLevel {INFO, WARNING, ALERT}
 
@@ -33,10 +47,19 @@ func _ready():
 	
 	read_names()
 	generate_game_names(30)
+	read_barks()
 #	music =AudioStreamPlayer.new()	
 #	music.stream=preload("res://assets/music/CatEgypt.mp3")
 #	music.volume_db=-20
 #	add_child(music)
+
+func read_barks():
+	var idx=0
+	for bark_file in BarkFiles:
+		barks[idx] = get_list_from_file(bark_file)
+		idx += 1
+	Logger.info("Barks read.")
+
 
 func read_names():
 	first_names = get_list_from_file("data/first_names.txt")
@@ -49,7 +72,9 @@ func get_list_from_file(filename):
 	f.open(filename, File.READ)
 
 	while not f.eof_reached(): # iterate through all lines until the end of file is reached
-		ret.append(f.get_line())
+		var line = f.get_line().strip_edges()
+		if line != "":
+			ret.append(line)
 	f.close()
 	return ret
 	
