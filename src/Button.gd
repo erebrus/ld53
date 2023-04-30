@@ -6,6 +6,7 @@ extends Node2D
 # var b = "text"
 
 onready var sprite = $Sprite
+onready var timer = $Timer
 var player_near = false
 var time_since_press = 100.0
 var wait_period = 2.0
@@ -33,11 +34,13 @@ func can_activate() -> bool:
 
 func on_trigger_up():
 	time_since_press = 0.0
+	timer.start(6)
 	sprite.play("Up")
 	MapEvents.emit_signal("up_button_pressed", level)
 
 func on_trigger_down():
 	time_since_press = 0.0
+	timer.start(6)
 	sprite.play("Down")
 	MapEvents.emit_signal("down_button_pressed", level)
 	
@@ -55,3 +58,7 @@ func _on_Area2D_body_exited(body):
 	print("exiting")
 	print(level)
 	player_near = false
+
+
+func _on_Timer_timeout():
+	sprite.play("Default")
