@@ -76,18 +76,23 @@ position = Vector2( 464, 192 )
 
 [node name="Button2" parent="." instance=ExtResource( 2 )]
 position = Vector2( 464, 416 )
+level = 1
 
 [node name="Button3" parent="." instance=ExtResource( 2 )]
 position = Vector2( 464, 640 )
+level = 2
 
 [node name="Button4" parent="." instance=ExtResource( 2 )]
 position = Vector2( 464, 864 )
+level = 3
 
 [node name="Button5" parent="." instance=ExtResource( 2 )]
 position = Vector2( 464, 1088 )
+level = 4
 
 [node name="Button6" parent="." instance=ExtResource( 2 )]
 position = Vector2( 464, 1312 )
+level = 5
 
 [node name="Button7" parent="." instance=ExtResource( 2 )]
 position = Vector2( 464, 1536 )
