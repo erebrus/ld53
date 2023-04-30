@@ -22,7 +22,7 @@ nodes/Seek/node = SubResource( 24 )
 nodes/Seek/position = Vector2( -100, 200 )
 nodes/Type/node = SubResource( 33 )
 nodes/Type/position = Vector2( -580, 340 )
-node_connections = [ "Add2", 0, "Animation", "Add2", 1, "Type", "Seek", 0, "Add2", "output", 0, "Seek" ]
+node_connections = [ "Seek", 0, "Add2", "Add2", 0, "Animation", "Add2", 1, "Type", "output", 0, "Seek" ]
 
 [sub_resource type="AnimationNodeStateMachine" id=20]
 states/Idle/node = SubResource( 25 )
@@ -187,7 +187,6 @@ centered = false
 [node name="Head Pivot" type="Node2D" parent="."]
 
 [node name="Head" type="AnimatedSprite" parent="Head Pivot"]
-animation = "Idle"
 centered = false
 
 [node name="Accesory" type="AnimatedSprite" parent="Head Pivot"]

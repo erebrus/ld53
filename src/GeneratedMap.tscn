@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://assets/gfx/world/Map.tres" type="TileSet" id=1]
 [ext_resource path="res://src/ElevatorButton.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/npc/AntGenerator.tscn" type="PackedScene" id=3]
 [ext_resource path="res://src/player/Courier.tscn" type="PackedScene" id=4]
 [ext_resource path="res://src/PackageGenerator.tscn" type="PackedScene" id=5]
+[ext_resource path="res://src/Elevator.tscn" type="PackedScene" id=6]
 
 [sub_resource type="Environment" id=1]
 
@@ -61,37 +62,41 @@ position = Vector2( -160, -32 )
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 32, 32 )
 format = 1
-tile_data = PoolIntArray( -65514, 21, 0, 22, 21, 0, 65558, 21, 0, 262166, 25, 0, 327701, 22, 0, 393229, 14, 0, 458774, 25, 0, 524298, 30, 0, 589833, 30, 0, 655368, 30, 0, 720903, 30, 0, 786438, 30, 0, 917488, 14, 0, 917492, 14, 0, 917500, 14, 0, 917503, 14, 0, 851970, 14, 0, 851973, 30, 0, 917508, 30, 0, 983050, 30, 0, 1048585, 30, 0, 1114120, 30, 0, 1179655, 30, 0, 1245190, 30, 0, 1376240, 14, 0, 1376244, 14, 0, 1376252, 14, 0, 1376255, 14, 0, 1310722, 14, 0, 1310725, 30, 0, 1376260, 30, 0, 1834992, 14, 0, 1834996, 14, 0, 1835004, 14, 0, 1835007, 14, 0, 1769474, 14, 0, 1900554, 30, 0, 1966089, 30, 0, 2031624, 30, 0, 2097159, 30, 0, 2162694, 30, 0, 2293744, 14, 0, 2293748, 14, 0, 2293756, 14, 0, 2293759, 14, 0, 2228226, 14, 0, 2228229, 30, 0, 2359290, 39, 0, 2293764, 30, 0, 2293775, 39, 0, 2359306, 30, 0, 2424841, 30, 0, 2490376, 30, 0, 2555911, 30, 0, 2621446, 30, 0, 2752496, 14, 0, 2752500, 14, 0, 2752508, 14, 0, 2752511, 14, 0, 2686978, 14, 0, 2686981, 30, 0, 2818039, 39, 0, 2818042, 39, 0, 2752516, 30, 0, 2818058, 30, 0, 2883593, 30, 0, 2949128, 30, 0, 3014663, 30, 0, 3080198, 30, 0, 3211248, 14, 0, 3211252, 14, 0, 3145733, 30, 0, 3276794, 39, 0, 3211268, 30, 0 )
+tile_data = PoolIntArray( -65514, 21, 0, 22, 21, 0, 65558, 21, 0, 262166, 25, 0, 393229, 14, 0, 458774, 25, 0, 524298, 30, 0, 589833, 30, 0, 655368, 30, 0, 720903, 30, 0, 786438, 30, 0, 917488, 14, 0, 917492, 14, 0, 917500, 14, 0, 917503, 14, 0, 851970, 14, 0, 851973, 30, 0, 917508, 30, 0, 983050, 30, 0, 1048585, 30, 0, 1114120, 30, 0, 1179655, 30, 0, 1245190, 30, 0, 1376240, 14, 0, 1376244, 14, 0, 1376252, 14, 0, 1376255, 14, 0, 1310722, 14, 0, 1310725, 30, 0, 1376260, 30, 0, 1834992, 14, 0, 1834996, 14, 0, 1835004, 14, 0, 1835007, 14, 0, 1769474, 14, 0, 1900554, 30, 0, 1966089, 30, 0, 2031624, 30, 0, 2097159, 30, 0, 2162694, 30, 0, 2293744, 14, 0, 2293748, 14, 0, 2293756, 14, 0, 2293759, 14, 0, 2228226, 14, 0, 2228229, 30, 0, 2359290, 39, 0, 2293764, 30, 0, 2293775, 39, 0, 2359306, 30, 0, 2424841, 30, 0, 2490376, 30, 0, 2555911, 30, 0, 2621446, 30, 0, 2752496, 14, 0, 2752500, 14, 0, 2752508, 14, 0, 2752511, 14, 0, 2686978, 14, 0, 2686981, 30, 0, 2818039, 39, 0, 2818042, 39, 0, 2752516, 30, 0, 2818058, 30, 0, 2883593, 30, 0, 2949128, 30, 0, 3014663, 30, 0, 3080198, 30, 0, 3211248, 14, 0, 3211252, 14, 0, 3145733, 30, 0, 3276794, 39, 0, 3211268, 30, 0 )
 
 [node name="Courier" parent="." instance=ExtResource( 4 )]
 position = Vector2( 421, 211 )
+z_index = 1
 
 [node name="Camera2D" type="Camera2D" parent="Courier"]
 current = true
 
 [node name="Button" parent="." instance=ExtResource( 2 )]
-position = Vector2( 448, 192 )
+position = Vector2( 464, 192 )
 
 [node name="Button2" parent="." instance=ExtResource( 2 )]
-position = Vector2( 448, 416 )
+position = Vector2( 464, 416 )
 
 [node name="Button3" parent="." instance=ExtResource( 2 )]
-position = Vector2( 448, 640 )
+position = Vector2( 464, 640 )
 
 [node name="Button4" parent="." instance=ExtResource( 2 )]
-position = Vector2( 448, 864 )
+position = Vector2( 464, 864 )
 
 [node name="Button5" parent="." instance=ExtResource( 2 )]
-position = Vector2( 448, 1088 )
+position = Vector2( 464, 1088 )
 
 [node name="Button6" parent="." instance=ExtResource( 2 )]
-position = Vector2( 448, 1312 )
+position = Vector2( 464, 1312 )
 
 [node name="Button7" parent="." instance=ExtResource( 2 )]
-position = Vector2( 448, 1536 )
+position = Vector2( 464, 1536 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 1 )
 
 [node name="PackageGenerator" parent="." instance=ExtResource( 5 )]
 position = Vector2( 332, 209 )
+
+[node name="Elevator" parent="." instance=ExtResource( 6 )]
+position = Vector2( 512, 160 )
