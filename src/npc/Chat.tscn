@@ -163,7 +163,7 @@ alignment = 2
 
 [node name="Label" type="Label" parent="VBoxContainer"]
 margin_right = 100.0
-margin_bottom = 88.0
+margin_bottom = 10.0
 grow_horizontal = 2
 grow_vertical = 2
 rect_min_size = Vector2( 100, 0 )

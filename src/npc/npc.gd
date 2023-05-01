@@ -27,6 +27,7 @@ var target_position
 #onready var sprite := $Sprite
 onready var tree := $AnimationTree
 onready var dialog := $Chat
+onready var leg := $Leg
 
 var props := {}
 var is_female := false
@@ -154,16 +155,21 @@ func _on_DetectionBox_body_entered(body):
 			Globals.emit_signal("bark", self, Globals.get_random_line(Globals.BarkType.BARK))
 	else:
 		if randf() > .5:
-			body.trip()
+			do_trip()			
 		else:
 			Globals.emit_signal("bark", self, Globals.get_random_line(Globals.BarkType.BARK))
-
+	
+func do_trip():
+	$Leg/AnimationPlayer.play("extend")
 
 func _on_DetectionBox_body_exited(body):
 	if body.target == self:
 		body.target = null
 		Logger.trace("%s - no longer detects played." % get_id())
 
+
+
+	
 func add_prop(key, value):
 	props[key]=value
 
@@ -253,3 +259,9 @@ func adjust_gender(comment:String, is_female:bool)->String:
 	else:			
 		return comment.replacen("_","")
 		
+
+
+func _on_Leg_body_entered(body: Node) -> void:
+	body.trip()
+	$Leg/AnimationPlayer.play("retreat")
+	show_dialog(Globals.get_random_line(Globals.BarkType.BARK_TRIP))
