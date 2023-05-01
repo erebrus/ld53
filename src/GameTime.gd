@@ -2,6 +2,7 @@ extends Reference
 class_name GameTime
 
 signal cycle_ended
+signal tick_ended
 
 const CYCLES_PER_DAY=4
 const CYCLE_DURATION=120
@@ -13,6 +14,7 @@ var time:int=1
 func tick():
 	Logger.debug("tick: t=%d c=%d" %[time, cycle])
 	time += 1
+	emit_signal("tick_ended")
 	if time > CYCLE_DURATION:
 		tick_cycle()
 		

@@ -414,7 +414,10 @@ func on_last_package_anchor():
 			
 			
 func on_packaged_delivered(package, source, reply):
+	var current_money = money
+	var gain = Package.INCOME_BY_TIMELINESS[reply]
 	money = clamp(money+Package.INCOME_BY_TIMELINESS[reply],-100,10000)
+	Globals.emit_signal("gain_money", current_money, gain)
 	if money == -100:
 		#Globals.do_game_over(Globals.GameOverReason.MONEY)
 		Globals.emit_signal("game_over")
