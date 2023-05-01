@@ -2,6 +2,7 @@ extends Node2D
 
 signal up_button_pressed(requested_level)
 signal down_button_pressed(requested_level)
+signal call_button_pressed(requested_level)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

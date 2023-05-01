@@ -56,6 +56,7 @@ var debug_build := false
 var showed_elevator_button_tip = false
 var showed_stop_button_tip = false
 var showed_door_tip = false
+var showed_call_tip = false
 
 
 
