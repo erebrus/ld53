@@ -77,12 +77,17 @@ func control(_delta:float) -> void:
 	if Input.is_action_just_pressed("pickup"):
 		pickup()
 		
-	if Input.is_action_just_pressed("deliver"):
+	if Input.is_action_just_pressed("deliver") and !Input.is_action_pressed("ask"):
 		show_wheel()
 	elif Input.is_action_just_released("deliver"):
 		deliver()
-	if Input.is_action_just_pressed("ask"):
+	
+	if Input.is_action_just_pressed("ask") and !Input.is_action_pressed("deliver"):
+		show_wheel()
+	elif Input.is_action_just_released("ask"):
 		ask()
+	if !Input.is_action_pressed("ask") and !Input.is_action_pressed("deliver"):
+		hide_wheel()
 			
 	if Input.is_action_just_pressed("trip"):
 		xsm.change_state("Trip")
@@ -183,6 +188,7 @@ func set_platform_collision_enabled(val):
 
 func trip():
 	xsm.change_state("Trip")
+	hide_wheel()
 
 func get_package_count()->int:
 	var count = 0
@@ -257,15 +263,18 @@ func pickup():
 func ask():
 	if not target or get_package_count() == 0:
 		return
-		
-	var package = get_package(0)
+	
+	wheel.hide_wheel()
+	var package = get_package(wheel.get_selection())
 	target.ask_about(package.target_name, package.target_section)
 
 func show_wheel():
 	wheel.show_wheel(get_packages())
+	
+func hide_wheel():
+	wheel.hide_wheel()
 
 func deliver():
-	wheel.hide_wheel()
 	if not target or packages_container.get_child_count() == 0:
 		return
 	var package = get_package(wheel.get_selection())

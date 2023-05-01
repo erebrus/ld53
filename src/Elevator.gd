@@ -8,6 +8,8 @@ onready var anim_player=  $AnimationPlayer
 onready var timer = $Timer
 onready var stop = $Stop
 onready var elevator_sign = $Sign
+onready var sfx_arrives = $sfx_arrives
+onready var sfx_leaves = $sfx_leaves
 onready var chat = $Chat
 export var level_y_height = 224.0
 export var wait_door_close = 2.0
@@ -35,6 +37,9 @@ func _ready():
 		levels.append(position.y + i * level_y_height)
 
 func go_up(level: int) -> void:
+	if current_level == 0:
+		return
+	
 	direction = -1
 	target_level = level
 	if current_level == target_level:
@@ -44,6 +49,8 @@ func go_up(level: int) -> void:
 	begin_moving()
 	
 func go_down(level: int) -> void:
+	if current_level == total_levels - 1:
+		return
 	direction = 1
 	target_level = level
 	if current_level == target_level:
@@ -54,6 +61,7 @@ func go_down(level: int) -> void:
 	
 func begin_moving():
 	if target_level != current_level:
+		sfx_leaves.play()
 		if is_player_inside:
 			Globals.emit_signal("player_in_moving_elevator")
 		time_since_request = 0
@@ -80,6 +88,7 @@ func request_stop():
 		
 
 func stop():
+	sfx_arrives.play()
 	stop.play("Off")
 	moving = false
 	called_slowing_elevator = false

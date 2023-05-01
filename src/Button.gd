@@ -32,12 +32,14 @@ func can_activate() -> bool:
 	return player_near and time_since_press > wait_period
 
 func on_trigger_up():
+	$sfx_button.play()
 	time_since_press = 0.0
 	timer.start(6)
 	sprite.play("Up")
 	MapEvents.emit_signal("up_button_pressed", level)
 
 func on_trigger_down():
+	$sfx_button.play()
 	time_since_press = 0.0
 	timer.start(6)
 	sprite.play("Down")
@@ -48,8 +50,8 @@ func on_elevator_arrived():
 
 
 func _on_Area2D_body_entered(body):
-	print("HERE")
-	print(body)
+	if !body.is_in_group("player"):
+		return
 	player_near = true
 	anim_player.play("Outline")
 	if !Globals.showed_elevator_button_tip:
@@ -57,6 +59,8 @@ func _on_Area2D_body_entered(body):
 		Globals.showed_elevator_button_tip = true
 
 func _on_Area2D_body_exited(body):
+	if !body.is_in_group("player"):
+		return
 	print("exiting")
 	print(level)
 	player_near = false

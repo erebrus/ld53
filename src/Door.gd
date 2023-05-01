@@ -51,6 +51,8 @@ func close_door():
 	Globals.emit_signal("door_closed")
 	timer.stop()
 func _on_Area2D_body_entered(body):
+	if !body.is_in_group("player"):
+		return
 	player_near = true
 	anim_player.play("Outline")
 	if !Globals.showed_door_tip:
@@ -58,6 +60,8 @@ func _on_Area2D_body_entered(body):
 		Globals.showed_door_tip = true
 
 func _on_Area2D_body_exited(body):
+	if !body.is_in_group("player"):
+		return
 	player_near = false
 	anim_player.play("Disappear")
 
