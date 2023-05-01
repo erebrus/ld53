@@ -45,7 +45,7 @@ func _on_update(_delta: float) -> void:
 		else:
 			owner.on_landing(owner.last_y)
 		owner.controller.jump_available=true
-		if randf() <.05+owner.get_package_count()*.2:
+		if abs(owner.last_y - owner.global_position.y)>10 and randf() <.05+owner.get_package_count()*.2:
 			change_state("Wobble")
 		elif owner.velocity.x != 0:
 			change_state("Walk")
