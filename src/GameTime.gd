@@ -19,9 +19,9 @@ func tick_cycle():
 	cycle += 1
 	time = 1
 	if cycle > CYCLES_PER_DAY:
-		cycle = 1
-		day +=1
-		emit_signal("cycle_ended")
+		Globals.do_game_win()
+		return
+	emit_signal("cycle_ended")
 
 func is_cycle_start()->bool:
 	return time == 1		

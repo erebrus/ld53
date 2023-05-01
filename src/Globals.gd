@@ -18,12 +18,12 @@ signal go_up_floor(current, target)
 
 #move to map
 var time=GameTime.new()
-
+var game_names:Array=[]
 
 
 var first_names:Array
 var last_names:Array
-var game_names:Array=[]
+
 
 enum GameOverReason {PACKAGES, MONEY}
 enum BarkType {QUICK, JUST_IN_TIME, DELAYED, VERY_DELAYED, BARK, BARK_TRIP, BARK_SLIP, ASK_WRONG_DEPARTMENT, ASK_REPLY, ALMOST_LOSING}
@@ -57,7 +57,7 @@ var showed_elevator_button_tip = false
 var showed_stop_button_tip = false
 var showed_door_tip = false
 
-var music:AudioStreamPlayer
+
 
 func _ready():
 	randomize()
@@ -66,15 +66,17 @@ func _ready():
 	connect("reply_package", self, "log_reply")
 	
 	read_names()
-	generate_game_names(30)
 	read_barks()
 	read_props()
 	read_comments()
-#	music =AudioStreamPlayer.new()	
-#	music.stream=preload("res://assets/music/CatEgypt.mp3")
-#	music.volume_db=-20
-#	add_child(music)
+	start_game()
 
+
+func start_game():
+	generate_game_names(30)
+	time=GameTime.new()
+	
+	
 func read_barks():
 	var idx=0
 	for bark_file in BarkFiles:
@@ -166,13 +168,6 @@ func log_reply(package, source, message):
 func log_bark(source, message):
 	Logger.info("%s barked: %s" % [source.get_id(), message])	
 	
-func start_music():
-	if music:
-		music.play()
-
-func stop_music():
-	if music:
-		music.stop()
 		
 func _init_logger():
 	Logger.set_logger_level(Logger.LOG_LEVEL_NONE)
@@ -242,3 +237,11 @@ func get_comment_for_prop(key, value):
 	else:
 		Logger.warn("Cannot find comment for %s %s" % [key, value])
 		return ""
+
+func do_game_win():
+	print("You WIN")
+	get_tree().quit()
+	
+func do_game_over(reason):
+	print("GAME OVER.")
+	get_tree().quit()
