@@ -255,7 +255,7 @@ func pickup():
 		over_package=package
 		
 func ask():
-	if not target or packages_container.get_child_count() == 0:
+	if not target or get_package_count() == 0:
 		return
 		
 	var package = get_package(0)
