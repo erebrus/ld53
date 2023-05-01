@@ -62,7 +62,7 @@ func get_hair_res(type):
 func get_tie_res(type):
 	if type == 0:
 		return null
-	var str_type = Hair.keys()[type].to_lower()
+	var str_type = Tie.keys()[type].to_lower()
 	return "res://assets/gfx/npcs/tie/tie_%s.png" % str_type
 
 func get_facial_res(type):

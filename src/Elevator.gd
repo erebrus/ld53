@@ -8,6 +8,7 @@ onready var anim_player=  $AnimationPlayer
 onready var timer = $Timer
 onready var stop = $Stop
 onready var elevator_sign = $Sign
+onready var chat = $Chat
 export var level_y_height = 224.0
 export var wait_door_close = 2.0
 var is_player_inside = false
@@ -19,9 +20,12 @@ var moving = false
 var direction = -1
 var levels = []
 var velocity = 0
-var speed = 40
+var speed = 100
+var slow_down_speed = 40
+var slowest_speed = 10
 var time_since_request = 0
 var target_pos = 0
+var called_slowing_elevator = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -50,8 +54,11 @@ func go_down(level: int) -> void:
 	
 func begin_moving():
 	if target_level != current_level:
+		if is_player_inside:
+			Globals.emit_signal("player_in_moving_elevator")
 		time_since_request = 0
 		moving = true
+		called_slowing_elevator = false
 		y_delta = levels[target_level] - position.y
 
 
@@ -75,6 +82,9 @@ func request_stop():
 func stop():
 	stop.play("Off")
 	moving = false
+	called_slowing_elevator = false
+	if is_player_inside:
+		Globals.emit_signal("player_in_stopped_elevator")
 	
 	# no doors..
 	open_door()
@@ -99,9 +109,16 @@ func _physics_process(delta: float):
 	time_since_request += delta
 	if moving:
 		distance = abs(levels[target_level] - position.y)
-		if distance < 100:
-			velocity = lerp(speed, 5, 1 - (distance / 100))
+		
+		if distance < 20:
+			velocity = lerp(speed, slowest_speed, 1 - (distance / 20))
+		if distance < 40:
+			velocity = lerp(speed, slow_down_speed, 1 - (distance / 40))
+			if is_player_inside and !called_slowing_elevator:
+				Globals.emit_signal("player_in_slowing_elevator")	
+				called_slowing_elevator
 		else:
+			called_slowing_elevator = true
 			velocity = lerp(0, speed, time_since_request / 4)
 		
 		target_pos = position.y + direction * velocity * delta
@@ -121,14 +138,23 @@ func _physics_process(delta: float):
 #func _process(delta):
 #	pass
 
-
 func _on_Timer_timeout():
 	close_door()
 
 
 func _on_Area2D_body_entered(body):
+	print("something entered elevator")
+	print(body)
 	is_player_inside = true
-
+	$AnimationPlayer.play("Enter")
 
 func _on_Area2D_body_exited(body):
 	is_player_inside = false
+	$AnimationPlayer.play("Leave")
+	
+func show_tooltip():
+	if !Globals.showed_stop_button_tip:
+		Globals.showed_stop_button_tip = true
+		chat.open_dialog("Press enter to stop.")
+		
+		

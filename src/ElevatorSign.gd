@@ -5,7 +5,6 @@ extends Node2D
 # var a = 2
 # var b = "text"
 onready var number = $Number
-onready var timer = $Timer
 onready var anim_player = $AnimationPlayer
 var current_level = 0
 var anim = "1"

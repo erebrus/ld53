@@ -9,6 +9,9 @@ const TIMELINESS_MODIFIERS:Dictionary = {
 	Package.Timeliness.VERY_DELAYED: -.5
 }
 
+enum BarkType {QUICK, JUST_IN_TIME, DELAYED, VERY_DELAYED, BARK, BARK_TRIP, BARK_SLIP}
+enum Timeliness {QUICK, JUST_IN_TIME, DELAYED, VERY_DELAYED}
+
 const BARKS:Array = [
 	"Why does everything always take so long around here?",
 "I'm sorry, I can't hear you over the sound of my deadlines whooshing by.",
@@ -34,14 +37,15 @@ var last_direction= Vector2.RIGHT
 var velocity:Vector2 = Vector2.ZERO
 var target_position 
 
-onready var sprite := $Sprite
+#onready var sprite := $Sprite
 onready var tree := $AnimationTree
-#
+onready var dialog := $Chat
+
 func _ready():
 	var rng = RandomNumberGenerator.new()
 	rng.randomize()
 	var seek = rng.randf_range(0, 2)
-#	tree.set("parameters/Idle/Seek/seek_position", seek)
+	tree.set("parameters/Idle/Seek/seek_position", seek)
 
 func get_id()->String:
 	return "%s (%s)" % [call_name, call_section]
@@ -72,27 +76,43 @@ func process_package(package):
 			update_relationship(TIMELINESS_MODIFIERS[timeliness])
 			Logger.debug("%s - new relationship state: %f" % [get_id(), relationship])
 			Globals.emit_signal("reply_package", package, self, timeliness)
+			show_dialog(get_timeliness_dialog(timeliness))
 			return true	
 	else:
 		Logger.debug("%s - received wrong package" % get_id())
 		Globals.emit_signal("bark", self, get_wrong_recipient_message())
+		show_dialog(get_wrong_recipient_message())
 		return false
 
 
 func get_wrong_recipient_message():
 	#TODO make this a random message
 	return "This package is not for me!"
+	
+func get_timeliness_dialog(timeliness):
+	match timeliness:
+		Package.Timeliness.DELAYED:
+			return get_dialog(Globals.BarkType.DELAYED)
+		Package.Timeliness.JUST_IN_TIME:
+			return get_dialog(Globals.BarkType.JUST_IN_TIME)
+		Package.Timeliness.QUICK:
+			return get_dialog(Globals.BarkType.QUICK)
+		Package.Timeliness.VERY_DELAYED:
+			return get_dialog(Globals.BarkType.VERY_DELAYED)
+
+func get_dialog(category):
+	var bark_list = Globals.barks[category]
+	var index = RNGTools.randi_range(0, len(bark_list))
+	return bark_list[index]
 
 func update_relationship(delta):
 	relationship = clamp(relationship + delta, -1,1)
-
-
-
 
 func give_candy():
 	update_relationship(CANDY_MODIFIER)
 	#TODO random message
 	Globals.emit_signal("bark", self, "Thank you for the candy...I guess")
+	show_dialog("Thank you for the candy...I guess")
 
 func ask_about(target_name, target_address):
 	Logger.error("%s - asked about %s (%s)" % [get_id(), target_name, target_address])
@@ -131,9 +151,13 @@ func set_tie(res):
 		$AntPivot/Tie.texture = load(res)
 		Logger.debug("%s - set tie res: %s" % [get_id(), res])
 	else:
-		$AntPivot/Tie.texture = null
+		$AntPivot/Tie.texture = null	
+		
+func show_dialog(text: String) -> void:
+	dialog.open_dialog(text)
 
-func _on_DetectionArea_body_entered(body: Node) -> void:
+
+func _on_DetectionBox_body_entered(body):
 	Logger.debug("%s - detected played." % get_id())
 	body.target = self
 	if relationship > -.1:
@@ -148,7 +172,7 @@ func _on_DetectionArea_body_entered(body: Node) -> void:
 			Globals.emit_signal("bark", self, RNGTools.pick(BARKS))
 
 
-func _on_DetectionArea_body_exited(body: Node) -> void:
+func _on_DetectionBox_body_exited(body):
 	if body.target == self:
 		body.target = null
 		Logger.trace("%s - no longer detects played." % get_id())

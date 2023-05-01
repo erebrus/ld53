@@ -19,10 +19,10 @@ onready var body_sprite:AnimatedSprite = $Sprite
 onready var controller = $PlatformController
 onready var direction_player:AnimationPlayer = $DirAnimationPlayer
 onready var timer_fs = $Sfx/FootstepTimer
-onready var reload_timer = $ReloadTimer
+#onready var reload_timer = $ReloadTimer
 onready var xsm := $XSM
 onready var packages_container := $packages
-
+onready var sprite :=$Sprite
 onready var sfx_run := $Sfx/SFXRun
 onready var sfx_jump := $Sfx/SFXJump
 onready var sfx_landing := $Sfx/SFXLand
@@ -35,7 +35,8 @@ var over_package = null
 var target
 
 func _ready():
-
+	Globals.connect("go_down_floor", self, "go_down_floor")
+	Globals.connect("go_up_floor", self, "go_up_floor")
 	last_y=global_position.y
 	last_direction=Vector2.RIGHT
 	$DirAnimationPlayer.play("right")
@@ -52,16 +53,12 @@ func setup_debug(val:bool):
 	else:
 		HyperLog.remove_log(self)
 
-
 func update_sprite():
-
-	
 	if facing_direction != last_direction and facing_direction!=Vector2.ZERO:		
 		last_direction = facing_direction
 		var desired_direction = "right" if facing_direction.x > 0 else "left"
 		if desired_direction != direction_player.current_animation:
 			direction_player.play(desired_direction)
-			
 
 
 func control(_delta:float) -> void:
@@ -76,6 +73,15 @@ func control(_delta:float) -> void:
 		
 	if Input.is_action_just_pressed("deliver"):
 		deliver()
+		
+	if Input.is_action_just_pressed("trip"):
+		xsm.change_state("Trip")
+	
+	if Input.is_action_just_pressed("slip"):
+		xsm.change_state("Slip")	
+		
+	if Input.is_action_just_pressed("wobble"):
+		xsm.change_state("Wobble")	
 
 func on_dash() -> void:
 	pass
@@ -126,16 +132,12 @@ func on_attacked(dmg):
 #		$XSM.change_state("Hurt")
 #	emit_signal("health_changed")
 
-	
-#func check_for_death():
-#	Logger.info("checking death: lives %d" % lives)
-#	if lives==0:
-#		set_collision_enabled(false)
-#		dead=true
-#		$XSM.change_state("Death")
-#		return true
-#	return false
+func go_down_floor(current, target):
+	pass
 
+func go_up_floor(current, target):
+	pass
+	
 
 func set_collision_enabled(val):
 	disabled = !false
@@ -168,36 +170,147 @@ func set_platform_collision_enabled(val):
 func trip():
 	xsm.change_state("Trip")
 
+func get_package_count()->int:
+	var count = 0
+	for package_anchor in packages_container.get_children():
+		if package_anchor.get_child_count()>0:
+			count += 1
+	return count
+	
+func push_package(package):
+	if get_package_count() == packages_container.get_child_count():
+		Logger.debug("Cannot pick up more packages")
+		return
+	packages_container.get_child(get_package_count()).add_child(package)
+	package.position = Vector2.ZERO
+	
+func pop_package():
+	if get_package_count() == 0:
+		return null
+	var ret = packages_container.get_child(0).get_child(0)
+	ret.get_parent().remove_child(ret)
+	for i in range(1, packages_container.get_child_count()):
+		if packages_container.get_child(i).get_child_count()>0:
+			var p = packages_container.get_child(i).get_child(0)
+			p.get_parent().remove_child(p)
+			packages_container.get_child(i-1).add_child(p)
+			p.position=Vector2.ZERO				
+	return ret
+	
 func pickup():
-	if not over_package and packages_container.get_child_count() == 0:
+	if not over_package and get_package_count() == 0:
 		return
 	
 	if over_package:			
 		over_package.being_carried=true
 		over_package.get_parent().remove_child(over_package)		
-		packages_container.add_child(over_package)				
-		over_package.global_position = packages_container.global_position	 \
-			+ Vector2(0, -8)*(packages_container.get_child_count()-1)	
+		push_package(over_package)	
 		over_package=null
 	else:
-		var package = packages_container.get_child(0)
-		var prev_pos = package.global_position
-		package.get_parent().remove_child(package)
+		var package = pop_package()
+		if not package:
+			Logger.warn("Tried to pop package, but found no package.")
+			return
+		var prev_pos = packages_container.get_child(0).global_position		
 		get_parent().add_child(package)
 		package.global_position = prev_pos
 		package.being_carried=false
 		over_package=package
 		
-		for i in range(packages_container.get_child_count()):
-			var p = packages_container.get_child(i)
-			p.global_position = packages_container.global_position	 \
-			+ Vector2(0, -8)*i	
 		
 func deliver():
 	if not target or packages_container.get_child_count() == 0:
 		return
-	var package = packages_container.get_child(0)
+	var package = pop_package()
 	if target.process_package(package):
+		Globals.emit_signal("package_received")
+		var glob = package.global_position
+		remove_child(package)
+		get_parent().add_child(package)
+		package.global_position = glob
+		package.consume(target)
+		
+
+func adjust_package_x():
+	for i in range(get_package_count()):
+		var package = packages_container.get_child(i).get_child(0)
+		if facing_direction.x < 0:
+			package.position.x = -package.position.x
+
+func get_package(idx:int):
+	if idx<0 or idx >2 or packages_container.get_child(idx).get_child_count() == 0:
+		return null
+	return packages_container.get_child(idx).get_child(0)
+
+
+
+
+func on_trip():
+	if get_package_count() == 0:
+		return
+	
+	
+	var velocities = [ 
+		(Vector2(-7,12)-Vector2(-4,4))*10 * -last_direction * Vector2(2,1),
+		(Vector2(-16,1)-Vector2(-7,-6))*10 * -last_direction * Vector2(2,1),
+		(Vector2(-24,-10)-Vector2(-13,-14))*10 *-last_direction * Vector2(2,1),
+	]	
+	var packages_dropped = []
+	for i in range(get_package_count()):
+		var package = packages_container.get_child(i).get_child(0)
+		package.velocity = velocities[i]
+		var pos = package.global_position
 		package.get_parent().remove_child(package)
-		package.consume()
+		get_parent().add_child(package)
+		package.global_position = pos
+		packages_dropped.append(package)
+		package.being_carried = false
+		
+
+func on_slip():
+	if get_package_count() == 0:
+		return
+		
+#	var positions := [
+#			[Vector2(0,0), Vector2(-4,4), Vector2(-7,12)],
+#			[Vector2(0,8), Vector2(-7,-6), Vector2(-16,1)],
+#			[Vector2(0,16), Vector2(-13,-14),Vector2(-24,-10)]
+#		]
+#	for plist in positions:
+#		for i in range(plist.size()):
+#			plist[i]=plist[i]*facing_direction
+#
+#	var velocities = [ 
+#		(positions[0][2]-positions[0][1])*10 ,
+#		(positions[1][2]-positions[1][1])*10 ,
+#		(positions[2][2]-positions[2][1])*10 ,				
+#
+#	]
+#	for i in range(get_package_count()):	
+#		packages_container.get_child(i).position = positions[i][0]
+#
+#	var tween = create_tween().set_trans(Tween.TRANS_LINEAR)	
+#	tween.tween_property(packages_container.get_child(0), "position", positions[0][1],.1 )
+#	for i in range(1, get_package_count()):
+#		tween.parallel().tween_property(packages_container.get_child(i), "position", positions[i][1],.1 )
+#	yield(tween,"finished")			
+#	tween.tween_property(packages_container.get_child(0), "position", positions[0][2],.1 )
+#	for i in range(1, get_package_count()):
+#		tween.parallel().tween_property(packages_container.get_child(i), "position", positions[i][2],.1 )
+#	yield(tween,"finished")			
+	var velocities = [ 
+		(Vector2(-7,12)-Vector2(-4,4))*10 *last_direction,
+		(Vector2(-16,1)-Vector2(-7,-6))*10 *last_direction,
+		(Vector2(-24,-10)-Vector2(-13,-14))*10 *last_direction
+	]	
+	var packages_dropped = []
+	for i in range(get_package_count()):
+		var package = packages_container.get_child(i).get_child(0)
+		package.velocity = velocities[i]
+		var pos = package.global_position
+		package.get_parent().remove_child(package)
+		get_parent().add_child(package)
+		package.global_position = pos
+		packages_dropped.append(package)
+		package.being_carried = false
 		
