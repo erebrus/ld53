@@ -15,8 +15,8 @@ func _ready():
 	Globals.connect("package_change", self, "on_package_change")
 
 func on_package_change(free_anchor_count):
-	print("FREE ANCHOR COUNT")
-	print(free_anchor_count)
+#	print("FREE ANCHOR COUNT")
+#	print(free_anchor_count)
 	for i in 6:
 		icons[i].fill()
 	for i in free_anchor_count:

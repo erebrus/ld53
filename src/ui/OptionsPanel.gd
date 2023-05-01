@@ -15,10 +15,14 @@ onready var music_slider = $MarginContainer/VBoxContainer/GridContainer/SfxSlide
 var unlock_done:=false
 func _ready():
 	yield(get_tree(), "idle_frame")
-	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), -5)
+	#AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), -5)
+	print(str(AudioServer.get_bus_volume_db(db2linear(AudioServer.get_bus_index("Master")))))
+	print(str(master_slider.value))
 	master_slider.value = AudioServer.get_bus_volume_db(db2linear(AudioServer.get_bus_index("Master")))
-	music_slider.value = AudioServer.get_bus_volume_db(db2linear(AudioServer.get_bus_index("music")))
-	sfx_slider.value = AudioServer.get_bus_volume_db(db2linear(AudioServer.get_bus_index("sfx")))
+	print(str(master_slider.value))
+	print("t")
+#	music_slider.value = AudioServer.get_bus_volume_db(db2linear(AudioServer.get_bus_index("music")))
+#	sfx_slider.value = AudioServer.get_bus_volume_db(db2linear(AudioServer.get_bus_index("sfx")))
 
 
 func _on_Close_pressed():

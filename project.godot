@@ -183,7 +183,7 @@ _global_script_class_icons={
 [application]
 
 config/name="ld53"
-run/main_scene="res://src/GeneratedMap.tscn"
+run/main_scene="res://src/ui/MainMenu.tscn"
 config/icon="res://icon.png"
 
 [autoload]
@@ -198,6 +198,7 @@ MapEvents="*res://src/MapEvents.gd"
 window/size/width=480
 window/size/height=270
 window/size/resizable=false
+window/size/fullscreen=true
 window/size/test_width=1920
 window/size/test_height=1080
 window/stretch/mode="2d"
