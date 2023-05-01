@@ -49,7 +49,7 @@ func close_door():
 	$SFXClose.play()
 	sprite.play("Close")
 	Globals.emit_signal("door_closed")
-	
+	timer.stop()
 func _on_Area2D_body_entered(body):
 	player_near = true
 	anim_player.play("Outline")
