@@ -1,0 +1,37 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://assets/gfx/npcs/smiley-angry.png" type="Texture" id=1]
+[ext_resource path="res://src/npc/Smiley.gd" type="Script" id=2]
+[ext_resource path="res://assets/gfx/npcs/smiley-happy.png" type="Texture" id=3]
+[ext_resource path="res://assets/gfx/npcs/smiley-positive.png" type="Texture" id=4]
+[ext_resource path="res://assets/gfx/npcs/smiley-neutral.png" type="Texture" id=5]
+[ext_resource path="res://assets/gfx/npcs/smiley-sad.png" type="Texture" id=6]
+
+[node name="Smiley" type="Node2D"]
+position = Vector2( 22, 23 )
+script = ExtResource( 2 )
+
+[node name="sprites" type="Node2D" parent="."]
+
+[node name="happy" type="Sprite" parent="sprites"]
+visible = false
+modulate = Color( 0.684, 0.95, 0.494, 1 )
+texture = ExtResource( 3 )
+
+[node name="positive" type="Sprite" parent="sprites"]
+visible = false
+modulate = Color( 0.494, 0.6612, 0.95, 1 )
+texture = ExtResource( 4 )
+
+[node name="neutral" type="Sprite" parent="sprites"]
+texture = ExtResource( 5 )
+
+[node name="sad" type="Sprite" parent="sprites"]
+visible = false
+modulate = Color( 0.945098, 0.74902, 0.494118, 1 )
+texture = ExtResource( 6 )
+
+[node name="angry" type="Sprite" parent="sprites"]
+visible = false
+modulate = Color( 0.945098, 0.494118, 0.494118, 1 )
+texture = ExtResource( 1 )

@@ -8,6 +8,9 @@ const TIMELINESS_MODIFIERS:Dictionary = {
 	Package.Timeliness.DELAYED: -.2,
 	Package.Timeliness.VERY_DELAYED: -.5
 }
+const WRONG_DEPARTMENT_MODIFIER=-.1
+const WRONG_PERSON_MODIFIER=-.1
+const ASK_MODIFIER=-.05
 
 enum Timeliness {QUICK, JUST_IN_TIME, DELAYED, VERY_DELAYED}
 
@@ -18,7 +21,7 @@ export var max_speed=24
 
 var call_name:String
 var call_section:String
-var relationship:float=0
+var relationship:float=0 setget _set_relationship
 
 var last_direction= Vector2.RIGHT
 var velocity:Vector2 = Vector2.ZERO
@@ -32,6 +35,7 @@ onready var sfx_talk := $sfx/sfx_talk
 onready var sfx_bark :=  $sfx/sfx_trumpet
 onready var sfx_laugh := $sfx/sfx_laugh
 onready var sfx_wow := $sfx/sfx_wow
+onready var smiley := $Smiley
 
 var active_sfx
 
@@ -44,7 +48,8 @@ func _ready():
 	var seek = rng.randf_range(0, 2)
 	tree.set("parameters/Idle/Seek/seek_position", seek)
 	Globals.connect("player_slipped", self, "on_player_slipped")
-
+	smiley.init(relationship)
+	
 func get_id()->String:
 	return "%s (%s)" % [call_name, call_section]
 
@@ -88,6 +93,7 @@ func process_package(package):
 		Logger.debug("%s - received wrong package" % get_id())
 		Globals.emit_signal("bark", self, get_wrong_recipient_message())
 		show_dialog(get_wrong_recipient_message(), sfx_talk)
+		update_relationship(WRONG_PERSON_MODIFIER)
 		return false
 
 
@@ -113,7 +119,8 @@ func get_dialog(category):
 
 func update_relationship(delta):
 	relationship = clamp(relationship + delta, -1,1)
-
+	smiley.on_relationship_change(relationship)
+	
 func give_candy():
 	update_relationship(CANDY_MODIFIER)
 	#TODO random message
@@ -170,6 +177,7 @@ func on_dialog_done(sfx):
 	
 func _on_DetectionBox_body_entered(body):
 	Logger.debug("%s - detected played." % get_id())
+	smiley.show()
 	body.target = self
 	if relationship > -.1:
 		return
@@ -189,7 +197,7 @@ func _on_DetectionBox_body_exited(body):
 	if body.target == self:
 		body.target = null
 		Logger.trace("%s - no longer detects played." % get_id())
-
+	smiley.hide()
 
 
 	
@@ -209,10 +217,12 @@ func ask_about(target_name, target_section):
 	if target_section != call_section:
 		show_dialog(Globals.get_random_line(Globals.BarkType.ASK_WRONG_DEPARTMENT),sfx_talk)
 #		Globals.emit_signal("bark", self, )
+		update_relationship(WRONG_DEPARTMENT_MODIFIER)
 		return
 
 	if call_name == target_name and call_section == target_section:
 		show_dialog("It's me you idiot!",sfx_wow)
+		update_relationship(WRONG_PERSON_MODIFIER)
 		return
 		
 	var target = null
@@ -224,11 +234,13 @@ func ask_about(target_name, target_section):
 	if target == null:
 		#Globals.emit_signal("bark", self, "I have no clue who that is.")
 		show_dialog("I have no clue who that is.", sfx_talk)
+		update_relationship(WRONG_PERSON_MODIFIER)
 		yield(get_tree().create_timer(1),"timeout")
 		sfx_talk.stop()
 	else:
 #		Globals.emit_signal("bark", self, build_directions_reply(target))
 		show_dialog(build_directions_reply(target),sfx_talk)
+		update_relationship(ASK_MODIFIER)
 
 		
 func build_directions_reply(target):
@@ -304,3 +316,6 @@ func _on_PrankTimer_timeout() -> void:
 func schedule_prank_check():
 	$PrankTimer.wait_time(RNGTools.randi_range(20, 120))
 	
+func _set_relationship(val):
+	relationship=val
+	smiley.on_relationship_change(val)
