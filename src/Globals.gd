@@ -16,6 +16,8 @@ signal door_closed()
 signal go_down_floor(current, target)
 signal go_up_floor(current, target)
 signal gain_money(current, additional)
+signal game_over()
+signal survived()
 
 #move to map
 var time=GameTime.new()
