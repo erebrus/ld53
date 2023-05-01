@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-
+const BananaScene:PackedScene = preload("res://src/world/Banana.tscn")
 const CANDY_MODIFIER :=.2
 const TIMELINESS_MODIFIERS:Dictionary = {
 	Package.Timeliness.QUICK: .2,
@@ -37,6 +37,7 @@ func _ready():
 	rng.randomize()
 	var seek = rng.randf_range(0, 2)
 	tree.set("parameters/Idle/Seek/seek_position", seek)
+	Globals.connect("player_slipped", self, "on_player_slipped")
 
 func get_id()->String:
 	return "%s (%s)" % [call_name, call_section]
@@ -58,7 +59,10 @@ func get_id()->String:
 #		sprite.flip_h= last_direction.x < 0
 
 
-
+func on_player_slipped(pos):
+	if global_position.distance_to(pos) < 200:
+		show_dialog(Globals.get_random_line(Globals.BarkType.BARK_SLIP))
+		
 func process_package(package):
 	if package.target_name == call_name and \
 		package.target_section == call_section:
@@ -265,3 +269,16 @@ func _on_Leg_body_entered(body: Node) -> void:
 	body.trip()
 	$Leg/AnimationPlayer.play("retreat")
 	show_dialog(Globals.get_random_line(Globals.BarkType.BARK_TRIP))
+
+
+func _on_PrankTimer_timeout() -> void:
+	if relationship < -.8 and randf() < .25:
+		var banana = BananaScene.instance()
+		$PrankAnchor.add_child(banana)
+		banana.position = Vector2.ZERO
+		Logger.debug("generated banana at %s" % str(banana.global_position))	
+	schedule_prank_check()
+	
+func schedule_prank_check():
+	$PrankTimer.wait_time(RNGTools.randi_range(20, 120))
+	

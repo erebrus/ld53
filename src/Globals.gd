@@ -2,6 +2,7 @@ extends Node
 
 signal reply_package(package, source, reply)
 signal bark(source, message)
+signal player_slipped(pos)
 
 signal trip()
 signal player_in_moving_elevator()
