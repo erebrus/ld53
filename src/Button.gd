@@ -32,12 +32,14 @@ func can_activate() -> bool:
 	return player_near and time_since_press > wait_period
 
 func on_trigger_up():
+	$sfx_button.play()
 	time_since_press = 0.0
 	timer.start(6)
 	sprite.play("Up")
 	MapEvents.emit_signal("up_button_pressed", level)
 
 func on_trigger_down():
+	$sfx_button.play()
 	time_since_press = 0.0
 	timer.start(6)
 	sprite.play("Down")
