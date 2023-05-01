@@ -71,7 +71,7 @@ func _on_Timer_timeout():
 		label.text = current_text
 		
 		if bubble_text_index < bubble_text_length - 1:
-			timer.start(.04)
+			timer.start(.02)
 			bubble_text_index += 1
 		else:
 			if not done:
@@ -80,7 +80,7 @@ func _on_Timer_timeout():
 			if !close:
 				close = true
 #				if not requires_keypress:
-				timer.start(2)
+				timer.start(.5)
 	else:
 		if bubble_text_length > 0:
 			current_text.erase(bubble_text_length - 1, 1)
