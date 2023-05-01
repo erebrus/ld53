@@ -39,16 +39,19 @@ var dead:=false
 
 var over_package = null
 var target
+var money:int = 0
 
 func _ready():
 	Globals.connect("go_down_floor", self, "go_down_floor")
 	Globals.connect("go_up_floor", self, "go_up_floor")
+	Globals.connect("reply_package", self, "on_packaged_delivered")
 	last_y=global_position.y
 	last_direction=Vector2.RIGHT
 	$DirAnimationPlayer.play("right")
 #	setup_debug(true)
 	$XSM.change_state("Idle")
-	
+	Globals.connect("last_package_anchor", self, "on_last_package_anchor")
+	Globals.connect("reply_package", self, "on_packaged_delivered")
 
 func setup_debug(val:bool):
 	if val:
@@ -367,3 +370,26 @@ func on_slip():
 		packages_dropped.append(package)
 		package.being_carried = false
 		
+
+func on_last_package_anchor():
+	var npcs = get_tree().get_nodes_in_group("npc")
+	for npc in npcs:
+		if npc.global_position.distance_to(self.global_position) < 300:
+			npc.warn_player()
+			
+			
+func on_packaged_delivered(package, source, reply):
+	money = clamp(money+Package.INCOME_BY_TIMELINESS[reply],-100,10000)
+	if money == -100:
+		Globals.do_game_over(Globals.GameOverReason.MONEY)
+	Logger.info("Player money %d" % money)
+#	match reply:
+#		Package.Timeliness.QUICK:
+#
+#		Package.Timeliness.JUST_IN_TIME:
+#			pass
+#		Package.Timeliness.DELAYED:
+#			pass
+#		Package.Timeliness.VERY_DELAYED:
+#			pass
+	
