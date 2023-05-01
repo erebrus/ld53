@@ -28,6 +28,13 @@ func _ready() -> void:
 			new_package(anchor, true)
 	schedule()
 	Globals.time.connect("cycle_ended", self, "on_cycle_ended")
+	Globals.connect("survived", self, "on_game_over")
+	Globals.connect("game_over", self, "on_game_over")
+
+func game_over():
+	$Timer.stop()
+	$ReminderTimer.stop()
+	set_process(false)
 
 func _process(delta):
 	current_free_anchor_count = get_free_anchor_count()
@@ -86,7 +93,8 @@ func _on_Timer_timeout() -> void:
 	schedule()
 	var anchor = get_next_free_anchor()
 	if not anchor:
-		Globals.do_game_over(Globals.GameOverReason.PACKAGES)
+		#Globals.do_game_over(Globals.GameOverReason.PACKAGES)
+		Globals.emit_signal("game_over")
 		return
 	new_package(anchor, true)
 

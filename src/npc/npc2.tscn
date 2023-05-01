@@ -413,7 +413,6 @@ position = Vector2( 0, 59 )
 
 [node name="sfx_talk" type="AudioStreamPlayer2D" parent="sfx"]
 max_distance = 500.0
-bus = "Sfx"
 script = ExtResource( 25 )
 samples = [ ExtResource( 24 ), ExtResource( 16 ), ExtResource( 12 ), ExtResource( 22 ), ExtResource( 21 ), ExtResource( 19 ), ExtResource( 20 ), ExtResource( 17 ), ExtResource( 23 ), ExtResource( 15 ), ExtResource( 18 ), ExtResource( 14 ), ExtResource( 13 ) ]
 random_volume_range = 0
@@ -421,7 +420,6 @@ random_pitch_range = 0
 
 [node name="sfx_trumpet" type="AudioStreamPlayer2D" parent="sfx"]
 max_distance = 500.0
-bus = "Sfx"
 script = ExtResource( 25 )
 samples = [ ExtResource( 27 ), ExtResource( 26 ), ExtResource( 30 ), ExtResource( 31 ), ExtResource( 29 ), ExtResource( 28 ), ExtResource( 32 ), ExtResource( 33 ), ExtResource( 43 ) ]
 random_volume_range = 0
@@ -429,7 +427,6 @@ random_pitch_range = 0
 
 [node name="sfx_laugh" type="AudioStreamPlayer2D" parent="sfx"]
 max_distance = 500.0
-bus = "Sfx"
 script = ExtResource( 25 )
 samples = [ ExtResource( 36 ), ExtResource( 34 ), ExtResource( 39 ), ExtResource( 38 ), ExtResource( 35 ), ExtResource( 37 ), ExtResource( 40 ) ]
 random_volume_range = 0
@@ -437,7 +434,6 @@ random_pitch_range = 0
 
 [node name="sfx_wow" type="AudioStreamPlayer2D" parent="sfx"]
 max_distance = 500.0
-bus = "Sfx"
 script = ExtResource( 25 )
 samples = [ ExtResource( 42 ), ExtResource( 46 ), ExtResource( 45 ), ExtResource( 44 ), ExtResource( 41 ) ]
 random_volume_range = 0
