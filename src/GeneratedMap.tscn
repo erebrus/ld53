@@ -392,11 +392,12 @@ z_index = 1
 z_as_relative = false
 
 [node name="Camera2D" type="Camera2D" parent="Courier"]
+position = Vector2( -5, -51 )
 current = true
 script = ExtResource( 7 )
 
 [node name="World BG" type="Sprite" parent="Courier/Camera2D"]
-position = Vector2( -413, -83 )
+position = Vector2( -421, -83 )
 z_index = -2
 z_as_relative = false
 texture = ExtResource( 8 )

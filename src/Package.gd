@@ -74,6 +74,5 @@ func _on_Package_body_exited(body: Node) -> void:
 	if body.is_in_group("player") and body.over_package==self:
 		body.over_package=null
 
-
 func on_consume_complete():
 	queue_free()
