@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://assets/gfx/world/Map.tres" type="TileSet" id=1]
 [ext_resource path="res://src/ElevatorButton.tscn" type="PackedScene" id=2]
@@ -25,7 +25,8 @@
 [ext_resource path="res://assets/gfx/world/signs/info-tech.png" type="Texture" id=23]
 [ext_resource path="res://assets/gfx/world/signs/human-resources.png" type="Texture" id=24]
 [ext_resource path="res://assets/gfx/world/signs/front-desk.png" type="Texture" id=25]
-[ext_resource path="res://assets/gfx/world/signs/accounting.png" type="Texture" id=26]
+[ext_resource path="res://src/ui/BoxMeter.tscn" type="PackedScene" id=26]
+[ext_resource path="res://assets/gfx/world/signs/accounting.png" type="Texture" id=27]
 
 [sub_resource type="ShaderMaterial" id=5]
 resource_local_to_scene = true
@@ -383,7 +384,7 @@ texture = ExtResource( 17 )
 
 [node name="Accounting" type="Sprite" parent="Wall BG Props/Signs"]
 position = Vector2( -400, 1056 )
-texture = ExtResource( 26 )
+texture = ExtResource( 27 )
 
 [node name="Office Inbetween" type="Node2D" parent="."]
 
@@ -576,6 +577,9 @@ z_as_relative = false
 texture = ExtResource( 8 )
 region_enabled = true
 region_rect = Rect2( 0, 0, 4000, 480 )
+
+[node name="BoxMeter" parent="Courier/Camera2D" instance=ExtResource( 26 )]
+position = Vector2( -176, -96 )
 
 [node name="Button" parent="." instance=ExtResource( 2 )]
 position = Vector2( 464, 192 )
