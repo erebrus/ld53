@@ -520,7 +520,7 @@ script = ExtResource( 5 )
 position = Vector2( 0, -22 )
 frames = SubResource( 486 )
 animation = "wobble"
-frame = 2
+frame = 4
 playing = true
 
 [node name="PlatformController" parent="." instance=ExtResource( 6 )]
@@ -635,6 +635,17 @@ timed = false
 next_state = NodePath("")
 
 [node name="Wobble" type="Node" parent="XSM"]
+script = ExtResource( 16 )
+animation_player = NodePath("../../AnimationPlayer")
+anim_on_enter = "Wobble"
+anim_times_to_play = 1
+on_anim_finished = 0
+disabled = false
+debug_mode = false
+timed = false
+next_state = NodePath("")
+
+[node name="Stairs" type="Node" parent="XSM"]
 script = ExtResource( 16 )
 animation_player = NodePath("../../AnimationPlayer")
 anim_on_enter = "Wobble"

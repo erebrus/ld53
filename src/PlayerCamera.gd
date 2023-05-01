@@ -18,6 +18,7 @@ func _ready():
 	Globals.connect("player_in_slowing_elevator", self, "shake")
 	Globals.connect("player_in_stopped_elevator", self, "shake")
 	Globals.connect("package_received", self, "shake")
+	Globals.connect("door_opened", self, "shake")
 	
 	rng.randomize()
 	noise.seed = rng.randi()

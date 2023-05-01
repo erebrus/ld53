@@ -35,7 +35,8 @@ var over_package = null
 var target
 
 func _ready():
-
+	Globals.connect("go_down_floor", self, "go_down_floor")
+	Globals.connect("go_up_floor", self, "go_up_floor")
 	last_y=global_position.y
 	last_direction=Vector2.RIGHT
 	$DirAnimationPlayer.play("right")
@@ -52,16 +53,12 @@ func setup_debug(val:bool):
 	else:
 		HyperLog.remove_log(self)
 
-
 func update_sprite():
-
-	
 	if facing_direction != last_direction and facing_direction!=Vector2.ZERO:		
 		last_direction = facing_direction
 		var desired_direction = "right" if facing_direction.x > 0 else "left"
 		if desired_direction != direction_player.current_animation:
 			direction_player.play(desired_direction)
-			
 
 
 func control(_delta:float) -> void:
@@ -135,16 +132,12 @@ func on_attacked(dmg):
 #		$XSM.change_state("Hurt")
 #	emit_signal("health_changed")
 
-	
-#func check_for_death():
-#	Logger.info("checking death: lives %d" % lives)
-#	if lives==0:
-#		set_collision_enabled(false)
-#		dead=true
-#		$XSM.change_state("Death")
-#		return true
-#	return false
+func go_down_floor(current, target):
+	pass
 
+func go_up_floor(current, target):
+	pass
+	
 
 func set_collision_enabled(val):
 	disabled = !false

@@ -8,6 +8,10 @@ signal player_in_moving_elevator()
 signal player_in_slowing_elevator()
 signal player_in_stopped_elevator()
 signal package_received()
+signal door_opened()
+signal door_closed()
+signal go_down_floor(current, target)
+signal go_up_floor(current, target)
 
 #move to map
 var time=GameTime.new()
@@ -43,6 +47,7 @@ var config:ConfigFile
 var debug_build := false
 var showed_elevator_button_tip = false
 var showed_stop_button_tip = false
+var showed_door_tip = false
 
 var music:AudioStreamPlayer
 
