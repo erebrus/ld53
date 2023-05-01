@@ -947,7 +947,7 @@ on_anim_finished = 0
 disabled = false
 debug_mode = false
 timed = false
-next_state = NodePath("../Walk")
+next_state = NodePath("")
 
 [node name="Walk" type="Node" parent="XSM/CanDash"]
 script = ExtResource( 4 )
@@ -958,7 +958,7 @@ on_anim_finished = 1
 disabled = false
 debug_mode = false
 timed = false
-next_state = NodePath("../Jump")
+next_state = NodePath("")
 
 [node name="Jump" type="Node" parent="XSM/CanDash"]
 script = ExtResource( 7 )
@@ -980,7 +980,7 @@ on_anim_finished = 0
 disabled = false
 debug_mode = false
 timed = false
-next_state = NodePath("../Slip")
+next_state = NodePath("")
 
 [node name="Slip" type="Node" parent="XSM"]
 script = ExtResource( 19 )
@@ -991,7 +991,7 @@ on_anim_finished = 0
 disabled = false
 debug_mode = false
 timed = false
-next_state = NodePath("../Wobble")
+next_state = NodePath("")
 
 [node name="Wobble" type="Node" parent="XSM"]
 script = ExtResource( 16 )
@@ -1002,7 +1002,7 @@ on_anim_finished = 0
 disabled = false
 debug_mode = false
 timed = false
-next_state = NodePath("../Stairs")
+next_state = NodePath("")
 
 [node name="Stairs" type="Node" parent="XSM"]
 script = ExtResource( 16 )

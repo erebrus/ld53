@@ -20,7 +20,7 @@ func tick_cycle():
 	cycle += 1
 	time = 1
 	if cycle > CYCLES_PER_DAY:
-		Globals.do_game_win()
+		Globals.emit_signal("survived")
 		return
 	emit_signal("cycle_ended")
 

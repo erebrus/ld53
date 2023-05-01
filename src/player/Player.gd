@@ -52,7 +52,14 @@ func _ready():
 	$XSM.change_state("Idle")
 	Globals.connect("last_package_anchor", self, "on_last_package_anchor")
 	Globals.connect("reply_package", self, "on_packaged_delivered")
+	Globals.connect("survived", self, "on_game_over")
+	Globals.connect("game_over", self, "on_game_over")
 
+func on_game_over():
+	in_animation=true
+	set_process(false)
+	set_physics_process(false)
+	
 func setup_debug(val:bool):
 	if val:
 		HyperLog.log(self).text("global_position>%0.2f")
@@ -404,7 +411,8 @@ func on_last_package_anchor():
 func on_packaged_delivered(package, source, reply):
 	money = clamp(money+Package.INCOME_BY_TIMELINESS[reply],-100,10000)
 	if money == -100:
-		Globals.do_game_over(Globals.GameOverReason.MONEY)
+		#Globals.do_game_over(Globals.GameOverReason.MONEY)
+		Globals.emit_signal("game_over")
 	Logger.info("Player money %d" % money)
 #	match reply:
 #		Package.Timeliness.QUICK:

@@ -57,8 +57,8 @@ func _state_timeout() -> void:
 
 # Called when any other Timer times out
 func _on_timeout(_name) -> void:
-	if randf() <.5:
-		change_state("Idle")
-	else:
+	if randf() <.1+.2*owner.get_package_count():
 		change_state("Slip")
+	else:
+		change_state("Idle")
 
