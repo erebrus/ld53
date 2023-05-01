@@ -26,6 +26,12 @@ onready var sprite :=$Sprite
 onready var sfx_run := $Sfx/SFXRun
 onready var sfx_jump := $Sfx/SFXJump
 onready var sfx_landing := $Sfx/SFXLand
+onready var sfx_wobble := $Sfx/SFXWobble
+onready var sfx_drop_package := $Sfx/SFXDrop
+onready var sfx_pickup_package := $Sfx/SFXPickUp
+onready var sfx_slip := $Sfx/SFXSlip
+onready var sfx_trip := $Sfx/SFXTrip
+
 
 var can_play_footstep:bool = true
 
@@ -212,6 +218,7 @@ func pickup():
 		over_package.get_parent().remove_child(over_package)		
 		push_package(over_package)	
 		over_package=null
+		sfx_pickup_package.play()
 	else:
 		var package = pop_package()
 		if not package:
@@ -221,6 +228,7 @@ func pickup():
 		get_parent().add_child(package)
 		package.global_position = prev_pos
 		package.being_carried=false
+		sfx_drop_package.play()
 		over_package=package
 		
 func ask():

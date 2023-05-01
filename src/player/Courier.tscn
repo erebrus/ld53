@@ -1,4 +1,4 @@
-[gd_scene load_steps=77 format=2]
+[gd_scene load_steps=96 format=2]
 
 [ext_resource path="res://assets/gfx/player/ant-idle.png" type="Texture" id=1]
 [ext_resource path="res://src/player/Fall.gd" type="Script" id=2]
@@ -19,6 +19,25 @@
 [ext_resource path="res://assets/gfx/player/ant-slip.png" type="Texture" id=17]
 [ext_resource path="res://assets/gfx/player/ant-trip.png" type="Texture" id=18]
 [ext_resource path="res://src/player/Slip.gd" type="Script" id=19]
+[ext_resource path="res://assets/sfx/Footstep_normal_2.wav" type="AudioStream" id=20]
+[ext_resource path="res://assets/sfx/Footstep_normal_4.wav" type="AudioStream" id=21]
+[ext_resource path="res://assets/sfx/Footstep_normal_1.wav" type="AudioStream" id=22]
+[ext_resource path="res://assets/sfx/Footstep_normal_3.wav" type="AudioStream" id=23]
+[ext_resource path="res://assets/sfx/Jump_1.wav" type="AudioStream" id=24]
+[ext_resource path="res://assets/sfx/Jump_2.wav" type="AudioStream" id=25]
+[ext_resource path="res://assets/sfx/Wobble_2.wav" type="AudioStream" id=26]
+[ext_resource path="res://assets/sfx/Wobble_1.wav" type="AudioStream" id=27]
+[ext_resource path="res://assets/sfx/Wobble_3.wav" type="AudioStream" id=28]
+[ext_resource path="res://assets/sfx/Package_pickup.wav" type="AudioStream" id=29]
+[ext_resource path="res://assets/sfx/fall_and_getting_backup.wav" type="AudioStream" id=30]
+[ext_resource path="res://assets/sfx/fall_and_getting_backup_2.wav" type="AudioStream" id=31]
+[ext_resource path="res://assets/sfx/fall_2.wav" type="AudioStream" id=32]
+[ext_resource path="res://assets/sfx/fall_1.wav" type="AudioStream" id=33]
+[ext_resource path="res://assets/sfx/package_drop.wav" type="AudioStream" id=34]
+[ext_resource path="res://assets/sfx/landing_3.wav" type="AudioStream" id=35]
+[ext_resource path="res://assets/sfx/landing_1.wav" type="AudioStream" id=36]
+[ext_resource path="res://assets/sfx/landing_4.wav" type="AudioStream" id=37]
+[ext_resource path="res://assets/sfx/landing_2.wav" type="AudioStream" id=38]
 
 [sub_resource type="AtlasTexture" id=588]
 atlas = ExtResource( 12 )
@@ -661,6 +680,20 @@ tracks/3/keys = {
 "method": "on_slip"
 } ]
 }
+tracks/4/type = "method"
+tracks/4/path = NodePath("Sfx/SFXSlip")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0.1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 0.0 ],
+"method": "play"
+} ]
+}
 
 [sub_resource type="Animation" id=538]
 resource_name = "Wobble"
@@ -738,6 +771,20 @@ tracks/5/keys = {
 "update": 0,
 "values": [ Vector2( 0, -16 ), Vector2( 2, -16 ), Vector2( 5, -16 ), Vector2( 6, -16 ), Vector2( 4, -16 ), Vector2( 2, -16 ), Vector2( 2, -16 ) ]
 }
+tracks/6/type = "method"
+tracks/6/path = NodePath("Sfx/SFXWobble")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 0.0 ],
+"method": "play"
+} ]
+}
 
 [sub_resource type="Animation" id=489]
 resource_name = "trip"
@@ -778,6 +825,20 @@ tracks/2/keys = {
 "values": [ {
 "args": [  ],
 "method": "on_trip"
+} ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath("Sfx/SFXTrip")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0.1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 0.0 ],
+"method": "play"
 } ]
 }
 
@@ -859,7 +920,7 @@ script = ExtResource( 5 )
 [node name="Sprite" type="AnimatedSprite" parent="."]
 position = Vector2( 2, -22 )
 frames = SubResource( 486 )
-animation = "idle"
+animation = "slip"
 frame = 3
 
 [node name="PlatformController" parent="." instance=ExtResource( 6 )]
@@ -1014,21 +1075,48 @@ anims/right = SubResource( 100 )
 
 [node name="SFXJump" type="AudioStreamPlayer2D" parent="Sfx"]
 script = ExtResource( 8 )
+samples = [ ExtResource( 24 ), ExtResource( 25 ) ]
 random_volume_range = 0
 random_pitch_range = 0
 
 [node name="SFXLand" type="AudioStreamPlayer2D" parent="Sfx"]
 script = ExtResource( 8 )
+samples = [ ExtResource( 36 ), ExtResource( 38 ), ExtResource( 35 ), ExtResource( 37 ) ]
 random_volume_range = 0
 random_pitch_range = 0
 
 [node name="SFXRun" type="AudioStreamPlayer2D" parent="Sfx"]
 script = ExtResource( 8 )
+samples = [ ExtResource( 22 ), ExtResource( 20 ), ExtResource( 23 ), ExtResource( 21 ) ]
 random_volume_range = 0
 random_pitch_range = 0
 
 [node name="FootstepTimer" type="Timer" parent="Sfx"]
 wait_time = 0.3
+
+[node name="SFXWobble" type="AudioStreamPlayer2D" parent="Sfx"]
+script = ExtResource( 8 )
+samples = [ ExtResource( 27 ), ExtResource( 26 ), ExtResource( 28 ) ]
+random_volume_range = 0
+random_pitch_range = 0
+
+[node name="SFXDrop" type="AudioStreamPlayer2D" parent="Sfx"]
+stream = ExtResource( 34 )
+
+[node name="SFXPickUp" type="AudioStreamPlayer2D" parent="Sfx"]
+stream = ExtResource( 29 )
+
+[node name="SFXSlip" type="AudioStreamPlayer2D" parent="Sfx"]
+script = ExtResource( 8 )
+samples = [ ExtResource( 30 ), ExtResource( 31 ) ]
+random_volume_range = 0
+random_pitch_range = 0
+
+[node name="SFXTrip" type="AudioStreamPlayer2D" parent="Sfx"]
+script = ExtResource( 8 )
+samples = [ ExtResource( 33 ), ExtResource( 32 ) ]
+random_volume_range = 0
+random_pitch_range = 0
 
 [node name="packages" type="Node2D" parent="."]
 position = Vector2( -6, -27 )
