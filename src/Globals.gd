@@ -242,10 +242,10 @@ func get_comment_for_prop(key, value):
 		Logger.warn("Cannot find comment for %s %s" % [key, value])
 		return ""
 
-func do_game_win():
-	print("You WIN")
-	get_tree().quit()
+# func do_game_win():
+# 	print("You WIN")
+# 	get_tree().quit()
 	
-func do_game_over(reason):
-	print("GAME OVER.")
-	get_tree().quit()
+# func do_game_over(reason):
+# 	print("GAME OVER.")
+# 	get_tree().quit()
