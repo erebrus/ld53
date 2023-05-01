@@ -72,6 +72,10 @@ func update_sprite():
 
 func control(_delta:float) -> void:
 	if in_animation:
+		if Input.is_action_just_released("deliver"):
+			deliver()
+		if Input.is_action_just_released("ask"):
+			ask()
 		return
 	facing_direction = Vector2(Input.get_axis("ui_left", "ui_right"),0);
 	if Input.is_action_just_pressed("jump"):
@@ -272,10 +276,12 @@ func ask():
 	target.ask_about(package.target_name, package.target_section)
 
 func show_wheel():
+	in_animation=true
 	wheel.show_wheel(get_packages())
 	
 func hide_wheel():
 	wheel.hide_wheel()
+	in_animation=false
 
 func deliver():
 	if not target or packages_container.get_child_count() == 0:

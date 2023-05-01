@@ -9,6 +9,7 @@ onready var sprite = $Sprite
 onready var timer = $Timer
 onready var anim_player = $AnimationPlayer
 onready var chat = $Chat
+export var inside_elevator = false
 var player_near = false
 var time_since_press = 100.0
 var wait_period = 2.0
@@ -54,9 +55,9 @@ func _on_Area2D_body_entered(body):
 		return
 	player_near = true
 	anim_player.play("Outline")
-	if !Globals.showed_elevator_button_tip:
-		chat.open_dialog("Press Up or Down.")
-		Globals.showed_elevator_button_tip = true
+#	if !Globals.showed_elevator_button_tip:
+#		chat.open_dialog("Press Up or Down.")
+#		Globals.showed_elevator_button_tip = true
 
 func _on_Area2D_body_exited(body):
 	if !body.is_in_group("player"):

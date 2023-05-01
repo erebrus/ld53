@@ -6,6 +6,7 @@ extends RigidBody2D
 # var b = "text"
 onready var anim_player=  $AnimationPlayer
 onready var timer = $Timer
+onready var tip_timer = $TooltipTimer
 onready var stop = $Stop
 onready var elevator_sign = $Sign
 onready var sfx_arrives = $sfx_arrives
@@ -33,6 +34,7 @@ var called_slowing_elevator = false
 func _ready():
 	MapEvents.connect("up_button_pressed", self, "go_up")
 	MapEvents.connect("down_button_pressed", self, "go_down")
+	MapEvents.connect("call_button_pressed", self, "go_to_call")
 	for i in total_levels:
 		levels.append(position.y + i * level_y_height)
 
@@ -41,9 +43,7 @@ func go_up(level: int) -> void:
 		return
 	
 	direction = -1
-	target_level = level
-	if current_level == target_level:
-		target_level = 0
+	target_level = 0
 	if moving:
 		stop()
 	begin_moving()
@@ -52,12 +52,23 @@ func go_down(level: int) -> void:
 	if current_level == total_levels - 1:
 		return
 	direction = 1
-	target_level = level
-	if current_level == target_level:
-		target_level = total_levels - 1
+	target_level = total_levels - 1
 	if moving:
 		stop()
 	begin_moving()
+	
+func go_to_call(level: int) -> void:
+	if level == current_level:
+		return
+	if level < current_level:
+		direction = -1
+	else:
+		direction = 1
+	target_level = level
+	if moving:
+		stop()
+	begin_moving()
+	
 	
 func begin_moving():
 	if target_level != current_level:
@@ -111,7 +122,7 @@ func close_door():
 
 func _physics_process(delta: float):
 	
-	if is_player_inside and Input.is_action_just_pressed("ui_accept"):
+	if is_player_inside and Input.is_action_just_pressed("ask"):
 		request_stop()
 	
 	var distance = 0
@@ -152,18 +163,25 @@ func _on_Timer_timeout():
 
 
 func _on_Area2D_body_entered(body):
-	print("something entered elevator")
-	print(body)
+	if !body.is_in_group("player"):
+		return
 	is_player_inside = true
 	$AnimationPlayer.play("Enter")
 
 func _on_Area2D_body_exited(body):
+	if !body.is_in_group("player"):
+		return
 	is_player_inside = false
 	$AnimationPlayer.play("Leave")
 	
 func show_tooltip():
+	if !Globals.showed_elevator_button_tip:
+		chat.open_dialog("Move up or down using your controls.")
+		Globals.showed_elevator_button_tip = true
+	tip_timer.start(2)
+
+func _on_TooltipTimer_timeout():
+	
 	if !Globals.showed_stop_button_tip:
 		Globals.showed_stop_button_tip = true
-		chat.open_dialog("Press enter to stop.")
-		
-		
+		chat.open_dialog("Press the interact button\n to stop.")
