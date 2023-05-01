@@ -41,6 +41,8 @@ var over_package = null
 var target
 var money:int = 0
 
+var instability:float=0
+
 func _ready():
 	Globals.connect("go_down_floor", self, "go_down_floor")
 	Globals.connect("go_up_floor", self, "go_up_floor")
@@ -52,7 +54,14 @@ func _ready():
 	$XSM.change_state("Idle")
 	Globals.connect("last_package_anchor", self, "on_last_package_anchor")
 	Globals.connect("reply_package", self, "on_packaged_delivered")
+	Globals.connect("survived", self, "on_game_over")
+	Globals.connect("game_over", self, "on_game_over")
 
+func on_game_over():
+	in_animation=true
+	set_process(false)
+	set_physics_process(false)
+	
 func setup_debug(val:bool):
 	if val:
 		HyperLog.log(self).text("global_position>%0.2f")
@@ -74,17 +83,19 @@ func control(_delta:float) -> void:
 	if in_animation:
 		if Input.is_action_just_released("deliver"):
 			deliver()
-		if Input.is_action_just_released("ask"):
+		elif Input.is_action_just_released("ask"):
 			ask()
+		elif !Input.is_action_pressed("ask") and !Input.is_action_pressed("deliver"):
+			hide_wheel()
 		return
 	facing_direction = Vector2(Input.get_axis("ui_left", "ui_right"),0);
 	if Input.is_action_just_pressed("jump"):
 		Logger.debug("Jump was pressed. (global, should be processed by now) . States = %s" % $XSM.get_active_states())
 
-	if Input.is_action_just_pressed("pickup"):
+	if Input.is_action_just_pressed("pickup") and can_pickup():
 		pickup()
 		
-	if Input.is_action_just_pressed("deliver") and !Input.is_action_pressed("ask"):
+	elif Input.is_action_just_pressed("deliver") and !Input.is_action_pressed("ask"):
 		show_wheel()
 	elif Input.is_action_just_released("deliver"):
 		deliver()
@@ -139,9 +150,12 @@ func on_landing(_last_vy:float):
 
 
 func _process(delta: float) -> void:
-	
 	control(delta)
-
+	if Input.is_action_just_pressed("ui_left") or Input.is_action_just_pressed("ui_right"):
+		instability+=.05*get_package_count()
+	if Input.is_action_just_pressed("jump"):
+		instability+=.2*get_package_count()
+		
 	if not in_animation: # we need the check in case we got into animation in control
 		update_sprite()
 
@@ -245,8 +259,11 @@ func pop_selected_package(package):
 					
 	return ret
 	
+func can_pickup()->bool:
+	return over_package and get_package_count() < 3
+
 func pickup():
-	if not over_package and get_package_count() == 0:
+	if not can_pickup():
 		return
 	
 	if over_package:			
@@ -255,17 +272,20 @@ func pickup():
 		push_package(over_package)	
 		over_package=null
 		sfx_pickup_package.play()
-	else:
-		var package = pop_package()
-		if not package:
-			Logger.warn("Tried to pop package, but found no package.")
-			return
-		var prev_pos = packages_container.get_child(0).global_position		
-		get_parent().add_child(package)
-		package.global_position = prev_pos
-		package.being_carried=false
-		sfx_drop_package.play()
-		over_package=package
+#	else:
+#		WE NO LONGER DROP PACKAGES
+		
+#
+#		var package = pop_package()
+#		if not package:
+#			Logger.warn("Tried to pop package, but found no package.")
+#			return
+#		var prev_pos = packages_container.get_child(0).global_position		
+#		get_parent().add_child(package)
+#		package.global_position = prev_pos
+#		package.being_carried=false
+#		sfx_drop_package.play()
+#		over_package=package
 		
 func ask():
 	if not target or get_package_count() == 0:
@@ -394,9 +414,13 @@ func on_last_package_anchor():
 			
 			
 func on_packaged_delivered(package, source, reply):
+	var current_money = money
+	var gain = Package.INCOME_BY_TIMELINESS[reply]
 	money = clamp(money+Package.INCOME_BY_TIMELINESS[reply],-100,10000)
+	Globals.emit_signal("gain_money", current_money, gain)
 	if money == -100:
-		Globals.do_game_over(Globals.GameOverReason.MONEY)
+		#Globals.do_game_over(Globals.GameOverReason.MONEY)
+		Globals.emit_signal("game_over")
 	Logger.info("Player money %d" % money)
 #	match reply:
 #		Package.Timeliness.QUICK:
@@ -408,3 +432,10 @@ func on_packaged_delivered(package, source, reply):
 #		Package.Timeliness.VERY_DELAYED:
 #			pass
 	
+func _on_StabilityTimer_timeout():
+	
+	if is_on_floor() and randf()<instability:
+		xsm.change_state("Wobble")
+
+func _on_RecoveryTimer_timeout():
+	instability = clamp(instability-.01,0,.9)
