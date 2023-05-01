@@ -17,10 +17,6 @@ func _on_anim_finished(_name: String) -> void:
 # This function is called when the state enters
 # XSM enters the root first, the the children
 func _on_enter(_args) -> void:
-	owner.sprite.offset.x=16*owner.last_direction.x
-	yield(get_tree().create_timer(1.1), "timeout")
-	var tween = create_tween().set_trans(Tween.TRANS_LINEAR)
-	tween.tween_property(owner.sprite, "offset", Vector2.ZERO,.1)
 	owner.in_animation = true
 	owner.velocity.x=0
 

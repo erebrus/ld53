@@ -1,0 +1,25 @@
+#type#,#value#,#text#
+body_type,ant_1,thin;skinny
+body_type,ant_2,fat;chubby;fatso;big
+body_type,ant_3,old;
+colour,green,green
+colour,grey,grey
+colour,orange,orange
+colour,blue,blue
+tie,blue,blue tie;ugly blue tie
+tie,yellow,yellow tie;jarring yellow tie
+hair,none,bald head
+hair,pink_long,pink wig;long pink hair;fake pink wig;ridiculous pink hair
+hair,blue_long,blue dyed hair;long blue hair;horrible blue hair;ridiculous blue hair
+hair,blue_buns,blue princess leia haircut;blue buns;childish blue buns
+hair,blue_short,short blue hair;clean cut blue hair
+hair,blonde_short,yellow hair;blonde short hair;blonde hair
+hair,green_short,green hair; short green hair; hair like grass;weed like hair
+glasses,blue,blue glasses
+glasses,green,green glasses
+glasses,sun_green,green sunglasses
+glasses,sun_yellow,yellow sunglasses
+facial,yellow,yellow moustache;blonde moustache
+facial,blue,blue moustache
+facial,green,green moustache
+
