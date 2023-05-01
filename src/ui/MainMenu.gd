@@ -17,8 +17,9 @@ func _on_Start_pressed():
 	if sfx_press.stream:
 		sfx_select.stop()
 		sfx_press.play()
+		Globals.start_game()
 		yield(get_tree().create_timer(.8),"timeout")
-
+		
 	get_tree().change_scene_to(first_level)
 
 func _on_Options_pressed():

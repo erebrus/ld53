@@ -150,6 +150,8 @@ func on_landing(_last_vy:float):
 
 
 func _process(delta: float) -> void:
+	if global_position.y > 5000:
+		Globals.emit_signal("game_over")
 	control(delta)
 	if Input.is_action_just_pressed("ui_left") or Input.is_action_just_pressed("ui_right"):
 		instability+=.05*get_package_count()
