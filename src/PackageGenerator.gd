@@ -3,9 +3,10 @@ extends Node2D
 const PackageScene:PackedScene = preload("res://src/Package.tscn")
 const AnchorDeltaX = 16
 
-export var max_packages = 6
-export var init_packages:int =3
-export var mean_period:float = 30
+export(Array,float) var mean_period_per_cycle=[45, 30, 20]
+export var max_packages = 8
+export var init_packages:int = 3
+export var mean_period:float = 60
 export var variability:float= .25
 
 func _ready() -> void:
@@ -24,7 +25,15 @@ func _ready() -> void:
 		if anchor:
 			new_package(anchor)
 	schedule()
+	Globals.time.connect("cycle_ended", self, "on_cycle_ended")
 	
+
+func on_cycle_ended():
+	if not mean_period_per_cycle.empty():
+		mean_period=mean_period_per_cycle[0]
+		mean_period_per_cycle.remove(0)
+		Logger.info("New mean period for package generator %2f." % mean_period)
+
 func get_next_free_anchor():
 	for anchor in $anchors.get_children():
 		if anchor.get_child_count()==0:
@@ -38,6 +47,7 @@ func new_package(anchor:Node2D, publish:=false):
 	Logger.debug("Generated new package for %s" % recipient.get_id())
 	obj.init(recipient)	
 	anchor.add_child(obj)
+	obj.show_puff()
 	obj.position = Vector2.ZERO
 	if publish:
 		Globals.emit_signal("new_package")
