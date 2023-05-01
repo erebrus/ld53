@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://src/UITheme.tres" type="Theme" id=1]
+[ext_resource path="res://TimeUI.gd" type="Script" id=2]
+[ext_resource path="res://assets/gfx/ui/TIME.png" type="Texture" id=3]
+
+[node name="Time" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="Background" type="Sprite" parent="."]
+texture = ExtResource( 3 )
+
+[node name="Label" type="Label" parent="."]
+margin_left = -10.0
+margin_right = 30.0
+margin_bottom = 14.0
+theme = ExtResource( 1 )
+text = "09:00"
