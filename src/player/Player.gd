@@ -86,6 +86,8 @@ func control(_delta:float) -> void:
 		show_wheel()
 	elif Input.is_action_just_released("ask"):
 		ask()
+	if !Input.is_action_pressed("ask") and !Input.is_action_pressed("deliver"):
+		hide_wheel()
 			
 	if Input.is_action_just_pressed("trip"):
 		xsm.change_state("Trip")
@@ -186,6 +188,7 @@ func set_platform_collision_enabled(val):
 
 func trip():
 	xsm.change_state("Trip")
+	hide_wheel()
 
 func get_package_count()->int:
 	var count = 0
@@ -267,9 +270,11 @@ func ask():
 
 func show_wheel():
 	wheel.show_wheel(get_packages())
+	
+func hide_wheel():
+	wheel.hide_wheel()
 
 func deliver():
-	wheel.hide_wheel()
 	if not target or packages_container.get_child_count() == 0:
 		return
 	var package = get_package(wheel.get_selection())

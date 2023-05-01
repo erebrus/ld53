@@ -36,6 +36,7 @@ func show_wheel(packages):
 func hide_wheel():
 	hide = true
 	visible = false
+	chat.close_dialog()
 	for i in max_slots:
 		slots[i].un_select()
 
