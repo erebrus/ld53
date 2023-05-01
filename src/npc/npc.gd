@@ -28,6 +28,12 @@ var target_position
 onready var tree := $AnimationTree
 onready var dialog := $Chat
 onready var leg := $Leg
+onready var sfx_talk := $sfx/sfx_talk
+onready var sfx_bark :=  $sfx/sfx_trumpet
+onready var sfx_laugh := $sfx/sfx_laugh
+onready var sfx_wow := $sfx/sfx_wow
+
+var active_sfx
 
 var props := {}
 var is_female := false
@@ -71,12 +77,17 @@ func process_package(package):
 			update_relationship(TIMELINESS_MODIFIERS[timeliness])
 			Logger.debug("%s - new relationship state: %f" % [get_id(), relationship])
 			Globals.emit_signal("reply_package", package, self, timeliness)
-			show_dialog(get_timeliness_dialog(timeliness))
+			if timeliness>1:
+				show_dialog(get_timeliness_dialog(timeliness), sfx_bark)
+			elif timeliness==1:
+				show_dialog(get_timeliness_dialog(timeliness), sfx_talk)
+			else:
+				show_dialog(get_timeliness_dialog(timeliness), sfx_wow)
 			return true	
 	else:
 		Logger.debug("%s - received wrong package" % get_id())
 		Globals.emit_signal("bark", self, get_wrong_recipient_message())
-		show_dialog(get_wrong_recipient_message())
+		show_dialog(get_wrong_recipient_message(), sfx_talk)
 		return false
 
 
@@ -107,7 +118,7 @@ func give_candy():
 	update_relationship(CANDY_MODIFIER)
 	#TODO random message
 	Globals.emit_signal("bark", self, "Thank you for the candy...I guess")
-	show_dialog("Thank you for the candy...I guess")
+	show_dialog("Thank you for the candy...I guess", sfx_talk)
 
 func set_body(res):
 	$AntPivot/Body.texture = load(res)
@@ -145,10 +156,18 @@ func set_tie(res):
 	else:
 		$AntPivot/Tie.texture = null	
 		
-func show_dialog(text: String, manual:=false) -> void:
-	dialog.open_dialog(text, manual)
+func show_dialog(text: String, sfx=null) -> void:
+	dialog.open_dialog(text)
+	if sfx:
+		sfx.play()
+		yield(get_tree().create_timer(text.length()*.05+.2),"timeout")
+		sfx.stop()
 
-
+func on_dialog_done(sfx):
+	if active_sfx:
+		active_sfx.stop()	
+	dialog.disconnect("done",self,"on_dialog_done")
+	
 func _on_DetectionBox_body_entered(body):
 	Logger.debug("%s - detected played." % get_id())
 	body.target = self
@@ -188,12 +207,12 @@ func get_colleagues():
 	
 func ask_about(target_name, target_section):
 	if target_section != call_section:
-		show_dialog(Globals.get_random_line(Globals.BarkType.ASK_WRONG_DEPARTMENT))
+		show_dialog(Globals.get_random_line(Globals.BarkType.ASK_WRONG_DEPARTMENT),sfx_talk)
 #		Globals.emit_signal("bark", self, )
 		return
 
 	if call_name == target_name and call_section == target_section:
-		show_dialog("It's me you idiot!")
+		show_dialog("It's me you idiot!",sfx_wow)
 		return
 		
 	var target = null
@@ -204,10 +223,13 @@ func ask_about(target_name, target_section):
 	
 	if target == null:
 		#Globals.emit_signal("bark", self, "I have no clue who that is.")
-		show_dialog("I have no clue who that is.")
+		show_dialog("I have no clue who that is.", sfx_talk)
+		yield(get_tree().create_timer(1),"timeout")
+		sfx_talk.stop()
 	else:
 #		Globals.emit_signal("bark", self, build_directions_reply(target))
-		show_dialog(build_directions_reply(target), true)
+		show_dialog(build_directions_reply(target),sfx_talk)
+
 		
 func build_directions_reply(target):
 	var keys = target.props.keys()
@@ -225,7 +247,7 @@ func build_directions_reply(target):
 	
 	for prop in target_props:
 		if prop == "colour":
-			body="%s%s" % [body, Globals.get_text_for_prop(prop, target.props[prop])]
+			body="%s %s" % [body, Globals.get_text_for_prop(prop, target.props[prop])]
 	
 	var other=""
 	for prop in target_props:
@@ -268,7 +290,7 @@ func adjust_gender(comment:String, is_female:bool)->String:
 func _on_Leg_body_entered(body: Node) -> void:
 	body.trip()
 	$Leg/AnimationPlayer.play("retreat")
-	show_dialog(Globals.get_random_line(Globals.BarkType.BARK_TRIP))
+	show_dialog(Globals.get_random_line(Globals.BarkType.BARK_TRIP), sfx_bark)
 
 
 func _on_PrankTimer_timeout() -> void:
