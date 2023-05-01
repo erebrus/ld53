@@ -13,7 +13,6 @@ var player_near = false
 var time_since_press = 100.0
 var wait_period = 2.0
 export var level = 0
-var showed_tooltip = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -53,9 +52,9 @@ func _on_Area2D_body_entered(body):
 	print(body)
 	player_near = true
 	anim_player.play("Outline")
-	if !showed_tooltip:
+	if !Globals.showed_elevator_button_tip:
 		chat.open_dialog("Press Up or Down.")
-		showed_tooltip = true
+		Globals.showed_elevator_button_tip = true
 
 func _on_Area2D_body_exited(body):
 	print("exiting")

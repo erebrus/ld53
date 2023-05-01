@@ -41,6 +41,7 @@ const GameDataPath = "user://conf.cfg"
 var config:ConfigFile
 
 var debug_build := false
+var showed_elevator_button_tip = false
 
 var music:AudioStreamPlayer
 
