@@ -48,6 +48,7 @@ func _ready():
 	var seek = rng.randf_range(0, 2)
 	tree.set("parameters/Idle/Seek/seek_position", seek)
 	Globals.connect("player_slipped", self, "on_player_slipped")
+
 	smiley.init(relationship)
 	
 func get_id()->String:
@@ -70,6 +71,7 @@ func get_id()->String:
 #		sprite.flip_h= last_direction.x < 0
 
 
+	
 func on_player_slipped(pos):
 	if global_position.distance_to(pos) < 200:
 		show_dialog(Globals.get_random_line(Globals.BarkType.BARK_SLIP))
@@ -319,3 +321,6 @@ func schedule_prank_check():
 func _set_relationship(val):
 	relationship=val
 	smiley.on_relationship_change(val)
+
+func warn_player():
+	show_dialog(Globals.get_random_line(Globals.BarkType.ALMOST_LOSING), sfx_bark)

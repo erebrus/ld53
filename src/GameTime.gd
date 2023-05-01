@@ -3,7 +3,7 @@ class_name GameTime
 
 signal cycle_ended
 
-const CYCLES_PER_DAY=2
+const CYCLES_PER_DAY=4
 const CYCLE_DURATION=120
 
 var day:int=1

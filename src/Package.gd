@@ -2,7 +2,7 @@ extends KinematicBody2D
 class_name Package
 
 enum Timeliness {QUICK, JUST_IN_TIME, DELAYED, VERY_DELAYED}
-
+const INCOME_BY_TIMELINESS = [15,5,0,-10]
 onready var tween = $Tween
 onready var anim_player = $AnimationPlayer
 

@@ -3,6 +3,8 @@ extends Node
 signal reply_package(package, source, reply)
 signal bark(source, message)
 signal player_slipped(pos)
+signal new_package()
+signal last_package_anchor()
 
 signal trip()
 signal player_in_moving_elevator()
@@ -23,7 +25,8 @@ var first_names:Array
 var last_names:Array
 var game_names:Array=[]
 
-enum BarkType {QUICK, JUST_IN_TIME, DELAYED, VERY_DELAYED, BARK, BARK_TRIP, BARK_SLIP, ASK_WRONG_DEPARTMENT, ASK_REPLY}
+enum GameOverReason {PACKAGES, MONEY}
+enum BarkType {QUICK, JUST_IN_TIME, DELAYED, VERY_DELAYED, BARK, BARK_TRIP, BARK_SLIP, ASK_WRONG_DEPARTMENT, ASK_REPLY, ALMOST_LOSING}
 var BarkFiles = [
 	"res://data/reply_quick.txt",
 	"res://data/reply_in_time.txt",
@@ -33,7 +36,8 @@ var BarkFiles = [
 	"res://data/bark_trip.txt",
 	"res://data/bark_slip.txt",	
 	"res://data/ask_wrong_section.txt",
-	"res://data/ask_reply.txt"	
+	"res://data/ask_reply.txt",	
+	"res://data/almost_losing.txt"	
 	
 ]
 var barks:Dictionary = {}
