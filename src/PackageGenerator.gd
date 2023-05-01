@@ -47,6 +47,7 @@ func new_package(anchor:Node2D, publish:=false):
 	Logger.debug("Generated new package for %s" % recipient.get_id())
 	obj.init(recipient)	
 	anchor.add_child(obj)
+	obj.show_puff()
 	obj.position = Vector2.ZERO
 	if publish:
 		Globals.emit_signal("new_package")

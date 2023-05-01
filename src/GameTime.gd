@@ -11,7 +11,7 @@ var cycle:int=1
 var time:int=1
 
 func tick():
-	Logger.info("tick: t=%d c=%d" %[time, cycle])
+	Logger.debug("tick: t=%d c=%d" %[time, cycle])
 	time += 1
 	if time > CYCLE_DURATION:
 		tick_cycle()
