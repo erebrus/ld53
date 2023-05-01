@@ -74,17 +74,19 @@ func control(_delta:float) -> void:
 	if in_animation:
 		if Input.is_action_just_released("deliver"):
 			deliver()
-		if Input.is_action_just_released("ask"):
+		elif Input.is_action_just_released("ask"):
 			ask()
+		elif !Input.is_action_pressed("ask") and !Input.is_action_pressed("deliver"):
+			hide_wheel()
 		return
 	facing_direction = Vector2(Input.get_axis("ui_left", "ui_right"),0);
 	if Input.is_action_just_pressed("jump"):
 		Logger.debug("Jump was pressed. (global, should be processed by now) . States = %s" % $XSM.get_active_states())
 
-	if Input.is_action_just_pressed("pickup"):
+	if Input.is_action_just_pressed("pickup") and can_pickup():
 		pickup()
 		
-	if Input.is_action_just_pressed("deliver") and !Input.is_action_pressed("ask"):
+	elif Input.is_action_just_pressed("deliver") and !Input.is_action_pressed("ask"):
 		show_wheel()
 	elif Input.is_action_just_released("deliver"):
 		deliver()
@@ -245,8 +247,11 @@ func pop_selected_package(package):
 					
 	return ret
 	
+func can_pickup()->bool:
+	return over_package and get_package_count() < 3
+
 func pickup():
-	if not over_package and get_package_count() == 0:
+	if not can_pickup():
 		return
 	
 	if over_package:			
@@ -255,17 +260,20 @@ func pickup():
 		push_package(over_package)	
 		over_package=null
 		sfx_pickup_package.play()
-	else:
-		var package = pop_package()
-		if not package:
-			Logger.warn("Tried to pop package, but found no package.")
-			return
-		var prev_pos = packages_container.get_child(0).global_position		
-		get_parent().add_child(package)
-		package.global_position = prev_pos
-		package.being_carried=false
-		sfx_drop_package.play()
-		over_package=package
+#	else:
+#		WE NO LONGER DROP PACKAGES
+		
+#
+#		var package = pop_package()
+#		if not package:
+#			Logger.warn("Tried to pop package, but found no package.")
+#			return
+#		var prev_pos = packages_container.get_child(0).global_position		
+#		get_parent().add_child(package)
+#		package.global_position = prev_pos
+#		package.being_carried=false
+#		sfx_drop_package.play()
+#		over_package=package
 		
 func ask():
 	if not target or get_package_count() == 0:
