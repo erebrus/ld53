@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://assets/gfx/world/Map.tres" type="TileSet" id=1]
 [ext_resource path="res://src/ElevatorButton.tscn" type="PackedScene" id=2]
@@ -14,7 +14,7 @@
 [ext_resource path="res://assets/music/Music Finale Loop.wav" type="AudioStream" id=12]
 [ext_resource path="res://src/world/Banana.tscn" type="PackedScene" id=13]
 [ext_resource path="res://src/ui/Custom.tres" type="TileSet" id=14]
-[ext_resource path="res://assets/gfx/world/signs/accounting.png" type="Texture" id=15]
+[ext_resource path="res://src/Map.gd" type="Script" id=15]
 [ext_resource path="res://assets/gfx/world/signs/quality-assurance.png" type="Texture" id=16]
 [ext_resource path="res://assets/gfx/world/signs/shipping.png" type="Texture" id=17]
 [ext_resource path="res://assets/gfx/world/signs/admin.png" type="Texture" id=18]
@@ -25,6 +25,7 @@
 [ext_resource path="res://assets/gfx/world/signs/info-tech.png" type="Texture" id=23]
 [ext_resource path="res://assets/gfx/world/signs/human-resources.png" type="Texture" id=24]
 [ext_resource path="res://assets/gfx/world/signs/front-desk.png" type="Texture" id=25]
+[ext_resource path="res://assets/gfx/world/signs/accounting.png" type="Texture" id=26]
 
 [sub_resource type="ShaderMaterial" id=5]
 resource_local_to_scene = true
@@ -287,6 +288,7 @@ tracks/7/keys = {
 [sub_resource type="Environment" id=1]
 
 [node name="Map" type="Node2D"]
+script = ExtResource( 15 )
 
 [node name="Transparent BG" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
@@ -381,7 +383,7 @@ texture = ExtResource( 17 )
 
 [node name="Accounting" type="Sprite" parent="Wall BG Props/Signs"]
 position = Vector2( -400, 1056 )
-texture = ExtResource( 15 )
+texture = ExtResource( 26 )
 
 [node name="Office Inbetween" type="Node2D" parent="."]
 
@@ -603,6 +605,7 @@ environment = SubResource( 1 )
 
 [node name="PackageGenerator" parent="." instance=ExtResource( 5 )]
 position = Vector2( 256, 208 )
+mean_period = 10.0
 
 [node name="Elevator" parent="." instance=ExtResource( 6 )]
 position = Vector2( 512, 160 )
@@ -613,4 +616,8 @@ volume_db = -15.0
 autoplay = true
 bus = "Music"
 
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
 [connection signal="timeout" from="Door Manager/Timer" to="Door Manager" method="_on_Timer_timeout"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
