@@ -1,4 +1,4 @@
-[gd_scene load_steps=96 format=2]
+[gd_scene load_steps=97 format=2]
 
 [ext_resource path="res://assets/gfx/player/ant-idle.png" type="Texture" id=1]
 [ext_resource path="res://src/player/Fall.gd" type="Script" id=2]
@@ -38,6 +38,7 @@
 [ext_resource path="res://assets/sfx/landing_1.wav" type="AudioStream" id=36]
 [ext_resource path="res://assets/sfx/landing_4.wav" type="AudioStream" id=37]
 [ext_resource path="res://assets/sfx/landing_2.wav" type="AudioStream" id=38]
+[ext_resource path="res://src/ui/Box Wheel.tscn" type="PackedScene" id=39]
 
 [sub_resource type="AtlasTexture" id=588]
 atlas = ExtResource( 12 )
@@ -680,20 +681,6 @@ tracks/3/keys = {
 "method": "on_slip"
 } ]
 }
-tracks/4/type = "method"
-tracks/4/path = NodePath("Sfx/SFXSlip")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
-"times": PoolRealArray( 0.1 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [ 0.0 ],
-"method": "play"
-} ]
-}
 
 [sub_resource type="Animation" id=538]
 resource_name = "Wobble"
@@ -771,20 +758,6 @@ tracks/5/keys = {
 "update": 0,
 "values": [ Vector2( 0, -16 ), Vector2( 2, -16 ), Vector2( 5, -16 ), Vector2( 6, -16 ), Vector2( 4, -16 ), Vector2( 2, -16 ), Vector2( 2, -16 ) ]
 }
-tracks/6/type = "method"
-tracks/6/path = NodePath("Sfx/SFXWobble")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [ 0.0 ],
-"method": "play"
-} ]
-}
 
 [sub_resource type="Animation" id=489]
 resource_name = "trip"
@@ -825,20 +798,6 @@ tracks/2/keys = {
 "values": [ {
 "args": [  ],
 "method": "on_trip"
-} ]
-}
-tracks/3/type = "method"
-tracks/3/path = NodePath("Sfx/SFXTrip")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"times": PoolRealArray( 0.1 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [ 0.0 ],
-"method": "play"
 } ]
 }
 
@@ -988,7 +947,7 @@ on_anim_finished = 0
 disabled = false
 debug_mode = false
 timed = false
-next_state = NodePath("")
+next_state = NodePath("../Walk")
 
 [node name="Walk" type="Node" parent="XSM/CanDash"]
 script = ExtResource( 4 )
@@ -999,7 +958,7 @@ on_anim_finished = 1
 disabled = false
 debug_mode = false
 timed = false
-next_state = NodePath("")
+next_state = NodePath("../Jump")
 
 [node name="Jump" type="Node" parent="XSM/CanDash"]
 script = ExtResource( 7 )
@@ -1021,7 +980,7 @@ on_anim_finished = 0
 disabled = false
 debug_mode = false
 timed = false
-next_state = NodePath("")
+next_state = NodePath("../Slip")
 
 [node name="Slip" type="Node" parent="XSM"]
 script = ExtResource( 19 )
@@ -1032,7 +991,7 @@ on_anim_finished = 0
 disabled = false
 debug_mode = false
 timed = false
-next_state = NodePath("")
+next_state = NodePath("../Wobble")
 
 [node name="Wobble" type="Node" parent="XSM"]
 script = ExtResource( 16 )
@@ -1043,7 +1002,7 @@ on_anim_finished = 0
 disabled = false
 debug_mode = false
 timed = false
-next_state = NodePath("")
+next_state = NodePath("../Stairs")
 
 [node name="Stairs" type="Node" parent="XSM"]
 script = ExtResource( 16 )
@@ -1136,5 +1095,8 @@ position = Vector2( 0, -8 )
 
 [node name="Anchor3" type="Node2D" parent="packages"]
 position = Vector2( 0, -16 )
+
+[node name="BoxWheelUI" parent="." instance=ExtResource( 39 )]
+position = Vector2( 0, -64 )
 
 [connection signal="timeout" from="Sfx/FootstepTimer" to="." method="_on_FootstepTimer_timeout"]

@@ -31,7 +31,7 @@ onready var sfx_drop_package := $Sfx/SFXDrop
 onready var sfx_pickup_package := $Sfx/SFXPickUp
 onready var sfx_slip := $Sfx/SFXSlip
 onready var sfx_trip := $Sfx/SFXTrip
-
+onready var wheel: = $BoxWheelUI
 
 var can_play_footstep:bool = true
 
@@ -78,6 +78,8 @@ func control(_delta:float) -> void:
 		pickup()
 		
 	if Input.is_action_just_pressed("deliver"):
+		show_wheel()
+	elif Input.is_action_just_released("deliver"):
 		deliver()
 	if Input.is_action_just_pressed("ask"):
 		ask()
@@ -190,6 +192,7 @@ func get_package_count()->int:
 	return count
 	
 func push_package(package):
+	wheel.hide_wheel()
 	if get_package_count() == packages_container.get_child_count():
 		Logger.debug("Cannot pick up more packages")
 		return
@@ -197,6 +200,7 @@ func push_package(package):
 	package.position = Vector2.ZERO
 	
 func pop_package():
+	wheel.hide_wheel()
 	if get_package_count() == 0:
 		return null
 	var ret = packages_container.get_child(0).get_child(0)
@@ -207,6 +211,25 @@ func pop_package():
 			p.get_parent().remove_child(p)
 			packages_container.get_child(i-1).add_child(p)
 			p.position=Vector2.ZERO				
+	return ret
+
+func pop_selected_package(package):
+	if get_package_count() == 0:
+		return null
+	var ret = packages_container.get_child(0).get_child(0)
+	for package_anchor in packages_container.get_children(): 
+		if package_anchor.get_child(0) == package:
+			ret = package_anchor.get_child(0)
+			ret.get_parent().remove_child(ret)
+			break
+			
+	for i in range(1, packages_container.get_child_count()):
+		if packages_container.get_child(i).get_child_count()>0:
+			var p = packages_container.get_child(i).get_child(0)
+			p.get_parent().remove_child(p)
+			packages_container.get_child(i-1).add_child(p)
+			p.position=Vector2.ZERO		
+					
 	return ret
 	
 func pickup():
@@ -238,19 +261,24 @@ func ask():
 	var package = get_package(0)
 	target.ask_about(package.target_name, package.target_section)
 
+func show_wheel():
+	wheel.show_wheel(get_packages())
+
 func deliver():
+	wheel.hide_wheel()
 	if not target or packages_container.get_child_count() == 0:
 		return
-	var package = get_package(0)
+	var package = get_package(wheel.get_selection())
+	if package == null:
+		return
 	if target.process_package(package):
-		pop_package()
+		pop_selected_package(package)
 		Globals.emit_signal("package_received")
 		var glob = package.global_position
 		remove_child(package)
 		get_parent().add_child(package)
 		package.global_position = glob
 		package.consume(target)
-		
 
 func adjust_package_x():
 	for i in range(get_package_count()):
@@ -263,8 +291,12 @@ func get_package(idx:int):
 		return null
 	return packages_container.get_child(idx).get_child(0)
 
-
-
+func get_packages():
+	var package_list = []
+	for i in 3:
+		package_list.append(get_package(i))
+		
+	return package_list
 
 func on_trip():
 	if get_package_count() == 0:
