@@ -1,4 +1,4 @@
-[gd_scene load_steps=92 format=2]
+[gd_scene load_steps=96 format=2]
 
 [ext_resource path="res://assets/gfx/player/ant-idle.png" type="Texture" id=1]
 [ext_resource path="res://src/player/Fall.gd" type="Script" id=2]
@@ -34,6 +34,10 @@
 [ext_resource path="res://assets/sfx/fall_2.wav" type="AudioStream" id=32]
 [ext_resource path="res://assets/sfx/fall_1.wav" type="AudioStream" id=33]
 [ext_resource path="res://assets/sfx/package_drop.wav" type="AudioStream" id=34]
+[ext_resource path="res://assets/sfx/landing_3.wav" type="AudioStream" id=35]
+[ext_resource path="res://assets/sfx/landing_1.wav" type="AudioStream" id=36]
+[ext_resource path="res://assets/sfx/landing_4.wav" type="AudioStream" id=37]
+[ext_resource path="res://assets/sfx/landing_2.wav" type="AudioStream" id=38]
 
 [sub_resource type="AtlasTexture" id=588]
 atlas = ExtResource( 12 )
@@ -1077,6 +1081,7 @@ random_pitch_range = 0
 
 [node name="SFXLand" type="AudioStreamPlayer2D" parent="Sfx"]
 script = ExtResource( 8 )
+samples = [ ExtResource( 36 ), ExtResource( 38 ), ExtResource( 35 ), ExtResource( 37 ) ]
 random_volume_range = 0
 random_pitch_range = 0
 
