@@ -7,7 +7,7 @@ extends Node2D
 onready var anim_player = $AnimationPlayer
 onready var timer = $Timer
 onready var tween = $Tween
-var stairs_duration = 3
+var stairs_duration = 2
 var doors = []
 var player = null
 var busy = false

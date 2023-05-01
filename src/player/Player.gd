@@ -170,36 +170,58 @@ func set_platform_collision_enabled(val):
 func trip():
 	xsm.change_state("Trip")
 
+func get_package_count()->int:
+	var count = 0
+	for package_anchor in packages_container.get_children():
+		if package_anchor.get_child_count()>0:
+			count += 1
+	return count
+	
+func push_package(package):
+	if get_package_count() == packages_container.get_child_count():
+		Logger.debug("Cannot pick up more packages")
+		return
+	packages_container.get_child(get_package_count()).add_child(package)
+	package.position = Vector2.ZERO
+	
+func pop_package():
+	if get_package_count() == 0:
+		return null
+	var ret = packages_container.get_child(0).get_child(0)
+	ret.get_parent().remove_child(ret)
+	for i in range(1, packages_container.get_child_count()):
+		if packages_container.get_child(i).get_child_count()>0:
+			var p = packages_container.get_child(i).get_child(0)
+			p.get_parent().remove_child(p)
+			packages_container.get_child(i-1).add_child(p)
+			p.position=Vector2.ZERO				
+	return ret
+	
 func pickup():
-	if not over_package and packages_container.get_child_count() == 0:
+	if not over_package and get_package_count() == 0:
 		return
 	
 	if over_package:			
 		over_package.being_carried=true
 		over_package.get_parent().remove_child(over_package)		
-		packages_container.add_child(over_package)				
-		over_package.global_position = packages_container.global_position	 \
-			+ Vector2(0, -8)*(packages_container.get_child_count()-1)	
+		push_package(over_package)	
 		over_package=null
 	else:
-		var package = packages_container.get_child(0)
-		var prev_pos = package.global_position
-		package.get_parent().remove_child(package)
+		var package = pop_package()
+		if not package:
+			Logger.warn("Tried to pop package, but found no package.")
+			return
+		var prev_pos = packages_container.get_child(0).global_position		
 		get_parent().add_child(package)
 		package.global_position = prev_pos
 		package.being_carried=false
 		over_package=package
-		reset_package_position()
 		
-func reset_package_position():
-	for i in range(packages_container.get_child_count()):
-			var p = packages_container.get_child(i)
-			p.global_position = packages_container.global_position	 \
-			+ Vector2(0, -8)*i	
+		
 func deliver():
 	if not target or packages_container.get_child_count() == 0:
 		return
-	var package = packages_container.get_child(0)
+	var package = pop_package()
 	if target.process_package(package):
 		Globals.emit_signal("package_received")
 		var glob = package.global_position
@@ -207,5 +229,11 @@ func deliver():
 		get_parent().add_child(package)
 		package.global_position = glob
 		package.consume(target)
-		reset_package_position()
 		
+		
+func on_slip():
+	var velocities = [ 
+		Vector2(0,0) *last_direction*Vector2(-1,0),
+		Vector2(0,0) *last_direction*Vector2(-1,0),
+		Vector2(0,0) *last_direction*Vector2(-1,0)
+	]

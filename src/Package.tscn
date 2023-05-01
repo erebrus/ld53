@@ -99,11 +99,13 @@ texture = ExtResource( 2 )
 region_rect = Rect2( 550, 144, 22, 16 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource( 1 )
 
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+visible = false
 shape = SubResource( 1 )
 
 [node name="Tween" type="Tween" parent="."]

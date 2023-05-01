@@ -13,7 +13,7 @@ var start_cycle:int
 var target_name:String
 var target_section:String
 
-var being_carried:=false
+var being_carried:=false setget _set_being_carried
 var velocity:Vector2 =Vector2.ZERO
 
 func init(recipient):
@@ -22,7 +22,10 @@ func init(recipient):
 	start_day = Globals.time.day
 	start_cycle = Globals.time.cycle
 	
-
+func _set_being_carried(val:bool):
+	$CollisionShape2D.disabled = val
+	being_carried=val
+	
 func get_timeliness(time:GameTime):
 	if time.day > start_day:
 		return Timeliness.VERY_DELAYED

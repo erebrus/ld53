@@ -198,6 +198,7 @@ MapEvents="*res://src/MapEvents.gd"
 window/size/width=512
 window/size/height=288
 window/size/resizable=false
+window/size/fullscreen=true
 window/size/test_width=1920
 window/size/test_height=1080
 window/stretch/mode="2d"
