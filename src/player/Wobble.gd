@@ -57,5 +57,8 @@ func _state_timeout() -> void:
 
 # Called when any other Timer times out
 func _on_timeout(_name) -> void:
-	change_state("Idle")
+	if randf() <.5:
+		change_state("Idle")
+	else:
+		change_state("Slip")
 

@@ -266,3 +266,51 @@ func on_trip():
 		packages_dropped.append(package)
 		package.being_carried = false
 		
+
+func on_slip():
+	if get_package_count() == 0:
+		return
+		
+#	var positions := [
+#			[Vector2(0,0), Vector2(-4,4), Vector2(-7,12)],
+#			[Vector2(0,8), Vector2(-7,-6), Vector2(-16,1)],
+#			[Vector2(0,16), Vector2(-13,-14),Vector2(-24,-10)]
+#		]
+#	for plist in positions:
+#		for i in range(plist.size()):
+#			plist[i]=plist[i]*facing_direction
+#
+#	var velocities = [ 
+#		(positions[0][2]-positions[0][1])*10 ,
+#		(positions[1][2]-positions[1][1])*10 ,
+#		(positions[2][2]-positions[2][1])*10 ,				
+#
+#	]
+#	for i in range(get_package_count()):	
+#		packages_container.get_child(i).position = positions[i][0]
+#
+#	var tween = create_tween().set_trans(Tween.TRANS_LINEAR)	
+#	tween.tween_property(packages_container.get_child(0), "position", positions[0][1],.1 )
+#	for i in range(1, get_package_count()):
+#		tween.parallel().tween_property(packages_container.get_child(i), "position", positions[i][1],.1 )
+#	yield(tween,"finished")			
+#	tween.tween_property(packages_container.get_child(0), "position", positions[0][2],.1 )
+#	for i in range(1, get_package_count()):
+#		tween.parallel().tween_property(packages_container.get_child(i), "position", positions[i][2],.1 )
+#	yield(tween,"finished")			
+	var velocities = [ 
+		(Vector2(-7,12)-Vector2(-4,4))*10 *last_direction,
+		(Vector2(-16,1)-Vector2(-7,-6))*10 *last_direction,
+		(Vector2(-24,-10)-Vector2(-13,-14))*10 *last_direction
+	]	
+	var packages_dropped = []
+	for i in range(get_package_count()):
+		var package = packages_container.get_child(i).get_child(0)
+		package.velocity = velocities[i]
+		var pos = package.global_position
+		package.get_parent().remove_child(package)
+		get_parent().add_child(package)
+		package.global_position = pos
+		packages_dropped.append(package)
+		package.being_carried = false
+		
