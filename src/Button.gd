@@ -50,8 +50,8 @@ func on_elevator_arrived():
 
 
 func _on_Area2D_body_entered(body):
-	print("HERE")
-	print(body)
+	if !body.is_in_group("player"):
+		return
 	player_near = true
 	anim_player.play("Outline")
 	if !Globals.showed_elevator_button_tip:
@@ -59,6 +59,8 @@ func _on_Area2D_body_entered(body):
 		Globals.showed_elevator_button_tip = true
 
 func _on_Area2D_body_exited(body):
+	if !body.is_in_group("player"):
+		return
 	print("exiting")
 	print(level)
 	player_near = false

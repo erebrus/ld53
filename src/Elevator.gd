@@ -37,6 +37,9 @@ func _ready():
 		levels.append(position.y + i * level_y_height)
 
 func go_up(level: int) -> void:
+	if current_level == 0:
+		return
+	
 	direction = -1
 	target_level = level
 	if current_level == target_level:
@@ -46,6 +49,8 @@ func go_up(level: int) -> void:
 	begin_moving()
 	
 func go_down(level: int) -> void:
+	if current_level == total_levels - 1:
+		return
 	direction = 1
 	target_level = level
 	if current_level == target_level:
