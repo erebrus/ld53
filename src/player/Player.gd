@@ -230,10 +230,39 @@ func deliver():
 		package.global_position = glob
 		package.consume(target)
 		
-		
-func on_slip():
+
+func adjust_package_x():
+	for i in range(get_package_count()):
+		var package = packages_container.get_child(i).get_child(0)
+		if facing_direction.x < 0:
+			package.position.x = -package.position.x
+
+func get_package(idx:int):
+	if idx<0 or idx >2 or packages_container.get_child(idx).get_child_count() == 0:
+		return null
+	return packages_container.get_child(idx).get_child(0)
+
+
+
+
+func on_trip():
+	if get_package_count() == 0:
+		return
+	
+	
 	var velocities = [ 
-		Vector2(0,0) *last_direction*Vector2(-1,0),
-		Vector2(0,0) *last_direction*Vector2(-1,0),
-		Vector2(0,0) *last_direction*Vector2(-1,0)
-	]
+		(Vector2(-7,12)-Vector2(-4,4))*10 * -last_direction * Vector2(2,1),
+		(Vector2(-16,1)-Vector2(-7,-6))*10 * -last_direction * Vector2(2,1),
+		(Vector2(-24,-10)-Vector2(-13,-14))*10 *-last_direction * Vector2(2,1),
+	]	
+	var packages_dropped = []
+	for i in range(get_package_count()):
+		var package = packages_container.get_child(i).get_child(0)
+		package.velocity = velocities[i]
+		var pos = package.global_position
+		package.get_parent().remove_child(package)
+		get_parent().add_child(package)
+		package.global_position = pos
+		packages_dropped.append(package)
+		package.being_carried = false
+		

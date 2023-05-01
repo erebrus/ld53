@@ -17,6 +17,7 @@ func _on_anim_finished(_name: String) -> void:
 # This function is called when the state enters
 # XSM enters the root first, the the children
 func _on_enter(_args) -> void:
+	owner.in_animation = true
 	add_timer("",1.4)
 
 # This function is called just after the state enters
@@ -28,7 +29,7 @@ func _after_enter(_args) -> void:
 # This function is called each frame if the state is ACTIVE
 # XSM updates the root first, then the children
 func _on_update(_delta: float) -> void:
-	pass
+	owner.velocity.x=0
 
 
 # This function is called each frame after all the update calls
@@ -46,7 +47,7 @@ func _before_exit(_args) -> void:
 # This function is called when the State exits
 # XSM before_exits the children first, then the root
 func _on_exit(_args) -> void:
-	pass
+	owner.in_animation = false
 
 
 # when StateAutomaticTimer timeout()
