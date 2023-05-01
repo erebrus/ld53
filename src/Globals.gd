@@ -3,9 +3,9 @@ extends Node
 signal reply_package(package, source, reply)
 signal bark(source, message)
 signal player_slipped(pos)
-signal new_package()
+signal new_package(free_anchor_count)
 signal last_package_anchor()
-
+signal package_change(free_anchor_count)
 signal trip()
 signal player_in_moving_elevator()
 signal player_in_slowing_elevator()

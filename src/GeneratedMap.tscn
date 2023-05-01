@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://assets/gfx/world/Map.tres" type="TileSet" id=1]
 [ext_resource path="res://src/ElevatorButton.tscn" type="PackedScene" id=2]
@@ -25,6 +25,7 @@
 [ext_resource path="res://assets/gfx/world/signs/info-tech.png" type="Texture" id=23]
 [ext_resource path="res://assets/gfx/world/signs/human-resources.png" type="Texture" id=24]
 [ext_resource path="res://assets/gfx/world/signs/front-desk.png" type="Texture" id=25]
+[ext_resource path="res://src/ui/BoxMeter.tscn" type="PackedScene" id=26]
 
 [sub_resource type="ShaderMaterial" id=5]
 resource_local_to_scene = true
@@ -575,6 +576,9 @@ texture = ExtResource( 8 )
 region_enabled = true
 region_rect = Rect2( 0, 0, 4000, 480 )
 
+[node name="BoxMeter" parent="Courier/Camera2D" instance=ExtResource( 26 )]
+position = Vector2( -176, -96 )
+
 [node name="Button" parent="." instance=ExtResource( 2 )]
 position = Vector2( 464, 192 )
 
@@ -612,5 +616,7 @@ stream = ExtResource( 12 )
 volume_db = -15.0
 autoplay = true
 bus = "Music"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [connection signal="timeout" from="Door Manager/Timer" to="Door Manager" method="_on_Timer_timeout"]
