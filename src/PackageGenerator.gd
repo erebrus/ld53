@@ -4,10 +4,12 @@ const PackageScene:PackedScene = preload("res://src/Package.tscn")
 const AnchorDeltaX = 16
 
 export(Array,float) var mean_period_per_cycle=[45, 30, 20]
-export var max_packages = 8
+export var max_packages = 6
 export var init_packages:int = 3
 export var mean_period:float = 60
 export var variability:float= .25
+var last_free_anchor_count = 0
+var current_free_anchor_count = 0
 
 func _ready() -> void:
 	yield(get_tree(),"idle_frame")
@@ -23,10 +25,16 @@ func _ready() -> void:
 	for i in range(init_packages):
 		var anchor = get_next_free_anchor()
 		if anchor:
-			new_package(anchor)
+			new_package(anchor, true)
 	schedule()
 	Globals.time.connect("cycle_ended", self, "on_cycle_ended")
-	
+
+func _process(delta):
+	current_free_anchor_count = get_free_anchor_count()
+	if current_free_anchor_count == last_free_anchor_count:
+		return
+	else:
+		Globals.emit_signal("package_change", current_free_anchor_count)
 
 func on_cycle_ended():
 	if not mean_period_per_cycle.empty():
@@ -50,7 +58,7 @@ func new_package(anchor:Node2D, publish:=false):
 	obj.show_puff()
 	obj.position = Vector2.ZERO
 	if publish:
-		Globals.emit_signal("new_package")
+		Globals.emit_signal("new_package", get_free_anchor_count())
 	if get_free_anchor_count()<=1:
 		Globals.emit_signal("last_package_anchor")
 		start_reminder()	
@@ -80,7 +88,7 @@ func _on_Timer_timeout() -> void:
 	if not anchor:
 		Globals.do_game_over(Globals.GameOverReason.PACKAGES)
 		return
-	new_package(anchor)
+	new_package(anchor, true)
 
 
 func _on_ReminderTimer_timeout() -> void:
