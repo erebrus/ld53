@@ -5,24 +5,33 @@ extends Node2D
 # var a = 2
 # var b = "text"
 
-var package: Package = null
 onready var anim_player = $AnimationPlayer
 onready var box = $Box
-onready var chat = $Chat
+var target_name = ""
+var target_section = ""
+var is_empty = true
 
-
-func fill_slot(box):
-	package = box
-	box.visible = true
+func fill_slot(incoming):
+	if incoming != null:
+		target_name = incoming.target_name
+		target_section = incoming.target_section
+		is_empty = false
+		box.visible = true
+	else:
+		clear_slot()
+	
 func clear_slot():
-	package = null
+	target_name = ""
+	target_section = ""
+	is_empty = true
 	box.visible = false
+	anim_player.play("Unselected")
 	pass
 func select():
+	if is_empty:
+		return
 	anim_player.play("Selected")
-	var format_string = "Name: %s\nSection: %s"
-	var text = format_string % [package.target_name, package.target_section]
-	chat.open_dialog(text)
+	
 func un_select():
 	anim_player.play("Unselected")
 	
