@@ -26,6 +26,12 @@ onready var sprite :=$Sprite
 onready var sfx_run := $Sfx/SFXRun
 onready var sfx_jump := $Sfx/SFXJump
 onready var sfx_landing := $Sfx/SFXLand
+onready var sfx_wobble := $Sfx/SFXWobble
+onready var sfx_drop_package := $Sfx/SFXDrop
+onready var sfx_pickup_package := $Sfx/SFXPickUp
+onready var sfx_slip := $Sfx/SFXSlip
+onready var sfx_trip := $Sfx/SFXTrip
+
 
 var can_play_footstep:bool = true
 
@@ -80,11 +86,15 @@ func control(_delta:float) -> void:
 		xsm.change_state("Trip")
 	
 	if Input.is_action_just_pressed("slip"):
-		xsm.change_state("Slip")	
+		slip()
 		
 	if Input.is_action_just_pressed("wobble"):
 		xsm.change_state("Wobble")	
 
+
+func slip():
+	xsm.change_state("Slip")	
+	
 func on_dash() -> void:
 	pass
 
@@ -208,6 +218,7 @@ func pickup():
 		over_package.get_parent().remove_child(over_package)		
 		push_package(over_package)	
 		over_package=null
+		sfx_pickup_package.play()
 	else:
 		var package = pop_package()
 		if not package:
@@ -217,10 +228,11 @@ func pickup():
 		get_parent().add_child(package)
 		package.global_position = prev_pos
 		package.being_carried=false
+		sfx_drop_package.play()
 		over_package=package
 		
 func ask():
-	if not target or packages_container.get_child_count() == 0:
+	if not target or get_package_count() == 0:
 		return
 		
 	var package = get_package(0)

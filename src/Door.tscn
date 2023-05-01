@@ -1,9 +1,11 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://src/OutlineItem.tres" type="Material" id=1]
 [ext_resource path="res://assets/gfx/world/Door.png" type="Texture" id=2]
 [ext_resource path="res://src/npc/Chat.tscn" type="PackedScene" id=3]
 [ext_resource path="res://src/Door.gd" type="Script" id=4]
+[ext_resource path="res://assets/sfx/door_open.wav" type="AudioStream" id=5]
+[ext_resource path="res://assets/sfx/door_close.wav" type="AudioStream" id=6]
 
 [sub_resource type="AtlasTexture" id=4]
 atlas = ExtResource( 2 )
@@ -254,6 +256,16 @@ monitorable = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2( 14.5, 8.5 )
 shape = SubResource( 6 )
+
+[node name="SFXOpen" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 5 )
+max_distance = 250.0
+bus = "Sfx"
+
+[node name="SFXClose" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 6 )
+max_distance = 250.0
+bus = "Sfx"
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]

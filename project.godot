@@ -195,8 +195,8 @@ MapEvents="*res://src/MapEvents.gd"
 
 [display]
 
-window/size/width=512
-window/size/height=288
+window/size/width=384
+window/size/height=216
 window/size/resizable=false
 window/size/fullscreen=true
 window/size/test_width=1920

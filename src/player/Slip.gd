@@ -17,6 +17,7 @@ func _on_anim_finished(_name: String) -> void:
 # XSM enters the root first, the the children
 func _on_enter(_args) -> void:
 	owner.in_animation = true
+	Globals.emit_signal("player_slipped", owner.global_position)
 
 
 # This function is called just after the state enters

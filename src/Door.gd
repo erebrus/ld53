@@ -40,14 +40,16 @@ func on_trigger_down():
 	Globals.emit_signal("go_down_floor", level, level + 1)
 	
 func open_door():
+	$SFXOpen.play()
 	timer.start(1)
 	sprite.play("Open")
 	Globals.emit_signal("door_opened")
 	
 func close_door():
+	$SFXClose.play()
 	sprite.play("Close")
 	Globals.emit_signal("door_closed")
-	
+	timer.stop()
 func _on_Area2D_body_entered(body):
 	player_near = true
 	anim_player.play("Outline")
