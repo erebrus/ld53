@@ -42,6 +42,7 @@ var config:ConfigFile
 
 var debug_build := false
 var showed_elevator_button_tip = false
+var showed_stop_button_tip = false
 
 var music:AudioStreamPlayer
 
@@ -99,14 +100,14 @@ func stop_music():
 		music.stop()
 		
 func _init_logger():
-	Logger.set_logger_level(Logger.LOG_LEVEL_TRACE)
+	Logger.set_logger_level(Logger.LOG_LEVEL_NONE)
 	Logger.set_logger_format(Logger.LOG_FORMAT_MORE)
 	var console_appender:Appender = Logger.add_appender(ConsoleAppender.new())
 	console_appender.logger_format=Logger.LOG_FORMAT_FULL
-	console_appender.logger_level = Logger.LOG_LEVEL_DEBUG
+	console_appender.logger_level = Logger.LOG_LEVEL_NONE
 	var file_appender:Appender = Logger.add_appender(FileAppender.new("res://debug.log"))
 	file_appender.logger_format=Logger.LOG_FORMAT_FULL
-	file_appender.logger_level = Logger.LOG_LEVEL_TRACE
+	file_appender.logger_level = Logger.LOG_LEVEL_NONE
 
 
 

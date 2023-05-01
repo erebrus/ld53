@@ -375,6 +375,7 @@ position = Vector2( 332, 209 )
 position = Vector2( 353, 209 )
 
 [node name="Elevator" parent="." instance=ExtResource( 6 )]
+modulate = Color( 1, 1, 1, 0.533333 )
 position = Vector2( 512, 160 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

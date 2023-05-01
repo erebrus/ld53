@@ -8,6 +8,7 @@ onready var anim_player=  $AnimationPlayer
 onready var timer = $Timer
 onready var stop = $Stop
 onready var elevator_sign = $Sign
+onready var chat = $Chat
 export var level_y_height = 224.0
 export var wait_door_close = 2.0
 var is_player_inside = false
@@ -137,14 +138,23 @@ func _physics_process(delta: float):
 #func _process(delta):
 #	pass
 
-
 func _on_Timer_timeout():
 	close_door()
 
 
 func _on_Area2D_body_entered(body):
+	print("something entered elevator")
+	print(body)
 	is_player_inside = true
-
+	$AnimationPlayer.play("Enter")
 
 func _on_Area2D_body_exited(body):
 	is_player_inside = false
+	$AnimationPlayer.play("Leave")
+	
+func show_tooltip():
+	if !Globals.showed_stop_button_tip:
+		Globals.showed_stop_button_tip = true
+		chat.open_dialog("Press enter to stop.")
+		
+		
