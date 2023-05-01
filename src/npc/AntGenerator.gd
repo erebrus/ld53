@@ -45,7 +45,7 @@ func _ready() -> void:
 	ant.set_glasses(glasses_str)
 	ant.set_facial(facial_str)
 	ant.set_hair(hair_str)
-	if body_type!=3:
+	if body_type!=1:
 		ant.add_prop("body_type", ant_sprite_name_map[body_type])
 	ant.add_prop("colour", BellyColour.keys()[colour].to_lower())
 	if not ant.is_female and tie !=0:

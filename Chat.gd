@@ -34,10 +34,12 @@ func open_dialog(text: String, manual:bool = false):
 	done=false
 	requires_keypress = manual
 	close = false
+	label.text = ""
 	bubble_text = text
 	bubble_text_length = bubble_text.length()
 	bubble_text_index = 0
 	current_text = ""
+	
 	anim_player.play("Open")
 	timer.start(.5)
 	

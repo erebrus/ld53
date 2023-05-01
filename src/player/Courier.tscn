@@ -1074,18 +1074,21 @@ anims/right = SubResource( 100 )
 [node name="Sfx" type="Node2D" parent="."]
 
 [node name="SFXJump" type="AudioStreamPlayer2D" parent="Sfx"]
+bus = "Sfx"
 script = ExtResource( 8 )
 samples = [ ExtResource( 24 ), ExtResource( 25 ) ]
 random_volume_range = 0
 random_pitch_range = 0
 
 [node name="SFXLand" type="AudioStreamPlayer2D" parent="Sfx"]
+bus = "Sfx"
 script = ExtResource( 8 )
 samples = [ ExtResource( 36 ), ExtResource( 38 ), ExtResource( 35 ), ExtResource( 37 ) ]
 random_volume_range = 0
 random_pitch_range = 0
 
 [node name="SFXRun" type="AudioStreamPlayer2D" parent="Sfx"]
+bus = "Sfx"
 script = ExtResource( 8 )
 samples = [ ExtResource( 22 ), ExtResource( 20 ), ExtResource( 23 ), ExtResource( 21 ) ]
 random_volume_range = 0
@@ -1095,6 +1098,7 @@ random_pitch_range = 0
 wait_time = 0.3
 
 [node name="SFXWobble" type="AudioStreamPlayer2D" parent="Sfx"]
+bus = "Sfx"
 script = ExtResource( 8 )
 samples = [ ExtResource( 27 ), ExtResource( 26 ), ExtResource( 28 ) ]
 random_volume_range = 0
@@ -1102,17 +1106,21 @@ random_pitch_range = 0
 
 [node name="SFXDrop" type="AudioStreamPlayer2D" parent="Sfx"]
 stream = ExtResource( 34 )
+bus = "Sfx"
 
 [node name="SFXPickUp" type="AudioStreamPlayer2D" parent="Sfx"]
 stream = ExtResource( 29 )
+bus = "Sfx"
 
 [node name="SFXSlip" type="AudioStreamPlayer2D" parent="Sfx"]
+bus = "Sfx"
 script = ExtResource( 8 )
 samples = [ ExtResource( 30 ), ExtResource( 31 ) ]
 random_volume_range = 0
 random_pitch_range = 0
 
 [node name="SFXTrip" type="AudioStreamPlayer2D" parent="Sfx"]
+bus = "Sfx"
 script = ExtResource( 8 )
 samples = [ ExtResource( 33 ), ExtResource( 32 ) ]
 random_volume_range = 0
