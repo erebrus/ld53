@@ -41,6 +41,8 @@ var over_package = null
 var target
 var money:int = 0
 
+var instability:float=0
+
 func _ready():
 	Globals.connect("go_down_floor", self, "go_down_floor")
 	Globals.connect("go_up_floor", self, "go_up_floor")
@@ -148,9 +150,12 @@ func on_landing(_last_vy:float):
 
 
 func _process(delta: float) -> void:
-	
 	control(delta)
-
+	if Input.is_action_just_pressed("ui_left") or Input.is_action_just_pressed("ui_right"):
+		instability+=.05*get_package_count()
+	if Input.is_action_just_pressed("jump"):
+		instability+=.2*get_package_count()
+		
 	if not in_animation: # we need the check in case we got into animation in control
 		update_sprite()
 
@@ -424,3 +429,10 @@ func on_packaged_delivered(package, source, reply):
 #		Package.Timeliness.VERY_DELAYED:
 #			pass
 	
+func _on_StabilityTimer_timeout():
+	
+	if is_on_floor() and randf()<instability:
+		xsm.change_state("Wobble")
+
+func _on_RecoveryTimer_timeout():
+	instability = clamp(instability-.01,0,.9)

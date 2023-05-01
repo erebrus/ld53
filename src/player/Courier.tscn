@@ -1091,4 +1091,11 @@ position = Vector2( 0, -16 )
 [node name="BoxWheelUI" parent="." instance=ExtResource( 39 )]
 position = Vector2( 0, -64 )
 
+[node name="StabilityTimer" type="Timer" parent="."]
+
+[node name="RecoveryTimer" type="Timer" parent="."]
+wait_time = 0.2
+
 [connection signal="timeout" from="Sfx/FootstepTimer" to="." method="_on_FootstepTimer_timeout"]
+[connection signal="timeout" from="StabilityTimer" to="." method="_on_StabilityTimer_timeout"]
+[connection signal="timeout" from="RecoveryTimer" to="." method="_on_RecoveryTimer_timeout"]
