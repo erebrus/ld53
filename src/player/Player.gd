@@ -73,7 +73,9 @@ func control(_delta:float) -> void:
 		
 	if Input.is_action_just_pressed("deliver"):
 		deliver()
-		
+	if Input.is_action_just_pressed("ask"):
+		ask()
+			
 	if Input.is_action_just_pressed("trip"):
 		xsm.change_state("Trip")
 	
@@ -217,12 +219,19 @@ func pickup():
 		package.being_carried=false
 		over_package=package
 		
+func ask():
+	if not target or packages_container.get_child_count() == 0:
+		return
 		
+	var package = get_package(0)
+	target.ask_about(package.target_name, package.target_section)
+
 func deliver():
 	if not target or packages_container.get_child_count() == 0:
 		return
-	var package = pop_package()
+	var package = get_package(0)
 	if target.process_package(package):
+		pop_package()
 		Globals.emit_signal("package_received")
 		var glob = package.global_position
 		remove_child(package)

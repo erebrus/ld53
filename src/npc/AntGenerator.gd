@@ -23,24 +23,40 @@ func _ready() -> void:
 	var ant = AntScene.instance()
 
 	ant.call_name = pick_name()
-	var is_female = check_if_female(ant.call_name)
+	ant.is_female = check_if_female(ant.call_name)
 	ant.call_section = get_parent().name
 	var body_type = RNGTools.pick(BodyType.values())
 	var colour = RNGTools.pick(BellyColour.values())
-	var head = get_head_res(body_type)
+	var head_str = get_head_res(body_type)
 
-	var tie = "" if is_female else get_tie_res(RNGTools.pick(Tie.values()))
-	var glasses = get_glasses_res(RNGTools.pick(Glasses.values()))
-	var facial = "" if is_female else get_facial_res(RNGTools.pick(FacialHair.values()))
-	var hair = get_hair_res(RNGTools.pick( [1,2,3,4] if is_female else Hair.values()))
+	var tie = RNGTools.pick(Tie.values())
+	var glasses = RNGTools.pick(Glasses.values())
+	var facial = RNGTools.pick(FacialHair.values())
+	var hair = RNGTools.pick( [1,2,3,4] if ant.is_female else Hair.values())
+	
+	var tie_str = "" if ant.is_female else get_tie_res(tie)
+	var glasses_str = get_glasses_res(glasses)
+	var facial_str = "" if ant.is_female else get_facial_res(facial)
+	var hair_str = get_hair_res(hair)
 
 	ant.set_body(get_body_res(body_type, colour))
-	ant.set_head(head)
-	ant.set_tie(tie)
-	ant.set_glasses(glasses)
-	ant.set_facial(facial)
-	ant.set_hair(hair)
-
+	ant.set_head(head_str)
+	ant.set_tie(tie_str)
+	ant.set_glasses(glasses_str)
+	ant.set_facial(facial_str)
+	ant.set_hair(hair_str)
+	if body_type!=3:
+		ant.add_prop("body_type", ant_sprite_name_map[body_type])
+	ant.add_prop("colour", BellyColour.keys()[colour].to_lower())
+	if not ant.is_female and tie !=0:
+		ant.add_prop("tie", Tie.keys()[tie].to_lower())
+	if not ant.is_female:
+		ant.add_prop("glasses", Glasses.keys()[glasses].to_lower())
+	if not ant.is_female and tie !=0:
+		ant.add_prop("facial", FacialHair.keys()[facial].to_lower())
+	ant.add_prop("hair", Hair.keys()[hair].to_lower())
+	
+	
 
 	yield(get_tree(),"idle_frame")	
 	get_parent().add_child(ant)

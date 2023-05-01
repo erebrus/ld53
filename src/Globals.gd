@@ -22,7 +22,7 @@ var first_names:Array
 var last_names:Array
 var game_names:Array=[]
 
-enum BarkType {QUICK, JUST_IN_TIME, DELAYED, VERY_DELAYED, BARK, BARK_TRIP, BARK_SLIP}
+enum BarkType {QUICK, JUST_IN_TIME, DELAYED, VERY_DELAYED, BARK, BARK_TRIP, BARK_SLIP, ASK_WRONG_DEPARTMENT, ASK_REPLY}
 var BarkFiles = [
 	"res://data/reply_quick.txt",
 	"res://data/reply_in_time.txt",
@@ -30,11 +30,14 @@ var BarkFiles = [
 	"res://data/reply_very_late.txt",
 	"res://data/barks.txt",
 	"res://data/bark_trip.txt",
-	"res://data/bark_slip.txt"	
+	"res://data/bark_slip.txt",	
+	"res://data/ask_wrong_section.txt",
+	"res://data/ask_reply.txt"	
 	
 ]
 var barks:Dictionary = {}
-
+var prop_text = {}
+var prop_comments = {}
 enum GameLogLevel {INFO, WARNING, ALERT}
 
 var master_volume:float = 100
@@ -60,6 +63,8 @@ func _ready():
 	read_names()
 	generate_game_names(30)
 	read_barks()
+	read_props()
+	read_comments()
 #	music =AudioStreamPlayer.new()	
 #	music.stream=preload("res://assets/music/CatEgypt.mp3")
 #	music.volume_db=-20
@@ -73,6 +78,66 @@ func read_barks():
 	Logger.info("Barks read.")
 
 
+func add_prop(key, value, text_csv):
+	if not key in prop_text:
+		prop_text[key]={}
+	if not value in prop_text[key]:
+		prop_text[key][value]=[]
+	var text_list = text_csv.split(";")
+	for text in text_list:
+		prop_text[key][value].append(text)
+	Logger.debug("Added property %s %s %s" % [key, value, str(text_list)])
+
+func read_props():
+	var file = File.new()
+	file.open("res://data/props.txt", file.READ)
+	while !file.eof_reached():		
+		var csv = file.get_csv_line()
+		if csv.size() != 3:
+			if csv.size()==1 and csv[0]=="":
+				continue
+			Logger.warn("Wrong csv line %s" % str(csv))
+			
+		if csv[0].begins_with("#"):
+			continue
+		add_prop(csv[0], csv[1], csv[2])
+			
+	file.close()
+
+
+func add_comment(key, value, text_csv):
+		
+	
+	if not key in prop_comments:
+		prop_comments[key]={}
+	if not value in prop_comments[key]:
+		prop_comments[key][value]=[]
+	var text_list = text_csv.split(";")
+	for text in text_list:
+		prop_comments[key][value].append(text)
+	Logger.debug("Added comment %s %s %s" % [key, value, str(text_list)])
+
+
+func read_comments():
+	var file = File.new()
+	file.open("res://data/comments.txt", file.READ)
+	while !file.eof_reached():		
+		var csv = file.get_csv_line()
+		if csv.size() < 3:
+			if csv.size()==1 and csv[0]=="":
+				continue
+			Logger.warn("Wrong csv line %s" % str(csv))
+			
+		if csv[0].begins_with("#"):
+			continue
+		var reconstruced_field = csv[2]	
+		for i in range(3, csv.size()):
+			reconstruced_field += "," + csv[i]
+	
+		add_comment(csv[0], csv[1], reconstruced_field)
+			
+	file.close()
+	
 func read_names():
 	first_names = get_list_from_file("res://data/first_names.txt")
 	last_names = get_list_from_file("res://data/last_names.txt")
@@ -109,10 +174,10 @@ func _init_logger():
 	Logger.set_logger_format(Logger.LOG_FORMAT_MORE)
 	var console_appender:Appender = Logger.add_appender(ConsoleAppender.new())
 	console_appender.logger_format=Logger.LOG_FORMAT_FULL
-	console_appender.logger_level = Logger.LOG_LEVEL_NONE
+	console_appender.logger_level = Logger.LOG_LEVEL_INFO
 	var file_appender:Appender = Logger.add_appender(FileAppender.new("res://debug.log"))
 	file_appender.logger_format=Logger.LOG_FORMAT_FULL
-	file_appender.logger_level = Logger.LOG_LEVEL_NONE
+	file_appender.logger_level = Logger.LOG_LEVEL_TRACE
 
 
 
@@ -148,3 +213,27 @@ func generate_game_names(count, max_repeat=3):
 #		chosen_first_names.remove(first_idx)
 #		chosen_last_names.remove(last_idx)
 	game_names = names
+
+func get_random_line(key)->String:
+	if not key in barks:
+		Logger.warn("Looking for wrong key in barks: %s" % str(key))
+		return ""
+	var list = barks[key]
+	return RNGTools.pick(list)
+
+
+func get_text_for_prop(key, value):
+	if key in prop_text and value in prop_text[key]:
+		var list = prop_text[key][value]
+		return RNGTools.pick(list)
+	else:
+		Logger.warn("Cannot find text for %s %s" % [key, value])
+		return ""
+
+func get_comment_for_prop(key, value):
+	if key in prop_comments and value in prop_comments[key]:
+		var list = prop_comments[key][value]
+		return RNGTools.pick(list)
+	else:
+		Logger.warn("Cannot find comment for %s %s" % [key, value])
+		return ""

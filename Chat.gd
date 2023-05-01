@@ -15,6 +15,7 @@ onready var rect = $VBoxContainer/Label/NinePatchRect
 onready var timer = $Timer
 onready var anim_player = $AnimationPlayer
 var close = false
+export var requires_keypress:=false
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	#bubble_text_length = bubble_text.length()
@@ -27,7 +28,8 @@ func _ready():
 #	pass
 
 
-func open_dialog(text: String):
+func open_dialog(text: String, manual:bool = false):
+	requires_keypress = manual
 	close = false
 	bubble_text = text
 	bubble_text_length = bubble_text.length()
@@ -40,6 +42,15 @@ func close_dialog():
 	bubble_text = ""
 	anim_player.play("Close")
 
+
+func _is_done()->bool:
+	return not(bubble_text_index < bubble_text_length - 1) and not close
+
+func _input(event: InputEvent) -> void:
+	if Input.is_action_just_pressed("ask"):
+		if requires_keypress and _is_done():
+			 close_dialog()
+
 func _on_Timer_timeout():
 	if !close:
 		current_text += bubble_text[bubble_text_index]
@@ -51,7 +62,8 @@ func _on_Timer_timeout():
 		else:
 			if !close:
 				close = true
-				timer.start(1)
+				if not requires_keypress:
+					timer.start(2)
 	else:
 		if bubble_text_length > 0:
 			current_text.erase(bubble_text_length - 1, 1)

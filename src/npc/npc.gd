@@ -9,21 +9,8 @@ const TIMELINESS_MODIFIERS:Dictionary = {
 	Package.Timeliness.VERY_DELAYED: -.5
 }
 
-enum BarkType {QUICK, JUST_IN_TIME, DELAYED, VERY_DELAYED, BARK, BARK_TRIP, BARK_SLIP}
 enum Timeliness {QUICK, JUST_IN_TIME, DELAYED, VERY_DELAYED}
 
-const BARKS:Array = [
-	"Why does everything always take so long around here?",
-"I'm sorry, I can't hear you over the sound of my deadlines whooshing by.",
-"I swear, they just hire anyone these days.",
-"I don't have time for this. Can't you see I'm busy?",
-"Why do I even bother coming in to work anymore?",
-"You call that work? I could do it in my sleep.",
-"I can't believe they expect us to work in these conditions.",
-"I'm so sick of these incompetent couriers messing everything up.",
-"Just once, I'd like to get something done without any delays or excuses.",
-"Why do they even bother with deadlines? No one ever meets them anyway."
-]
 
 export var max_speed=24
 
@@ -40,6 +27,9 @@ var target_position
 #onready var sprite := $Sprite
 onready var tree := $AnimationTree
 onready var dialog := $Chat
+
+var props := {}
+var is_female := false
 
 func _ready():
 	var rng = RandomNumberGenerator.new()
@@ -114,9 +104,6 @@ func give_candy():
 	Globals.emit_signal("bark", self, "Thank you for the candy...I guess")
 	show_dialog("Thank you for the candy...I guess")
 
-func ask_about(target_name, target_address):
-	Logger.error("%s - asked about %s (%s)" % [get_id(), target_name, target_address])
-
 func set_body(res):
 	$AntPivot/Body.texture = load(res)
 	Logger.debug("%s - set body res: %s" % [get_id(), res])
@@ -153,8 +140,8 @@ func set_tie(res):
 	else:
 		$AntPivot/Tie.texture = null	
 		
-func show_dialog(text: String) -> void:
-	dialog.open_dialog(text)
+func show_dialog(text: String, manual:=false) -> void:
+	dialog.open_dialog(text, manual)
 
 
 func _on_DetectionBox_body_entered(body):
@@ -164,15 +151,105 @@ func _on_DetectionBox_body_entered(body):
 		return
 	if relationship > -.9:
 		if randf()< abs(relationship)/2:			
-			Globals.emit_signal("bark", self, RNGTools.pick(BARKS))
+			Globals.emit_signal("bark", self, Globals.get_random_line(Globals.BarkType.BARK))
 	else:
 		if randf() > .5:
 			body.trip()
 		else:
-			Globals.emit_signal("bark", self, RNGTools.pick(BARKS))
+			Globals.emit_signal("bark", self, Globals.get_random_line(Globals.BarkType.BARK))
 
 
 func _on_DetectionBox_body_exited(body):
 	if body.target == self:
 		body.target = null
 		Logger.trace("%s - no longer detects played." % get_id())
+
+func add_prop(key, value):
+	props[key]=value
+
+
+func get_colleagues():
+	var npcs = get_tree().get_nodes_in_group("npc")
+	var ret = []
+	for npc in npcs:
+		if npc.call_section == call_section:
+			ret.append(npc)
+	return ret
+	
+func ask_about(target_name, target_section):
+	if target_section != call_section:
+		show_dialog(Globals.get_random_line(Globals.BarkType.ASK_WRONG_DEPARTMENT))
+#		Globals.emit_signal("bark", self, )
+		return
+
+	if call_name == target_name and call_section == target_section:
+		show_dialog("It's me you idiot!")
+		return
+		
+	var target = null
+	for npc in get_colleagues():
+		if npc.call_name == target_name:
+			target = npc
+			break
+	
+	if target == null:
+		#Globals.emit_signal("bark", self, "I have no clue who that is.")
+		show_dialog("I have no clue who that is.")
+	else:
+#		Globals.emit_signal("bark", self, build_directions_reply(target))
+		show_dialog(build_directions_reply(target), true)
+		
+func build_directions_reply(target):
+	var keys = target.props.keys()
+	var props_count = 2 #+ 1 if randf()>.4 else 0
+	if props_count > keys.size():
+		props_count = keys.size()
+	if props_count == 0:
+		return "I have no clue who that is."
+	
+	var target_props = RNGTools.pick_many(target.props.keys(), 2)
+	var body=""
+	for prop in target_props:
+		if prop == "body_type":
+			body=" %s" % Globals.get_text_for_prop(prop, target.props[prop])
+	
+	for prop in target_props:
+		if prop == "colour":
+			body="%s%s" % [body, Globals.get_text_for_prop(prop, target.props[prop])]
+	
+	var other=""
+	for prop in target_props:
+		if prop !=	"colour" and prop != "body_type":
+			var txt= Globals.get_text_for_prop(prop, target.props[prop])
+			if other == "":
+				other = "the %s" % txt
+			else:
+				other = "%s and the %s" % [other, txt]
+	var ant 
+	if body != "":
+		ant = "That's the %s ant" % body
+	else:
+		ant = "That's the ant"
+	
+	if other!= "":
+		ant = "%s with %s." % [ant,other]
+	else:
+		ant= "%s." % ant
+	
+	var prop = RNGTools.pick(target.props.keys())
+	var comment = adjust_gender(Globals.get_comment_for_prop(prop, target.props[prop]), target.is_female)
+	ant = "%s %s" % [ant, comment]
+	return ant
+
+
+func adjust_gender(comment:String, is_female:bool)->String:
+	if is_female:
+		var ret = comment.replacen("_His_", "Her")\
+			.replacen("_his_", "her")\
+			.replacen("_him_", "her")\
+			.replacen("_he_", "she")\
+			.replacen("_He_", "She")
+		return ret
+	else:			
+		return comment.replacen("_","")
+		

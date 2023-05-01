@@ -1,0 +1,25 @@
+#type#,#value#,#text#
+body_type,ant_1,_He_ should eat more;I guess _he_ can't afford food. Maybe that is why _he_ is always so cranky.
+body_type,ant_2,_He_ can't stop eating.;_He_ has let _himself_ go;_He_ will burst if _he_ doesn't stop eating.
+body_type,ant_3,Seems like _he_ will never die. _He_ is older than dust. No clue how _he_ survived so long.
+colour,green,Green suits _him_ well... _he_ is always so envious of everyone else.;_He_ is so green that I'm always thinking _he_ is going to throw up.; _He_ is so green that when we're walking on grass I never see _him_.
+colour,grey,_His_ hair went grey when _he_ was young; Some get a distinct look with grey hair. _He_ doesn't; _He_ looks so old with that hair.
+colour,orange,I almost go blind every time I look at that orange belly of _his_.; _He_ is so orange...I don't think that is real.
+colour,blue,_He_ is blue like water. Not as clean though; _He_ is blue like the Summer sky. _His_ mood reminds me more of Winter.
+tie,blue,_He_ is so boring with that tie; _He_ thinks he looks important with that tie.
+tie,yellow, That yellow tie hurts my eyes.; _He_ lacks any notion of style.; _He_ uses that tie because _he_ loves to draw attention.
+hair,none,_His_ head is like a crystal ball, but you can't see the future on it.; Lost _his_ hair at a young age.; So bald... some say baldness is attractive. I don't think so.;_He_ tried everything, but _he_ could never get _his_ hair back.
+hair,pink_long,Pink hair...someone loves attention; Pink hair...at the office...honestly...some people...; 
+hair,blue_long,I don't think that blue hair is real; I don't dislike _his_ blue hair, but it's a waste in such uninteresting person.
+hair,blue_buns,I don't understand how an adult wears the hair like that;Buns...I guess someone is a fan of Star Wars;
+hair,blue_short,Some say blue short hair is edgy. I don't.; Blue short hair...it's like _he_ is in the army!
+hair,blonde_short,I don't think _he_ is a natural blond.; I don't think that hair is blonde. It's more like a jarring yellow.
+hair,green_short,It's like _he_ has grass on _his_ head.; That hair is so green it could remind me of weeds, but even weeds look nicer.
+glasses,blue,_He_ uses glasses just to look intelectual.; _He_ wouldn't be able to see anything without _his_ glasses.; Sometimes I steal _his_ glasses just to mess with _him_.
+glasses,green,_He_ uses glasses just to look intelectual.; _He_ wouldn't be able to see anything without _his_ glasses.; Sometimes I steal _his_ glasses just to mess with _him_.
+glasses,sun_green,Who wears sun glasses indoors? Only idiots like _him_.; Looking at _him_, one would think it's really sunny in the colony...
+glasses,sun_yellow,Who wears sun glasses indoors? Only idiots like _him_.; Looking at _him_, one would think it's really sunny in the colony...; Yellow sunglasses... Could _he_ be any more ridiculous?
+facial,yellow,_He_ calls that a blonde moustache, but for me it looks like _he_ has mustard on _his_ face.; Blonde moustache...it looks like a dead animal above his mouth.
+facial,blue,_He_ is always very proud of _his_ blue moustache. It's so 70s. Someone tell _him_ it's the 21st century.; _He_ just has that moustache because _he_ is too lazy to shave.
+facial,green,Every time I look at _him_, I think _he_ has grass above his mouth. That is not a moustache.; A green moustache...how can _he_ eat with that?;
+
