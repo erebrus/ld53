@@ -16,12 +16,21 @@ var target_section:String
 var being_carried:=false setget _set_being_carried
 var velocity:Vector2 =Vector2.ZERO
 
+onready var puff:AnimatedSprite = $Puff
+
 func init(recipient):
 	target_name = recipient.call_name
 	target_section = recipient.call_section
 	start_day = Globals.time.day
 	start_cycle = Globals.time.cycle
 	
+func show_puff():
+	var tween = create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	tween.tween_property(puff, "modulate", Color.white, .1)
+	puff.play("default")
+	yield(get_tree().create_timer(.8),"timeout")
+	puff.modulate.a=0
+
 func _set_being_carried(val:bool):
 	$CollisionShape2D.disabled = val
 	being_carried=val
