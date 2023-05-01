@@ -7,10 +7,13 @@ extends Node2D
 
 onready var sprite = $Sprite
 onready var timer = $Timer
+onready var anim_player = $AnimationPlayer
+onready var chat = $Chat
 var player_near = false
 var time_since_press = 100.0
 var wait_period = 2.0
 export var level = 0
+var showed_tooltip = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -49,13 +52,16 @@ func _on_Area2D_body_entered(body):
 	print("HERE")
 	print(body)
 	player_near = true
-
+	anim_player.play("Outline")
+	if !showed_tooltip:
+		chat.open_dialog("Press Up or Down.")
+		showed_tooltip = true
 
 func _on_Area2D_body_exited(body):
 	print("exiting")
 	print(level)
 	player_near = false
-
+	anim_player.play("Disappear")
 
 func _on_Timer_timeout():
 	sprite.play("Default")
