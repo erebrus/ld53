@@ -50,6 +50,10 @@ func close_door():
 	sprite.play("Close")
 	Globals.emit_signal("door_closed")
 	timer.stop()
+	
+func player_entering():
+	player_near = true
+	
 func _on_Area2D_body_entered(body):
 	if !body.is_in_group("player"):
 		return
