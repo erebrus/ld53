@@ -6,9 +6,7 @@ const INCOME_BY_TIMELINESS = [15,5,0,-10]
 onready var tween = $Tween
 onready var anim_player = $AnimationPlayer
 
-var start_day:int
-var start_cycle:int 
-
+var start_time:GameTime
 
 var target_name:String
 var target_section:String
@@ -21,8 +19,7 @@ onready var puff:AnimatedSprite = $Puff
 func init(recipient):
 	target_name = recipient.call_name
 	target_section = recipient.call_section
-	start_day = Globals.time.day
-	start_cycle = Globals.time.cycle
+	start_time = Globals.time.set_from(GameTime.new())
 	
 func show_puff():
 	var tween = create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
@@ -35,18 +32,33 @@ func _set_being_carried(val:bool):
 	$CollisionShape2D.disabled = val
 	being_carried=val
 	
+
 func get_timeliness(time:GameTime):
-	if time.day > start_day:
+	if time.day > start_time.day:
 		return Timeliness.VERY_DELAYED
-	if time.cycle > start_cycle:
-		if time.cycle > start_cycle+1 or time.time > GameTime.CYCLE_DURATION/2:
-			return Timeliness.VERY_DELAYED
-		else:
-			return Timeliness.DELAYED
-	elif time.time > GameTime.CYCLE_DURATION/2:
+	var now = Globals.time
+	
+	var tick_delta = now.compare(start_time)
+	if tick_delta > GameTime.CYCLE_DURATION:
+		return Timeliness.VERY_DELAYED
+	
+	if tick_delta > GameTime.CYCLE_DURATION*2/3:
+		return Timeliness.DELAYED
+		
+	if tick_delta > GameTime.CYCLE_DURATION*1/3:
 		return Timeliness.JUST_IN_TIME
-	else:
-		return Timeliness.QUICK
+		
+	return Timeliness.QUICK
+		
+#	if time.cycle > start_cycle:
+#		if time.cycle > start_cycle+1 or time.time > GameTime.CYCLE_DURATION/2:
+#			return Timeliness.VERY_DELAYED
+#		else:
+#			return Timeliness.DELAYED
+#	elif time.time > GameTime.CYCLE_DURATION/2:
+#		return Timeliness.JUST_IN_TIME
+#	else:
+#		return Timeliness.QUICK
 		
 func consume(target):
 	print("target position")

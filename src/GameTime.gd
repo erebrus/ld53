@@ -32,3 +32,16 @@ func is_cycle_start()->bool:
 func is_day_start()->bool:
 	return cycle == 1	
 	
+func ticks_from_day_start()->int:
+	return CYCLE_DURATION * (cycle-1) + time
+	
+func compare(other:GameTime)->int:
+	return ticks_from_day_start()-other.ticks_from_day_start()
+	
+func set_from(ret)->GameTime:
+
+	ret.day = day
+	ret.cycle = cycle
+	ret.time = time
+	return ret
+	

@@ -80,7 +80,7 @@ func process_package(package):
 	if package.target_name == call_name and \
 		package.target_section == call_section:
 			var timeliness = package.get_timeliness(Globals.time)
-			Logger.debug("%s - received package. Timeliness = %d" % [get_id(), timeliness] )
+			Logger.info("%s - received package. Timeliness = %d" % [get_id(), timeliness] )
 			update_relationship(TIMELINESS_MODIFIERS[timeliness])
 			Logger.debug("%s - new relationship state: %f" % [get_id(), relationship])
 			Globals.emit_signal("reply_package", package, self, timeliness)
