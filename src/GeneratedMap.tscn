@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=2]
+[gd_scene load_steps=38 format=2]
 
 [ext_resource path="res://assets/gfx/world/Map.tres" type="TileSet" id=1]
 [ext_resource path="res://src/CallButton.tscn" type="PackedScene" id=2]
@@ -31,6 +31,7 @@
 [ext_resource path="res://src/ui/TimeUI.tscn" type="PackedScene" id=29]
 [ext_resource path="res://src/ui/MoneyUI.tscn" type="PackedScene" id=30]
 [ext_resource path="res://src/ui/HUD.tscn" type="PackedScene" id=31]
+[ext_resource path="res://src/Clipboard.tscn" type="PackedScene" id=32]
 
 [sub_resource type="ShaderMaterial" id=5]
 resource_local_to_scene = true
@@ -630,6 +631,9 @@ position = Vector2( 208, -112 )
 
 [node name="Time" parent="Courier/Camera2D" instance=ExtResource( 29 )]
 position = Vector2( 0, -112 )
+
+[node name="Node2D" parent="Courier/Camera2D" instance=ExtResource( 32 )]
+position = Vector2( -192, -16 )
 
 [node name="CallButton" parent="." instance=ExtResource( 2 )]
 position = Vector2( 464, 192 )
