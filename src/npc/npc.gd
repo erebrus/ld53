@@ -5,12 +5,12 @@ const CANDY_MODIFIER :=.2
 const TIMELINESS_MODIFIERS:Dictionary = {
 	Package.Timeliness.QUICK: .2,
 	Package.Timeliness.JUST_IN_TIME: .05,
-	Package.Timeliness.DELAYED: -.2,
+	Package.Timeliness.DELAYED: -.3,
 	Package.Timeliness.VERY_DELAYED: -.5
 }
-const WRONG_DEPARTMENT_MODIFIER=-.1
+const WRONG_DEPARTMENT_MODIFIER=-.15
 const WRONG_PERSON_MODIFIER=-.1
-const ASK_MODIFIER=-.05
+const ASK_MODIFIER=-.1
 
 enum Timeliness {QUICK, JUST_IN_TIME, DELAYED, VERY_DELAYED}
 
