@@ -512,12 +512,12 @@ position = Vector2( -672, 384 )
 [node name="AntGenerator2" parent="Sections/Human Resources" instance=ExtResource( 3 )]
 position = Vector2( -544, 384 )
 
-[node name="Marketting" type="Node2D" parent="Sections"]
+[node name="Marketing" type="Node2D" parent="Sections"]
 
-[node name="AntGenerator" parent="Sections/Marketting" instance=ExtResource( 3 )]
+[node name="AntGenerator" parent="Sections/Marketing" instance=ExtResource( 3 )]
 position = Vector2( -672, 608 )
 
-[node name="AntGenerator2" parent="Sections/Marketting" instance=ExtResource( 3 )]
+[node name="AntGenerator2" parent="Sections/Marketing" instance=ExtResource( 3 )]
 position = Vector2( -544, 608 )
 
 [node name="IT" type="Node2D" parent="Sections"]
