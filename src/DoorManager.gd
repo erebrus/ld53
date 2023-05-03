@@ -55,5 +55,4 @@ func _on_Timer_timeout():
 		state = DoorState.INACTIVE
 		#player.disabled = false
 		player.z_index = player_z
-		doors[destination].player_entering()
 		anim_player.play("Leave Stairs")
