@@ -189,10 +189,6 @@ func set_collision_enabled(val):
 	else:
 		collision_layer=0
 
-
-
-
-
 func stop_animation():
 	$Sprite.playing=false
 
@@ -243,21 +239,28 @@ func pop_package():
 	return ret
 
 func pop_selected_package(package):
+	var ret = null
 	if get_package_count() == 0:
-		return null
-	var ret = packages_container.get_child(0).get_child(0)
+		return ret
+		
+	# first remove the selected package from the array
 	for package_anchor in packages_container.get_children(): 
 		if package_anchor.get_child(0) == package:
 			ret = package_anchor.get_child(0)
 			ret.get_parent().remove_child(ret)
 			break
-			
-	for i in range(1, packages_container.get_child_count()):
-		if packages_container.get_child(i).get_child_count()>0:
-			var p = packages_container.get_child(i).get_child(0)
-			p.get_parent().remove_child(p)
-			packages_container.get_child(i-1).add_child(p)
-			p.position=Vector2.ZERO		
+	
+	# now shift array backwards to fill empty slots
+	if ret != null:
+		for i in range(0, packages_container.get_child_count()):
+			# try to fill anchor if empty by searching forward in array
+			if packages_container.get_child(i).get_child_count() == 0:
+				for z in range (i+1, packages_container.get_child_count()):
+					if packages_container.get_child(z).get_child_count() > 0:
+						var p = packages_container.get_child(z).get_child(0)
+						p.get_parent().remove_child(p)
+						packages_container.get_child(i).add_child(p)
+						p.position=Vector2.ZERO		
 					
 	return ret
 	
@@ -312,9 +315,9 @@ func deliver():
 	if package == null:
 		return
 	if target.process_package(package):
+		var glob = package.global_position
 		pop_selected_package(package)
 		Globals.emit_signal("package_received")
-		var glob = package.global_position
 		remove_child(package)
 		get_parent().add_child(package)
 		package.global_position = glob
