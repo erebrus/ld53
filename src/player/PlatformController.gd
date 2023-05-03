@@ -24,7 +24,7 @@ export(float) var hangtime:float = 0.1 # time before gravity starts being applie
 export(float) var climb_timeout:float = 1 # time before gravity starts being applied when player reaches zenith of jump
 export(bool) var allow_wall_jump:bool = false
 export(bool) var wall_jump_x:float=300
-export(bool) var wall_control_timeout:float=.3
+export(float) var wall_control_timeout:float=.3
 export(float) var g_factor:float = 1
 
 export(NodePath) var xsm_path:NodePath
@@ -32,7 +32,7 @@ export(NodePath) var xsm_path:NodePath
 var hanging := false #is in hangtime
 var jump_available := true #can jump
 var can_dash:bool = true 
-var can_climb:bool = true  
+var can_climb:bool = false  
 
 var air_jump_count:int = 0
 var jump_requested:bool = false #for jump buffer
