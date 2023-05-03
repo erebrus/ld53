@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=2]
+[gd_scene load_steps=50 format=2]
 
 [ext_resource path="res://assets/gfx/world/Map.tres" type="TileSet" id=1]
 [ext_resource path="res://src/CallButton.tscn" type="PackedScene" id=2]
@@ -32,6 +32,10 @@
 [ext_resource path="res://src/ui/MoneyUI.tscn" type="PackedScene" id=30]
 [ext_resource path="res://src/ui/HUD.tscn" type="PackedScene" id=31]
 [ext_resource path="res://src/Clipboard.tscn" type="PackedScene" id=32]
+[ext_resource path="res://assets/gfx/Circle Light.png" type="Texture" id=33]
+[ext_resource path="res://assets/gfx/Light.png" type="Texture" id=34]
+[ext_resource path="res://src/MapModulate.gd" type="Script" id=35]
+[ext_resource path="res://assets/gfx/player/forager-ant.png" type="Texture" id=36]
 
 [sub_resource type="ShaderMaterial" id=5]
 resource_local_to_scene = true
@@ -293,8 +297,42 @@ tracks/7/keys = {
 
 [sub_resource type="Environment" id=1]
 
+[sub_resource type="Animation" id=8]
+resource_name = "Fifth Level"
+
+[sub_resource type="Animation" id=9]
+resource_name = "First Level"
+
+[sub_resource type="Animation" id=10]
+resource_name = "Fourth Level"
+
+[sub_resource type="Animation" id=11]
+resource_name = "Second Level"
+
+[sub_resource type="Animation" id=12]
+resource_name = "Sixth Level"
+
+[sub_resource type="Animation" id=13]
+resource_name = "Third Level"
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 36 )
+region = Rect2( 0, 0, 80, 48 )
+
+[sub_resource type="SpriteFrames" id=7]
+animations = [ {
+"frames": [ SubResource( 6 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
 [node name="Map" type="Node2D"]
 script = ExtResource( 15 )
+level_heights = [ 0, 224, 448, 672, 896, 1120 ]
+
+[node name="First Level Top" type="Node2D" parent="."]
+position = Vector2( 448, 96 )
 
 [node name="Transparent BG" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
@@ -431,18 +469,10 @@ texture = ExtResource( 28 )
 position = Vector2( 304, 1248 )
 texture = ExtResource( 28 )
 
-[node name="Office Inbetween" type="Node2D" parent="."]
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+visible = false
 
-[node name="TileMap" type="TileMap" parent="Office Inbetween"]
-tile_set = ExtResource( 1 )
-cell_size = Vector2( 32, 32 )
-format = 1
-tile_data = PoolIntArray( 393225, 15, 0, 917484, 15, 0, 917488, 15, 0, 917496, 15, 0, 917497, 536870954, 0, 917499, 15, 0, 917503, 536870967, 0, 851972, 15, 0, 1310698, 48, 0, 1310709, 536870960, 0, 1245184, 536870964, 0, 1245185, 536870960, 0, 1376236, 15, 0, 1376240, 15, 0, 1376246, 536870967, 0, 1376249, 42, 0, 1834986, 536870951, 0, 1834989, 536870951, 0, 1834998, 536870961, 0, 1835000, 42, 0, 1835002, 536870965, 0, 1835003, 54, 0, 1835004, 42, 0, 1835006, 15, 0, 1835007, 54, 0, 1769472, 53, 0, 1769473, 536870965, 0, 1769474, 536870961, 0, 1769476, 42, 0, 1769477, 536870967, 0, 1769478, 536870966, 0, 1769479, 53, 0, 1769480, 53, 0, 1769481, 536870965, 0, 1769482, 536870961, 0, 1769485, 536870965, 0, 2162685, 536870931, 0, 2162691, 52, 0, 2162700, 48, 0, 2293740, 42, 0, 2293745, 42, 0, 2293753, 42, 0, 2293754, 55, 0, 2293757, 42, 0, 2293758, 55, 0, 2293759, 536870961, 0, 2228226, 42, 0, 2752491, 15, 0, 2752495, 15, 0, 2752505, 15, 0, 2752506, 55, 0, 2752509, 536870931, 0, 2752511, 15, 0, 2686976, 55, 0, 2686977, 536870927, 0, 2686978, 15, 0, 2686981, 15, 0 )
-
-[node name="Custom" type="TileMap" parent="Office Inbetween"]
-tile_set = ExtResource( 14 )
-cell_size = Vector2( 32, 32 )
-format = 1
+[node name="Inbetween" type="ParallaxLayer" parent="ParallaxBackground"]
 
 [node name="Door Manager" type="Node2D" parent="."]
 script = ExtResource( 11 )
@@ -590,6 +620,19 @@ position = Vector2( -672, 1056 )
 [node name="AntGenerator2" parent="Sections/Accounting" instance=ExtResource( 3 )]
 position = Vector2( -512, 1056 )
 
+[node name="Office Inbetween" type="Node2D" parent="."]
+
+[node name="TileMap" type="TileMap" parent="Office Inbetween"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 32, 32 )
+format = 1
+tile_data = PoolIntArray( 393225, 15, 0, 917484, 15, 0, 917488, 15, 0, 917496, 15, 0, 917497, 536870954, 0, 917499, 15, 0, 917503, 536870967, 0, 851972, 15, 0, 1310698, 48, 0, 1310709, 536870960, 0, 1245184, 536870964, 0, 1245185, 536870960, 0, 1376236, 15, 0, 1376240, 15, 0, 1376246, 536870967, 0, 1376249, 42, 0, 1834986, 536870951, 0, 1834989, 536870951, 0, 1834998, 536870961, 0, 1835000, 42, 0, 1835002, 536870965, 0, 1835003, 54, 0, 1835004, 42, 0, 1835006, 15, 0, 1835007, 54, 0, 1769472, 53, 0, 1769473, 536870965, 0, 1769474, 536870961, 0, 1769476, 42, 0, 1769477, 536870967, 0, 1769478, 536870966, 0, 1769479, 53, 0, 1769480, 53, 0, 1769481, 536870965, 0, 1769482, 536870961, 0, 1769485, 536870965, 0, 2162685, 536870931, 0, 2162691, 52, 0, 2162700, 48, 0, 2293740, 42, 0, 2293745, 42, 0, 2293753, 42, 0, 2293754, 55, 0, 2293757, 42, 0, 2293758, 55, 0, 2293759, 536870961, 0, 2228226, 42, 0, 2752491, 15, 0, 2752495, 15, 0, 2752505, 15, 0, 2752506, 55, 0, 2752509, 536870931, 0, 2752511, 15, 0, 2686976, 55, 0, 2686977, 536870927, 0, 2686978, 15, 0, 2686981, 15, 0 )
+
+[node name="Custom" type="TileMap" parent="Office Inbetween"]
+tile_set = ExtResource( 14 )
+cell_size = Vector2( 32, 32 )
+format = 1
+
 [node name="Office FG" type="Node2D" parent="."]
 
 [node name="Office Props" type="TileMap" parent="Office FG"]
@@ -606,7 +649,7 @@ format = 1
 tile_data = PoolIntArray( 1376235, 6, 0, 1835005, 7, 0 )
 
 [node name="Courier" parent="." instance=ExtResource( 4 )]
-position = Vector2( 421, 211 )
+position = Vector2( 417, 223 )
 z_index = 1
 z_as_relative = false
 
@@ -678,6 +721,71 @@ autoplay = true
 autostart = true
 
 [node name="HUD" parent="." instance=ExtResource( 31 )]
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+position = Vector2( -32, 80 )
+color = Color( 0.878431, 0.878431, 0.878431, 1 )
+script = ExtResource( 35 )
+first = Color( 0.913725, 0.878431, 0.768627, 1 )
+second = Color( 0.878431, 0.878431, 0.878431, 1 )
+third = Color( 0.803922, 0.854902, 0.811765, 1 )
+fourth = Color( 0.709804, 0.784314, 0.752941, 1 )
+fifth = Color( 0.541176, 0.690196, 0.639216, 1 )
+sixth = Color( 0.317647, 0.345098, 0.509804, 1 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasModulate"]
+"anims/Fifth Level" = SubResource( 8 )
+"anims/First Level" = SubResource( 9 )
+"anims/Fourth Level" = SubResource( 10 )
+"anims/Second Level" = SubResource( 11 )
+"anims/Sixth Level" = SubResource( 12 )
+"anims/Third Level" = SubResource( 13 )
+
+[node name="Tween" type="Tween" parent="CanvasModulate"]
+
+[node name="Light2D" type="Light2D" parent="."]
+visible = false
+position = Vector2( -128, 1280 )
+texture = ExtResource( 34 )
+mode = 2
+range_height = 28.4
+shadow_gradient_length = 2088.6
+
+[node name="Light2D4" type="Light2D" parent="."]
+visible = false
+position = Vector2( 64, 1280 )
+texture = ExtResource( 34 )
+mode = 2
+range_height = 28.4
+shadow_gradient_length = 2088.6
+
+[node name="Light2D5" type="Light2D" parent="."]
+visible = false
+position = Vector2( 368, 1072 )
+texture = ExtResource( 34 )
+mode = 2
+range_height = 28.4
+shadow_gradient_length = 2088.6
+
+[node name="Light2D3" type="Light2D" parent="."]
+visible = false
+position = Vector2( 368, 1280 )
+texture = ExtResource( 34 )
+mode = 2
+range_height = 28.4
+shadow_gradient_length = 2088.6
+
+[node name="Light2D6" type="Light2D" parent="."]
+visible = false
+position = Vector2( -32, 1312 )
+texture = ExtResource( 33 )
+color = Color( 0.482353, 0.501961, 0.831373, 1 )
+range_height = 28.4
+shadow_gradient_length = 2088.6
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 314, 201 )
+frames = SubResource( 7 )
 
 [connection signal="timeout" from="Door Manager/Timer" to="Door Manager" method="_on_Timer_timeout"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
