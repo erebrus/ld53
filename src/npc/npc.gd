@@ -293,6 +293,7 @@ func adjust_gender(comment:String, is_female:bool)->String:
 		var ret = comment.replacen("_His_", "Her")\
 			.replacen("_his_", "her")\
 			.replacen("_him_", "her")\
+			.replacen("_himself_", "herself")\
 			.replacen("_he_", "she")\
 			.replacen("_He_", "She")
 		return ret
